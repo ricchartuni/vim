@@ -1,0 +1,206 @@
+map <silent> <leader>d :call SWAPignorecase()<CR>
+func! SWAPignorecase()
+  if &ignorecase
+    set noic
+  else
+    set ic
+  endif
+endfunc
+
+func! PrimeiraLinha()
+   let arqini_cursor = getpos("0")
+   call setpos('.', arqini_cursor)
+endfunc
+
+func! UltimaLinha()
+   let arqfim_cursor = getpos("$")
+   call setpos('.', arqfim_cursor)
+endfunc
+
+ " Complementar palavras
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+    "return "   "
+  endif
+endfunction
+ " Completion using a syntax file
+"if has("autocmd") && exists("+omnifunc")
+"  autocmd Filetype *
+"          \	if &omnifunc == "" |
+"          \		setlocal omnifunc=syntaxcomplete#Complete |
+"          \	endif
+"endif
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+
+inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+"inoremap <Tab> <C-R>=Smart_TabComplete()<CR>
+"inoremap <Tab> <C-R>=TabCompletion()<CR>
+imap <c-tab> <c-x><c-o>
+
+ "  .: The current buffer
+ "  w: Buffers in other windows
+ "  b: Other loaded buffers
+ "  u: Unloaded buffers
+ "  t: Tags
+ "  i: Included files
+ "  k: dictionary
+set complete=.,k,w,i
+"set infercase
+
+ "use “space” to get rid of highlighting after a search
+:noremap <silent> <Space> :silent noh<Bar>echo<CR>
+
+ " remover os espacos no inicio da linha
+noremap <silent> ,l :<C-B>sil <C-E>s/^[ \t]*\V<C-R><CR>//e<CR>:noh<CR>
+
+ " remover os espacos repetidos na linha
+"noremap <silent> ,s :<C-B>sil <C-E>s/ \+\V<C-R><CR>/ /ge<CR>:noh<CR>
+ " remover os espacos repetidos na linha - PRESERVAR PARAGRAFO
+noremap <silent> ,s :<C-B>sil <C-E>s/[^ ]\zs \+\V<C-R><CR>/ /ge<CR>:noh<CR>
+
+ " remover os espacos no fim da linha de todo o arquivo
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+noremap ,w :call DeleteTrailingWS()<CR>
+
+ " remover a insercao automatica de comentarios
+"autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+au FileType * setl fo-=cro
+
+func! CMDpreserva(comando)
+   let search = @/
+   let cursor_position = getpos('.')
+   normal! H
+   let window_position = getpos('.')
+   call setpos('.', cursor_position)
+   execute a:comando
+   let @/ = search
+   call setpos('.', window_position)
+   normal! zt
+   call setpos('.', cursor_position)
+endfunc
+
+ "convert the text to UPPER CASE, then to lower case, then to Title Case
+function! TwiddleCase(str)
+   let cursor_position = getpos('.')
+"echo cursor_position
+"sleep 2
+   if a:str ==# toupper(a:str)
+     let result = tolower(a:str)
+   elseif a:str ==# tolower(a:str)
+     let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+   else
+     let result = toupper(a:str)
+   endif
+   call setpos('.', cursor_position)
+   return result
+endfunction
+"vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgvl
+vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+
+ "conversao das aspas no log de compilacao do TGMAKE
+map <silent> ,e :e ++enc=1252 <C-R>=expand("%:p")<CR><CR>
+
+map <C-w> <esc>/warning<CR>
+
+ "substituir a palavra procurada por ......
+nnoremap <leader>s :call ReplaceIt(1)<CR>
+vnoremap <leader>s <esc>:call ReplaceIt(2)<CR>
+function! ReplaceIt(tst)
+    let cursor_pos = getpos(".")
+    call inputsave()
+    if a:tst == 1
+       let replacement = input(' >substituicao por: ')
+    else
+       let replacement = input(' >substituicao da selecao por: ')
+    endif
+    let replacement = substitute(replacement, '/', '\\/', 'g')
+    call inputrestore()
+    if a:tst == 1
+       silent! execute '%s//'.replacement.'/g'
+    else
+       silent! execute "'<,'>s//".replacement."/g"
+    endif
+    call cursor(cursor_pos[1], cursor_pos[2])
+endfunction
+
+ "Substituir selecao com y/n ............
+vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+ "trocar as palavras procurada com ......
+nnoremap <leader>t :call ToggleIt(1)<CR>
+vnoremap <leader>t <esc>:call ToggleIt(2)<CR>
+function! ToggleIt(tst)
+    call inputsave()
+    let valor_rep = @/
+    let valor_org = substitute(valor_rep, '^..', '', '')
+    let valor_org = substitute(valor_org, '..$', '', '')
+    if a:tst == 1
+       let toggle_org = input(' >trocar com: ')
+    else
+       let toggle_org = input(' >trocar na selecao com: ')
+    endif
+    let toggle_org = substitute(toggle_org, '/', '\\/', 'g')
+    let toggle_rep = substitute(toggle_org, '^', '\\<', '')
+    let toggle_rep = substitute(toggle_rep, '$', '\\>', '')
+    call inputrestore()
+    if a:tst == 1
+       silent! execute '%s/'.valor_rep.'/__XXXXXXXXxxxxxxXXXXXXXX__/g'
+       silent! execute '%s/'.toggle_rep.'/'.valor_org.'/g'
+       silent! execute '%s/__XXXXXXXXxxxxxxXXXXXXXX__/'.toggle_org.'/g'
+    else
+       silent! execute "'<,'>s/".valor_rep."/__XXXXXXXXxxxxxxXXXXXXXX__/g"
+       silent! execute "'<,'>s/".toggle_rep."/".valor_org."/g"
+       silent! execute "'<,'>s/__XXXXXXXXxxxxxxXXXXXXXX__/".toggle_org."/g"
+    endif
+endfunction
+
+ "resize window ...........................
+map <silent> <leader>r :set columns=200 lines=50<CR>
+
+function! ViewVARS()
+   let replacement = input(' **Caso queira exportar para saida >>>> :redir END e depois "ap')
+   silent! redir @a
+   let
+endfunction
+
+ "pad character s with amt spaces..........
+function! Pad(s,amt)
+  return a:s . repeat(' ',a:amt - len(a:s))
+endfunction
+
+ "pad character s with amt spaces/other....
+function! NPad(s,amt,...)
+    if a:0 > 0
+        let char = a:1
+    else
+        let char = ' '
+    endif
+    return repeat(char,a:amt - len(a:s)) . a:s
+endfunction
+
+vnoremap da :%!sed '/.*/d'<CR>
+
+ "escape from .....
+inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
+
+vnoremap <leader>i y:call AddBlock()<CR>gv
+function! AddBlock()
+  let cursor_pos = getpos(".")
+  silent! exe "'<,'>s/^.\\{".cursor_pos[2]."}/& /"
+  call cursor(cursor_pos[1], cursor_pos[2])
+endfunction
+
+function! GvimClean()
+   set guioptions-=m  "remove menu bar
+   set guioptions-=T  "remove toolbar
+   set guioptions-=r  "remove right-hand scroll bar
+   set guioptions-=L  "remove left-hand scroll bar
+endfunction
+

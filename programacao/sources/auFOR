@@ -1,0 +1,278 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F2> :call Subrotina()<CR>
+function! Subrotina()
+    let nomerotina = input(' >nome da rotina: ')
+    r! echo -e "
+\\!=======================================================================\n
+\      SUBROUTINE ___ZZZ_subrotina_ZZZ___()\n
+\\!----------------------------------------------------------------------\n
+\\! Descricao:\n
+\\!----------------------------------------------------------------------\n
+\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\\!=======================================================================\n
+\      IMPLICIT NONE\n
+\      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
+\\n
+\      write(0,*)'  ** UR9Z >> ======================='\n
+\      write(0,*)'  ** UR9Z >> Inicio da subrotina ' // nomerotina\n
+\      write(0,*)'  ** UR9Z >> ======================='\n
+\      flush(0)\n
+\\n
+\      END SUBROUTINE ___ZZZ_subrotina_ZZZ___\n
+\\!=======================================================================\n
+\"
+    let n = line("$")
+    silent! exe "1,". n . "/\\(      \! Rotinas & Funcoes\\)/s//\\1\\r      PUBLIC  :: ___ZZZ_subrotina_ZZZ___"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F12> :call FuncaoF()<CR>
+function! FuncaoF()
+    let nomerotina = input(' >nome da funcao: ')
+    r! echo -e "
+\\!=======================================================================\n
+\      FUNCTION ___ZZZ_subrotina_ZZZ___() RESULT(output)\n
+\\!----------------------------------------------------------------------\n
+\\! Descricao:\n
+\\!----------------------------------------------------------------------\n
+\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\\!=======================================================================\n
+\      IMPLICIT NONE\n
+\      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
+\\n
+\      write(0,*)'  ** UR9Z >> ======================='\n
+\      write(0,*)'  ** UR9Z >> Inicio da funcao ' // nomerotina\n
+\      write(0,*)'  ** UR9Z >> ======================='\n
+\      flush(0)\n
+\\n
+\      END FUNCTION ___ZZZ_subrotina_ZZZ___\n
+\\!=======================================================================\n
+\"
+    let n = line("$")
+    silent! exe "1,". n . "/\\(      \! Rotinas & Funcoes\\)/s//\\1\\r      PUBLIC  :: ___ZZZ_subrotina_ZZZ___"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F3> :call WriteTest()<CR>
+function! WriteTest()
+    r! echo -e "
+\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\      write(0,*)'  ** UR9Z >> ============================================'\n
+\      write(0,*)'  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
+\      write(0,*)'  ** UR9Z >> ============================================'\n
+\      flush(0)\n
+\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F4> :call Comentario()<CR>
+function! Comentario()
+    r! echo -e "
+\\!\!\! UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\!\!\! UR9Z >>> ...........................................................
+\"
+    let sbst = strftime('%B-%Y')
+    let sbrt = NPad(sbst, 14)
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F6> :call TravaCOD()<CR>
+function! TravaCOD()
+    r! echo -e "
+\\!====================================================================\n
+\      SUBROUTINE debugTravaCOD(i_entra, i_atual)\n
+\\!-------------------------------------------------------------------\n
+\\! Descricao: Subrotina para travar codigo (usado para DEBUG)\n
+\\! OBS.2: AINDA NAO TESTADO\n
+\\!-------------------------------------------------------------------\n
+\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!====================================================================\n
+\         INTEGER, INTENT(IN) :: i_entra\n
+\         INTEGER, INTENT(IN) :: i_atual\n
+\         INTEGER :: i_debug\n
+\         i_debug = 1\n
+\         IF (i_atual .EQ. i_entra) THEN\n
+\            WRITE(0,*)\n
+\            WRITE(0,*)'  ** UR9Z >> Teste de parada para DEBUG'\n
+\            WRITE(0,*)'  ** UR9Z >> =========================='\n
+\            FLUSH(0)\n
+\            DO WHILE(i_debug == 1)\n
+\               i_debug = 1\n
+\            END DO\n
+\         END IF\n
+\      END SUBROUTINE debugTravaCOD\n
+\\!=======================================================================\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F7> :call DBGBin()<CR>
+function! DBGBin()
+    r! echo -e "
+\\!=======================================================================\n
+\      SUBROUTINE debugBIN(tip, mat, bin)\n
+\\!----------------------------------------------------------------------\n
+\\! Descricao: Leitura/Escrita de arquivo binario\n
+\\! OBS.: AINDA NAO TESTADO\n
+\\!-------------------------------------------------------------------\n
+\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!=======================================================================\n
+\         IMPLICIT NONE\n
+\         INTEGER     ,           INTENT(IN   ) :: tip\n
+\         REAL        ,           INTENT(INOUT) :: mat(:)\n
+\         CHARACTER(*), OPTIONAL, INTENT(IN   ) :: bin\n
+\         INTEGER, PARAMETER :: iunit          = 999\n
+\         INTEGER, PARAMETER :: abrele         = 10\n
+\         INTEGER, PARAMETER :: abre_le        = 11\n
+\         INTEGER, PARAMETER :: leitura        = 12\n
+\         INTEGER, PARAMETER :: abre_le_fecha  = 15\n
+\         INTEGER, PARAMETER :: abreesc        = 50\n
+\         INTEGER, PARAMETER :: abre_esc       = 51\n
+\         INTEGER, PARAMETER :: escrita        = 52\n
+\         INTEGER, PARAMETER :: abre_esc_fecha = 55\n
+\         INTEGER, PARAMETER :: fecha          = 99\n
+\         INTEGER, SAVE      :: iopen          = 0\n
+\         INTEGER, SAVE      :: ireg           = 0\n
+\         INTEGER            :: tam\n
+\\n
+\      SELECT CASE (tip)\n
+\         CASE(abrele, abre_le, abre_le_fecha)\n
+\            IF (iopen .NE. 0) THEN\n
+\               WRITE(0,*)' >> SO SE PERMITE UM ARQUIVO POR VEZ'\n
+\               WRITE(0,*)' >> E JA EXISTE ARQUIVO ABERTO......'\n
+\               FLUSH(0)\n
+\               EXIT\n
+\            END IF\n
+\            WRITE(0,*)' >> ABRINDO para LEITURA: .... ', bin\n
+\            INQUIRE(IOLENGTH=tam) mat\n
+\            OPEN(iunit,FILE=bin,STATUS='OLD',FORM='UNFORMATTED',ACCESS='DIRECT',RECL=tam)\n
+\            iopen = abrele\n
+\            ireg  = 0\n
+\         CASE(abreesc, abre_esc, abre_esc_fecha)\n
+\            IF (iopen .NE. 0) THEN\n
+\               WRITE(0,*)' >> SO SE PERMITE UM ARQUIVO POR VEZ'\n
+\               WRITE(0,*)' >> E JA EXISTE ARQUIVO ABERTO......'\n
+\               FLUSH(0)\n
+\               EXIT\n
+\            END IF\n
+\            WRITE(0,*)' >> ABRINDO para ESCRITA: .... ', bin\n
+\            INQUIRE(IOLENGTH=tam) mat\n
+\            OPEN(iunit,FILE=bin,STATUS='UNKNOWN',FORM='UNFORMATTED',ACCESS='DIRECT',RECL=tam)\n
+\            iopen = abreesc\n
+\            ireg  = 0\n
+\      END SELECT\n
+\\n
+\      SELECT CASE (tip)\n
+\         CASE(abre_le, leitura, abre_le_fecha)\n
+\            IF (iopen .NE. abrele) THEN\n
+\               WRITE(0,*)' >> ARQUIVO NAO FOI ABERTO PARA LEITURA ...'\n
+\               FLUSH(0)\n
+\               EXIT\n
+\            END IF\n
+\            ireg = ireg + 1\n
+\            WRITE(0,*)' >> LENDO REGISTRO: .......... ', ireg\n
+\            READ(iunit,REC=ireg) mat\n
+\         CASE(abre_esc, escrita, abre_esc_fecha)\n
+\            IF (iopen .NE. abreesc) THEN\n
+\               WRITE(0,*)' >> ARQUIVO NAO FOI ABERTO PARA ESCRITA ...'\n
+\               FLUSH(0)\n
+\               EXIT\n
+\            END IF\n
+\            ireg = ireg + 1\n
+\            WRITE(0,*)' >> ESCREVENDO REGISTRO: ..... ', ireg\n
+\            WRITE(iunit,REC=ireg) mat\n
+\      END SELECT\n
+\\n
+\      SELECT CASE (tip)\n
+\         CASE(abre_le_fecha, abre_esc_fecha, fecha)\n
+\            IF (iopen .EQ. 0) THEN\n
+\               WRITE(0,*)' >> NAO FOI ABERTO NENHUM ARQUIVO ...'\n
+\               FLUSH(0)\n
+\               EXIT\n
+\            END IF\n
+\            WRITE(0,*)' >> FECHANDO REGISTRO.........'\n
+\            CLOSE(iunit)\n
+\            iopen = 0\n
+\            ireg  = 0\n
+\      END SELECT\n
+\      END SUBROUTINE debugBIN\n
+\\!=======================================================================\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F8> :call ChamaDBGBin()<CR>
+function! ChamaDBGBin()
+    r! echo -e "
+\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\\!\!\! OBS.: AINDA NAO TESTADO\n
+\      CALL debugBIN(55, reshape(array, (/n1*n2*n3/)), bin=\"out.bin\")\n
+\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F9> :call DefineDBG()<CR>
+function! DefineDBG()
+    r! echo -e "
+\\#if(DEBUG==1)\n
+\      write(0,*)'  ** UR9Z >> ============================================'\n
+\      write(0,*)'  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
+\      write(0,*)'  ** UR9Z >> ============================================'\n
+\      flush(0)\n
+\\#else\n
+\\n
+\\#endif\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+

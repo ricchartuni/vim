@@ -1,0 +1,85 @@
+ " comentar/descomentar: MODO VISUAL ==> ,c/,u
+noremap  ,c :call CMDcomenta()<CR>
+noremap  ,u :call CMDdescomenta()<CR>
+noremap  ,t :call ToggleComment()<CR>
+
+func! CMDcomenta()
+   if exists("b:com_leader")
+      let search = @/
+      let cursor_position = getpos('.')
+      normal! H
+      let window_position = getpos('.')
+      call setpos('.', cursor_position)
+
+      let comentario = substitute(b:com_leader, '/', '\\/', 'g')
+      silent! execute 's/^/' . comentario . '/'
+
+      let @/ = search
+      call setpos('.', window_position)
+      normal! zt
+      call setpos('.', cursor_position)
+   end
+endfunc
+
+func! CMDdescomenta()
+   if exists("b:com_leader")
+      let search = @/
+      let cursor_position = getpos('.')
+      normal! H
+      let window_position = getpos('.')
+      call setpos('.', cursor_position)
+
+      let comentario = substitute(b:com_leader, '/', '\\/', 'g')
+      let comentario = substitute(  comentario    , '*', '\\*', 'g')
+      silent! execute 's,^' . comentario . ',,'
+
+      let @/ = search
+      call setpos('.', window_position)
+      normal! zt
+      call setpos('.', cursor_position)
+   end
+endfunc
+
+function! ToggleComment()
+   let str = getline('.')
+   let comentario = substitute(b:com_leader, '/', '\\/', 'g')
+   let comentario = substitute(  comentario    , '*', '\\*', 'g')
+   if str =~ comentario
+      call CMDdescomenta()
+   else
+      call CMDcomenta()
+   end
+endfunction
+
+func! NOVOc(carregaarq)
+   if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
+      call UltimaLinha()
+      silent! execute a:carregaarq
+
+      let sbrt = expand('%:t:r')
+      silent! execute '%s/XXXXXXX/'.sbrt.'/g'
+      let sbrt = strftime("%d.%m.%Y")
+      silent! execute '%s/* Criado em:.*/* Criado em: ..................... '.sbrt.'/g'
+      call PrimeiraLinha()
+   endif
+endfunc
+
+func! NOVOh(carregaarq)
+   if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
+      silent! execute a:carregaarq
+      let sbrt = expand('%:t:r')
+      silent! execute '%s/XXXXXXX/'.sbrt.'/g'
+   endif
+endfunc
+
+func! INFOgravacao()
+   "silent! exe "1," . 10 . "/* Ultima modificacao:.*/s//* Ultima modificacao: .... " .strftime("%H:%M - %d.%m.%Y")
+   if &modified
+      let save_cursor = getpos(".")
+      let n = min([20, line("$")])
+      silent! keepjumps exe '1,' . n . "/* Ultima modificacao:.*/s//* Ultima modificacao: .... " .strftime("%H:%M - %d.%m.%Y")
+      call histdel('search', -1)
+      call setpos('.', save_cursor)
+  endif
+endfunc
+

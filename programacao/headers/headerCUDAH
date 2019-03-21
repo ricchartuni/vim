@@ -1,0 +1,53 @@
+:insert
+#ifndef __XXXXXXX_CUH__
+#define __XXXXXXX_CUH__
+
+#include <cstdlib>
+#include <iostream>
+
+#define  CUDA_ASYNC(call) do{\
+   cudaError_t err=call;\
+   if (err != cudaSuccess){\
+      ELR_printf("ERRO_CUDA: %s(%i)\n  *%s %s\n",\
+       __FILE__, __LINE__, cudaGetErrorString(err), #call);\
+      return ERR_CUDA;\
+   }\
+}while(0)
+#define  CUDA_CALL(call) do {\
+   CUDA_ASYNC(cudaThreadSynchronize());\
+	CUDA_ASYNC(call);\
+}while(0)
+
+//=========================================
+#define  nbx     (gridDim.x)
+#define  ibx     (blockIdx.x)
+#define  ntx     (blockDim.x)
+#define  itx     (threadIdx.x)
+//---------------------------------------
+#define  nby     (gridDim.y)
+#define  iby     (blockIdx.y)
+#define  nty     (blockDim.y)
+#define  ity     (threadIdx.y)
+//---------------------------------------
+#define  indx    (ibx*ntx+itx)
+#define  indy    (iby*nty+ity)
+#define  tid     (ntx*ity+itx)
+// __ind__ valido apenas para multiplo --
+// do WARPSIZE --------------------------
+#define  __ind__ ((nbx*indy+ibx)*ntx+itx)
+//=========================================
+//#define  sh_inp2d(ioffy,ioffx)   sh_inp[ty+]
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif
+
+.

@@ -1,0 +1,29 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F5> :call SubrotinaCUDA()<CR>
+function! SubrotinaCUDA()
+    let nomerotina = input(' >nome da rotina: ')
+    r! echo -e "
+\//======================================================================\n
+\   __global__ void ___ZZZ_subrotina_ZZZ___()\n
+\   {\n
+\//---------------------------------------------------------------------\n
+\// Descricao:\n
+\//---------------------------------------------------------------------\n
+\//         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\//======================================================================\n
+\\n
+\\n
+\   }\n
+\//======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+
+    let n = line("$")
+    silent! exe "1,". n . "/\\(      \! Rotinas & Funcoes\\)/s//\\1\\r      PUBLIC  :: ___ZZZ_subrotina_ZZZ___"
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+

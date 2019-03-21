@@ -1,0 +1,45 @@
+:insert
+
+      !-------------------------
+      ! Estruturas
+      !-------------------------
+      !.........................
+      !-------------------------
+
+      !-------------------------
+      ! Variaveis
+      !-------------------------
+      CHARACTER(LEN=*), PARAMETER :: nomemodulo = '<<XXXXXXX>>'
+      CHARACTER(LEN=3), PARAMETER ::    SN(0:1) = (/'nao', 'sim'/)
+      INTEGER         , PARAMETER ::        NAO = 0
+      INTEGER         , PARAMETER ::        SIM = 1
+      INTEGER         , PARAMETER ::         SP = kind( 0.0)
+      INTEGER         , PARAMETER ::         DP = kind(0.d0)
+      INTEGER         , PARAMETER ::      INULO = -99999
+      REAL            , PARAMETER ::      RNULO = -99999.
+      REAL            , PARAMETER ::         PI =  3.141592653589793116
+      REAL            , PARAMETER ::    DEG2RAD =   .0174532925199
+      REAL            , PARAMETER ::    RAD2DEG = 57.29577951319
+      !.........................
+      PRIVATE :: nomemodulo
+      PUBLIC  ::         SN
+      PUBLIC  ::        NAO
+      PUBLIC  ::        SIM
+      PUBLIC  ::         SP
+      PUBLIC  ::         DP
+      PUBLIC  ::      INULO
+      PUBLIC  ::      RNULO
+      PUBLIC  ::         PI
+      PUBLIC  ::    DEG2RAD
+      PUBLIC  ::    RAD2DEG
+      !-------------------------
+
+      !-------------------------
+      ! Rotinas & Funcoes
+      !-------------------------
+
+   CONTAINS
+
+   END MODULE XXXXXXX
+!=======================================================================
+.

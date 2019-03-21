@@ -1,0 +1,52 @@
+:insert
+#include "XXXXXXX.h"
+#define N1MAX 1000000000
+
+#ifndef _DBG_XXXXXXX
+#define _DBG_XXXXXXX
+#endif
+
+//======================================================================
+   int main(int argc, char *argv[]){
+//---------------------------------------------------------------------
+// Descricao:
+//---------------------------------------------------------------------
+//        *** Criado por: ....... Ricardo Chartuni - UR9Z
+//        *** Criado em: ..................... XX.XX.XXXX
+//        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+//======================================================================
+      char    carq[1024];
+      char     cmd[512];
+      FILE  * farq;
+      float *array = NULL;
+      clock_t tbeg;
+      clock_t tend;
+      double  trun;
+
+      tbeg = clock();
+
+      sprintf(carq, "teste.log");
+      fprintf(stderr,"  ** UR9Z >> ABRINDO Arquivo %s para ESCRITA\n", carq);
+      fflush (stderr);
+      farq = fopen(carq, "w");
+      setvbuf(farq, NULL, _IONBF, 0);
+      fprintf(farq," *** apenas teste ***\n");
+      fclose(farq);
+
+      strcpy(cmd, "sleep 1" );
+      system(cmd);
+#ifdef _DBG_XXXXXXX
+      fprintf(stderr,"  ** UR9Z >> Olhando tempo de alocacao/desalocacao\n");
+#endif
+      array = (float*)(malloc)(N1MAX*sizeof(float));
+      free(array);
+
+      tend = clock();
+      trun = (double) (tend-tbeg)/CLOCKS_PER_SEC;
+      fprintf(stdout, " *Programa rodou em %lf\n", trun);
+
+      return 0;
+   }
+//======================================================================
+
+.

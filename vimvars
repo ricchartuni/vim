@@ -1,0 +1,6 @@
+let b:com_assina = "RChartuni"
+
+if exists("b:comentario")
+   let b:com_leader = b:comentario." ** ".b:com_assina." >>"
+end
+

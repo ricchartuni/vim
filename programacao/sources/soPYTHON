@@ -1,0 +1,47 @@
+" Carregar para programacao PYTHON ........
+echo "  > Carregando PYTHON ..............."
+exec "source" . g:vimdir . "programacao/sources/auPYTHON"
+
+let b:comentario = '#'
+
+autocmd BufNewFile *.py      call NOVOc('so'.g:vimdir.'programacao/headers/headerPYTHON')
+
+ " tab com espacos ..................
+set tabstop=3
+set shiftwidth=3
+set expandtab
+
+ "permissao de execucao a arquivos comecando por
+ "#!/usr/bin/perl ou #!/bin/sh
+au BufWritePost * if getline(1) =~ "^#!/usr/bin/env python" | silent execute "!chmod a+x <afile>" | endif
+
+au BufNewFile,BufRead * set filetype=sh
+set filetype=python
+
+"set smartindent
+set autoindent
+ "fechar automaticamente parentesis, colchetes, ....
+inoremap (      ()<Left>
+inoremap ((     (
+inoremap ()     ()
+inoremap (<CR>  (<CR>)<Esc>O
+
+inoremap [      []<Left>
+inoremap [[     [
+inoremap []     []
+inoremap [<CR>  [<CR>]<Esc>O
+
+inoremap {      {}<Left>
+inoremap {{     {
+inoremap {}     {}
+inoremap {<CR>  {<CR>}<Esc>O<TAB>
+
+inoremap "      ""<Left>
+inoremap ""     "
+inoremap "<CR>  "<CR>"<Esc>O
+
+inoremap '      ''<Left>
+inoremap ''     '
+inoremap '<CR>  '<CR>'<Esc>O
+" ===================================================
+

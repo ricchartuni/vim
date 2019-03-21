@@ -1,0 +1,27 @@
+:insert
+
+#ifdef _MAIN_XXXXXXX
+!=======================================================================
+      PROGRAM MAIN_XXXXXXX
+!----------------------------------------------------------------------
+! Descricao: Programa para testar o modulo, se necessario
+!  OBS.: compilar com as opcoes: -cpp -D_MAIN_XXXXXXX
+!----------------------------------------------------------------------
+!         *** Criado por: ....... Ricardo Chartuni - UR9Z
+!         *** Criado em: ..................... XX.XX.XXXX
+!=======================================================================
+      use XXXXXXX
+      IMPLICIT NONE
+      character(len=*), parameter :: nomerotina = "<<MAIN_XXXXXXX>>"
+
+#ifdef _DBG_XXXXXXX
+      write(0,*)'  ** UR9Z >> ======================='
+      write(0,*)'  ** UR9Z >> Testando modulo com programa ', nomerotina
+      write(0,*)'  ** UR9Z >> ======================='
+      flush(0)
+#endif
+
+      END PROGRAM MAIN_XXXXXXX
+!=======================================================================
+#endif
+.

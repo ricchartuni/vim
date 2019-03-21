@@ -1,0 +1,10 @@
+:insert
+! Includes do ProMAX. (fixedform)
+!DEC$ NOFREEFORM
+#include "global.inc"
+#include "header.inc"
+#include "mem.inc"
+#include "hdr_err.inc"
+#include "db_err.inc"
+!DEC$ FREEFORM
+.

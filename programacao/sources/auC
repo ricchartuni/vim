@@ -1,0 +1,212 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F2> :call Subrotina()<CR>
+function! Subrotina()
+    let nomerotina = input(' >nome da rotina: ')
+    r! echo -e "
+\//======================================================================\n
+\   void ___ZZZ_subrotina_ZZZ___()\n
+\   {\n
+\//---------------------------------------------------------------------\n
+\// Descricao:\n
+\//---------------------------------------------------------------------\n
+\//         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\//======================================================================\n
+\\n
+\\n
+\   }\n
+\//======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F12> :call FuncaoF()<CR>
+function! FuncaoF()
+    let nomerotina = input(' >nome da funcao: ')
+    r! echo -e "
+\//======================================================================\n
+\   int ___ZZZ_subrotina_ZZZ___()\n
+\   {\n
+\//---------------------------------------------------------------------\n
+\// Descricao:\n
+\//---------------------------------------------------------------------\n
+\//         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\//======================================================================\n
+\\n
+\\n
+\      return 0;\n
+\   }\n
+\//======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F3> :call WriteTest()<CR>
+function! WriteTest()
+    r! echo -e "
+\/// UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\      fprintf(stderr,\"  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
+\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\      fflush (stderr);\n
+\/// UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F4> :call Comentario()<CR>
+function! Comentario()
+    r! echo -e "
+\/// UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\/// UR9Z >>> ...........................................................\n
+\"
+    let sbst = strftime('%B-%Y')
+    let sbrt = NPad(sbst, 14)
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F6> :call TravaCOD()<CR>
+function! TravaCOD()
+    r! echo -e "
+\/// UR9Z   > > >   T E S T E    P A R A   D E B U G = = = = I N I C I O\n
+\      int i_entra = 1;\n
+\      int i_atual = 1;\n
+\      if (i_atual == i_entra){\n
+\         fprintf(stderr,\"\\\n\");\n
+\         fprintf(stderr,\"  ** UR9Z >> Teste de parada para DEBUG\\\n\");\n
+\         fprintf(stderr,\"  ** UR9Z >> ==========================\\\n\");\n
+\         fflush (stderr);\n
+\         int i_debug = 1;\n
+\         do{\n
+\         }while(i_debug == 1);\n
+\      }\n
+\/// UR9Z   > > >   T E S T E    P A R A   D E B U G = = = = = = = F I M\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F7> :call DBGBin(0)<CR>
+map <F8> :call DBGBin(1)<CR>
+function! DBGBin(tipo)
+    if a:tipo == 0
+       let dim = input(' >LEITURA de array [1][2][3]D? ')
+    else
+       let dim = input(' >ESCRITA de array [1][2][3]D? ')
+    end
+    r! echo -e "
+\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = = = V A R S\n
+\      char carq[1024];\n
+\      FILE * farq;\n
+\      int nn1 = 1001;\n
+\      ___ZZZ_ii2_ZZZ___int nn2 = 1;\n
+\      ___ZZZ_ii3_ZZZ___int nn3 = 1;\n
+\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = I N I C I O\n
+\      sprintf(carq, \"./___ZZZ_arquivo_ZZZ____\%d___ZZZ_dimensao_ZZZ___.bin\", nn1___ZZZ_formato_ZZZ___);\n
+\      fprintf(stderr,\"  ** UR9Z >> ABRINDO Arquivo \%s para ___ZZZ_tipo_ZZZ___\\\n\", carq);\n
+\      fflush (stderr);\n
+\      farq = fopen(carq, \"___ZZZ_abrefecha_ZZZ___\");\n
+\      setvbuf(farq, NULL, _IONBF, 0);\n
+\      ___ZZZ_ii3_ZZZ___for(int ii3=0; ii3<nn3; ii3=ii3+1)\n
+\      ___ZZZ_ii2_ZZZ___for(int ii2=0; ii2<nn2; ii2=ii2+1)\n
+\         ___ZZZ_read_write_ZZZ___(array___ZZZ_indices_ZZZ___, sizeof(float), nn1, farq);\n
+\      fclose(farq);\n
+\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = = = = F I M\n
+\"
+
+    if a:tipo == 0
+       silent! execute '%s/___ZZZ_arquivo_ZZZ___/inp/g'
+       silent! execute '%s/___ZZZ_tipo_ZZZ___/LEITURA/g'
+       silent! execute '%s/___ZZZ_abrefecha_ZZZ___/rb/g'
+       silent! execute '%s/___ZZZ_read_write_ZZZ___/fread/g'
+    else
+       silent! execute '%s/___ZZZ_arquivo_ZZZ___/out/g'
+       silent! execute '%s/___ZZZ_tipo_ZZZ___/ESCRITA/g'
+       silent! execute '%s/___ZZZ_abrefecha_ZZZ___/wb/g'
+       silent! execute '%s/___ZZZ_read_write_ZZZ___/fwrite/g'
+    end
+
+    let sbst = ''
+    let sdim = ''
+    let sfmt = ''
+    if dim < 3
+       silent! execute 'g/___ZZZ_ii3_ZZZ___/d'
+    else
+       let sbst = "".sbst."[ii3]"
+       let sdim = "".sdim."_%d"
+       let sfmt = ", nn3".sfmt.""
+       silent! execute '%s/___ZZZ_ii3_ZZZ___//g'
+    end
+    if dim < 2
+       silent! execute 'g/___ZZZ_ii2_ZZZ___/d'
+    else
+       let sbst = "".sbst."[ii2]"
+       let sdim = "".sdim."_%d"
+       let sfmt = ", nn2".sfmt.""
+       silent! execute '%s/___ZZZ_ii2_ZZZ___//g'
+    end
+    silent! execute '%s/___ZZZ_indices_ZZZ___/'.sbst.'/g'
+    silent! execute '%s/___ZZZ_dimensao_ZZZ___/'.sdim.'/g'
+    silent! execute '%s/___ZZZ_formato_ZZZ___/'.sfmt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F9> :call DefineDBG()<CR>
+function! DefineDBG()
+    r! echo -e "
+\\#if(DEBUG==1)\n
+\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\      fprintf(stderr,\"  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
+\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\      fflush (stderr);\n
+\\#else\n
+\\n
+\\#endif\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+

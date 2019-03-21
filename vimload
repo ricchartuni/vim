@@ -1,0 +1,15 @@
+" funcoes
+exec "source" . g:vimdir . "vimfuncs"
+
+ " Definindo diretorio local como estrutura para vim
+exec "set runtimepath+=" . g:vimdir
+
+" cores:
+exec "source" . g:vimdir . "colors/vimrc"
+
+" programacao:
+exec "source" . g:vimdir . "programacao/vimrc"
+
+" variaveis
+exec "source" . g:vimdir . "vimvars"
+

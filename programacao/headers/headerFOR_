@@ -1,0 +1,57 @@
+:insert
+!=======================================================================
+      PROGRAM XXXXXXX
+!---------------------------------------------------------------------
+! Descricao:
+!---------------------------------------------------------------------
+!         *** Criado por: ....... Ricardo Chartuni - UR9Z
+!         *** Criado em: ..................... XX.XX.XXXX
+!         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+!=======================================================================
+      USE rsf
+      IMPLICIT NONE
+
+      type (file)                     :: in
+      type (file)                     :: out
+      integer                         :: i1
+      integer                         :: i2
+      integer                         :: n1
+      integer                         :: n2
+      real                            :: clip
+      real, dimension(:), allocatable :: trace
+
+#ifdef DEBUG
+      write(0,*)'  ** UR9Z >> Testando versao DUBUG RSF para CLIP de tracos :: -cpp -ffree-form -DDEBUG'
+#else
+      write(0,*)'  ** UR9Z >> Testando versao NORMAL RSF para CLIP de tracos :: -cpp -ffree-form'
+#endif
+      write(0,*)'  ** UR9Z >> ============================================'
+      flush(0)
+
+      ! initialize RSF
+      !-------------------------
+      call sf_init()
+      in  = rsf_input()
+      out = rsf_output() 
+      if (sf_float /= gettype(in)) call sf_error("Need float type")
+      !-------------------------
+ 
+      call from_par(in, "n1", n1)
+      n2 = filesize(in, 1)
+ 
+      call from_par("clip", clip) ! command-line parameter
+      allocate (trace (n1))
+ 
+      do i2=1, n2
+         call rsf_read(in, trace)
+         where (trace >  clip) trace =  clip
+         where (trace < -clip) trace = -clip
+         call rsf_write(out,trace)
+      end do
+ 
+      deallocate (trace)
+
+      END PROGRAM XXXXXXX
+!=======================================================================
+
+.

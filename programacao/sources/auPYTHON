@@ -1,0 +1,66 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F2> :call Subrotina()<CR>
+function! Subrotina()
+    let nomerotina = input(' >nome da rotina: ')
+    r! echo -e "
+\\#=======================================================================\n
+\def ___ZZZ_subrotina_ZZZ___():\n
+\\#----------------------------------------------------------------------\n
+\\# Descricao:\n
+\\#----------------------------------------------------------------------\n
+\\#         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\#         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\\#=======================================================================\n
+\\n
+\   boolerr = False\n
+\   return boolerr\n
+\\#=======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F3> :call WriteTest()<CR>
+function! WriteTest()
+    r! echo -e "
+\\#\#\# UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\print(\"  ** UR9Z >> =======================\")\n
+\print(\"  ** UR9Z >>  ___ZZZ_arquivo_ZZZ___ :: (___ZZZ_00000_ZZZ___)\")\n
+\print(\"  ** UR9Z >> =======================\")\n
+\\#\#\# UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F4> :call Comentario()<CR>
+function! Comentario()
+    r! echo -e "
+\\#\#\# UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\#\#\# UR9Z >>> ...........................................................\n
+\"
+    let sbrt = strftime('%B-%Y')
+    let sbrt = NPad(sbrt, 14)
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+

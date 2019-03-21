@@ -1,0 +1,92 @@
+:insert
+#=======================================================================
+from rsf.proj import *
+#---------------------------------------------------------------------
+# Descricao:
+#---------------------------------------------------------------------
+#         *** Criado por: ....... Ricardo Chartuni - UR9Z
+#         *** Criado em: ..................... XX.XX.XXXX
+#         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+#=======================================================================
+
+#---------------------------------------------------------------------
+import os
+def which(file):
+    for path in os.environ["PATH"].split(os.pathsep):
+        if os.path.exists(os.path.join(path, file)):
+                return os.path.join(path, file)
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+par = {
+   'pclip' : 75,
+   'scl'   : 4.
+}
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+dat = {
+   'spk1' : 'spike' ,
+   'spk2' : 'spike1',
+   'spk3' : 'noise' ,
+   'spka' : 'all'   ,
+}
+#---------------------------------------------------------------------
+
+
+#---------------------------------------------------------------------
+cor = {
+   'white'   : 7, 
+   'yellow'  : 6, 
+   'cyan'    : 5, 
+   'green'   : 4, 
+   'magenta' : 3, 
+   'red'     : 2, 
+   'blue'    : 1, 
+   'black'   : 0 
+}
+#---------------------------------------------------------------------
+
+#---------------------------------------------------------------------
+sfinp = None
+sfout = dat['spk1']
+sfcmd = 'spike n1=100 k1=50'
+Flow(sfout, sfinp, sfcmd)
+
+sfinp = dat['spk1']
+sfout = dat['spk2']
+sfcmd = 'add scale={}'.format(par['scl'])
+Flow(sfout, sfinp, sfcmd)
+
+sfinp = dat['spk2']
+sfout = dat['spk3']
+sfcmd = 'noise'
+Flow(sfout, sfinp, sfcmd)
+
+sfinp = [ dat['spk1'],  dat['spk2'], dat['spk3'] ]
+sfout = dat['spka']
+sfcmd = 'cat ${SOURCES[1:-1]}'
+Flow(sfout, sfinp, sfcmd)
+
+for sfinp in dat.values():
+    sfcmd = 'graph pad=n transp=y yreverse=y'
+    sfcmd += ' title="{}" min2={} max2={} '.format(sfinp, -1.*abs(par['scl']), abs(par['scl']))
+    sfcmd += ' screenht=10 screenwd=1'
+    # so executa comando abaixo com scons puro, sem view (gera .vpl de plote)
+    Plot(sfinp, sfcmd)
+
+sfinp = dat['spk3']
+sfcmd = 'graph title="{} (2)" pclip={}'.format(sfinp, par['pclip'])
+Result(sfinp, sfcmd)
+
+#---------------------------------------------------------------------
+inp = dat['spka'] + '.vpl'
+out = dat['spka'] + '.gif'
+cmd = which("gdpen") + ' type=gif bgcolor=white delay=100'
+Flow(out, inp, cmd)
+#---------------------------------------------------------------------
+
+#=======================================================================
+End()
+#=======================================================================
+.

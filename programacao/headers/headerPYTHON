@@ -1,0 +1,52 @@
+:insert
+#!/usr/bin/env python
+
+import sys
+from math import *
+
+#=======================================================================
+def main(argv):
+#---------------------------------------------------------------------
+# Descricao:
+#---------------------------------------------------------------------
+#         *** Criado por: ....... Ricardo Chartuni - UR9Z
+#         *** Criado em: ..................... XX.XX.XXXX
+#         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+#=======================================================================
+   import getopt
+   import select
+
+   if select.select([sys.stdin,],[],[],0.0)[0]:
+      data = sys.stdin.readline()
+   else:
+      print '**ERRO: faltando entrada...'
+      usage(argv[0])
+      sys.exit(2)
+      
+   try:
+      opts, args = getopt.getopt(argv[1:],"hi:o:",["ifile=","ofile="])
+   except getopt.GetoptError:
+      usage(argv[0])
+      sys.exit(2)
+
+   for opt, arg in opts:
+      if opt == '-h':
+         usage(argv[0])
+         sys.exit()
+      elif opt in ("-i", "--ifile"):
+         inputfile = arg
+      elif opt in ("-o", "--ofile"):
+         outputfile = arg
+#=======================================================================
+
+#=======================================================================
+def usage(cmd):
+#---------------------------------------------------------------------
+   print cmd, '-i <inputfile> -o <outputfile>'
+#=======================================================================
+
+
+if __name__ == "__main__":
+   main(sys.argv)
+
+.

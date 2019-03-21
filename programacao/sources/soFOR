@@ -1,0 +1,82 @@
+" Carregar para programacao F .............
+echo "  > Carregando FORTRAN .............."
+exec "source" . g:vimdir . "programacao/sources/auFOR"
+
+let b:comentario = "!"
+
+let pmx = expand('%:p:h:t')
+if pmx ==? "Promax"
+    autocmd BufNewFile *Promax/*.f90 call TipoPMX()
+else
+   autocmd BufNewFile *.f90          call TipoF90()
+endif
+autocmd BufNewFile *.f               call TipoF77()
+
+function! TipoF77()
+  echo "  > Programa Fortran............"
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR_')
+endfunction
+
+function! TipoF90()
+  echo "  > Modulo Fortran.............."
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR1')
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR2')
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR3')
+endfunction
+
+function! TipoPMX()
+  echo "  > Modulo Promax .............."
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR1'  )
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR1_1')
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR2'  )
+endfunction
+
+ " tab com espacos ..................
+set smarttab
+set softtabstop=3
+set tabstop=3
+set shiftwidth=3
+set expandtab
+
+"let fortran_do_enddo=1
+"let fortran_more_precise=1
+"let fortran_have_tabs=1
+
+"set smartindent
+set autoindent
+
+" alerta apos coluna 72 (fortran 70)
+"match ErrorMsg '\%>72v.\+'
+if g:arqext ==? "f"
+    let fortran_fixed_source=1
+    unlet! fortran_free_source
+    echo "  > EXTENSAO .F ................"
+else
+    let fortran_free_source=1
+    unlet! fortran_fixed_source
+    echo "  > EXTENSAO .F90 .............."
+endif
+set ft=fortran
+
+" trocar fortran 77 > 90
+""" nmap <S-F>
+nmap <silent> <leader>f :set syntax=fortran<CR>:let b:fortran_fixed_source=!b:fortran_fixed_source<CR>:set syntax=text<CR>:set syntax=fortran<CR>
+
+"set smartindent
+set autoindent
+ "fechar automaticamente parentesis, colchetes, ....
+inoremap (      ()<Left>
+inoremap ((     (
+inoremap ()     ()
+inoremap (<CR>  (<CR>)<Esc>O
+
+inoremap "      ""<Left>
+inoremap ""     "
+inoremap "<CR>  "<CR>"<Esc>O
+
+inoremap '      ''<Left>
+inoremap ''     '
+inoremap '<CR>  '<CR>'<Esc>O
+" ===================================================
+
+"source ~/.vim/sources/fortran.vim

@@ -1,0 +1,14 @@
+" Carregar para programacao C .............
+exec "source" . g:vimdir . "programacao/sources/soC"
+
+" Carregar para programacao CUDA ..........
+echo "  > Carregando CUDA ................."
+exec "source" . g:vimdir . "programacao/sources/auCUDA"
+
+autocmd BufNewFile *.cu      call NOVOc('so'.g:vimdir.'programacao/headers/headerCUDA ')
+autocmd BufNewFile *.cuh     call NOVOh('so'.g:vimdir.'programacao/headers/headerCUDAH')
+
+exec 'set dictionary+=' . g:vimdir . 'dic/cuda.dic'
+au BufNewFile,BufRead * set filetype=cuda
+set filetype=cuda
+

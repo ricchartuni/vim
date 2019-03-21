@@ -1,0 +1,93 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F2> :call Subrotina()<CR>
+function! Subrotina()
+    let nomerotina = input(' >nome da rotina: ')
+    r! echo -e "
+\\#=======================================================================\n
+\function ___ZZZ_subrotina_ZZZ___(){\n
+\\#----------------------------------------------------------------------\n
+\\# Descricao:\n
+\\#----------------------------------------------------------------------\n
+\\#         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\#         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\\#=======================================================================\n
+\local arquivo_atual=\${BASH_SOURCE}\n
+\local arquivo_origem=\${BASH_SOURCE[\${\#BASH_SOURCE[@]}-1]}\n
+\local funcao_atual=\${FUNCNAME}\n
+\local funcao_origem=\${FUNCNAME[\${\#FUNCNAME[@]}-1]}\n
+\local erro_echo=\" **__\${FUNCNAME}_err___**\"\n
+\local warn_echo=\" **__\${FUNCNAME}_warn__**\"\n
+\local opa=\"teste\"\n
+\local verb=\"n\"\n
+\local ___parametros_de_chamada___=\$(argopcao \"\$@\")\n
+\local ___parametros_de_entrada___=\$(arglocal \"\$@\")\n
+\eval \$___parametros_de_entrada___\n
+\\n
+\local OPTIND\n
+\local OPTARG\n
+\local opts\n
+\\n
+\      while getopts 'a:vh' opts 2>/dev/null; do\n
+\         case \"\${opts}\" in\n
+\            a) opa=\${OPTARG} ;;\n
+\            v) verb=\"s\"      ;;\n
+\            h)\n
+\               echo -n \"  $> \$funcao_atual\"\n
+\               echo\n
+\               return\n
+\            ;;\n
+\         esac\n
+\      done\n
+\      shift \$((OPTIND-1))\n
+\\n
+\}\n
+\\#=======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
+
+    let sbrt = strftime('%d.%m.%Y')
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F3> :call WriteTest()<CR>
+function! WriteTest()
+    r! echo -e "
+\\#\#\# UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\      echo \"  ** UR9Z >> ============================================\" >/dev/tty\n
+\      echo \"  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: \${FUNCNAME} (___ZZZ_00000_ZZZ___)\" >/dev/tty\n
+\      echo \"  ** UR9Z >> ============================================\" >/dev/tty\n
+\\#\#\# UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\"
+
+    let sbrt = expand('%:t')
+    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
+
+    if exists("g:TSTprint")
+       let g:TSTprint = g:TSTprint + 1
+    else
+       let g:TSTprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:TSTprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F4> :call Comentario()<CR>
+function! Comentario()
+    r! echo -e "
+\\#\#\# UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\#\#\# UR9Z >>> ...........................................................\n
+\"
+    let sbrt = strftime('%B-%Y')
+    let sbrt = NPad(sbrt, 14)
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+endfunction
+

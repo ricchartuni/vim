@@ -1,0 +1,29 @@
+"===================================================================
+" ESQUEMA DE CORES --- ESCOLHA -----------------------------
+"===================================================================
+if has("gui_running")
+"   colorscheme codeschool
+"   colorscheme inkpot
+"   colorscheme ir_black
+"   colorscheme ir_blue
+"   colorscheme ir_dark
+"   colorscheme PaperColor
+"   colorscheme railscasts
+"   colorscheme vcbc
+   "colorscheme wombat
+   colorscheme desert_
+"   colorscheme jellybeans
+"   colorscheme gruvbox
+   "colorscheme badwolf
+   "colorscheme solarized
+else
+   colorscheme desert_
+   "colorscheme solarized
+endif
+
+"===================================================================
+" ESQUEMA DE CORES --- ESCURO ------------------------------
+"===================================================================
+"set background=dark
+"hi Normal guifg=White guibg=grey20
+
