@@ -77,9 +77,9 @@ for sfinp in dat.values():
     # so executa comando abaixo com scons puro, sem view (gera .vpl de plote)
     Plot(sfinp, sfcmd)
 
-sfinp = dat['spk3']
-sfcmd = 'graph title="{} (2)" pclip={}'.format(sfinp, par['pclip'])
-Result(sfinp, sfcmd)
+#sfinp = dat['spk3']
+#sfcmd = 'graph title="{} (2)" pclip={}'.format(sfinp, par['pclip'])
+#Result(sfinp, sfcmd)
 
 #---------------------------------------------------------------------
 inp = dat['spka'] + '.vpl'
