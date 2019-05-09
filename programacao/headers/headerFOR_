@@ -3,6 +3,8 @@
       PROGRAM XXXXXXX
 !---------------------------------------------------------------------
 ! Descricao:
+!  OBS.: flags para compilacao RSF:
+!        -I$RSFROOT/include -L$RSFROOT/lib -lrsff90 -lrsf -lm [-lfftw3f]
 !---------------------------------------------------------------------
 !         *** Criado por: ....... Ricardo Chartuni - UR9Z
 !         *** Criado em: ..................... XX.XX.XXXX
@@ -11,8 +13,8 @@
       USE rsf
       IMPLICIT NONE
 
-      type (file)                     :: in
-      type (file)                     :: out
+      type (file)                     :: sfin
+      type (file)                     :: sfout
       integer                         :: i1
       integer                         :: i2
       integer                         :: n1
@@ -31,22 +33,22 @@
       ! initialize RSF
       !-------------------------
       call sf_init()
-      in  = rsf_input()
-      out = rsf_output() 
-      if (sf_float /= gettype(in)) call sf_error("Need float type")
+      sfin  = rsf_input()
+      sfout = rsf_output() 
+      if (sf_float /= gettype(sfin)) call sf_error("Need float type")
       !-------------------------
  
-      call from_par(in, "n1", n1)
-      n2 = filesize(in, 1)
+      call from_par(sfin, "n1", n1)
+      n2 = filesize(sfin, 1)
  
       call from_par("clip", clip) ! command-line parameter
       allocate (trace (n1))
  
       do i2=1, n2
-         call rsf_read(in, trace)
+         call rsf_read(sfin, trace)
          where (trace >  clip) trace =  clip
          where (trace < -clip) trace = -clip
-         call rsf_write(out,trace)
+         call rsf_write(sfout,trace)
       end do
  
       deallocate (trace)

@@ -5,14 +5,31 @@
       PROGRAM MAIN_XXXXXXX
 !----------------------------------------------------------------------
 ! Descricao: Programa para testar o modulo, se necessario
-!  OBS.: compilar com as opcoes: -cpp -D_MAIN_XXXXXXX
+!  OBS.: compilar com as opcoes:
+!         -I$RSFROOT/include -L$RSFROOT/lib -lrsff90 -lrsf -lm  [-lfftw3f]
+!         -cpp -D_MAIN_XXXXXXX
 !----------------------------------------------------------------------
 !         *** Criado por: ....... Ricardo Chartuni - UR9Z
 !         *** Criado em: ..................... XX.XX.XXXX
 !=======================================================================
+      use rsf
       use XXXXXXX
       IMPLICIT NONE
-      character(len=*), parameter :: nomerotina = "<<MAIN_XXXXXXX>>"
+      character(len=*), parameter     :: nomerotina = "<<MAIN_XXXXXXX>>"
+      type(file)                      :: sfin, sfout
+      integer                         :: n1, n2, i1, i2
+      real                            :: clip
+      real, dimension(:), allocatable :: trace
+
+      call sf_init() ! initialize RSF
+      sfin  = rsf_input()
+      sfout = rsf_output()
+
+      if (sf_float /= gettype(sfin)) call sf_error("Need float type")
+
+      call from_par(sfin,"n1",n1)
+      n2 = filesize(sfin,1)
+      call from_par("clip", clip) ! command-line parameter
 
 #ifdef _DBG_XXXXXXX
       write(0,*)'  ** UR9Z >> ======================='
@@ -21,6 +38,18 @@
       flush(0)
 #endif
 
+      allocate (trace(n1))
+
+      do i2=1, n2 ! loop over traces
+         call rsf_read(sfin,trace)
+
+         where (trace >  clip) trace =  clip
+         where (trace < -clip) trace = -clip
+
+         call rsf_write(sfout,trace)
+      end do
+
+      deallocate (trace)
       END PROGRAM MAIN_XXXXXXX
 !=======================================================================
 #endif
