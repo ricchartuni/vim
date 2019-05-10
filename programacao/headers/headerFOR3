@@ -1,13 +1,11 @@
 :insert
-
-#ifdef _MAIN_XXXXXXX
 !=======================================================================
       PROGRAM MAIN_XXXXXXX
 !----------------------------------------------------------------------
 ! Descricao: Programa para testar o modulo, se necessario
 !  OBS.: compilar com as opcoes:
 !         -I$RSFROOT/include -L$RSFROOT/lib -lrsff90 -lrsf -lm  [-lfftw3f]
-!         -cpp -D_MAIN_XXXXXXX
+!         -cpp [-D_DEBUG___]
 !----------------------------------------------------------------------
 !         *** Criado por: ....... Ricardo Chartuni - UR9Z
 !         *** Criado em: ..................... XX.XX.XXXX
@@ -31,9 +29,9 @@
       n2 = filesize(sfin,1)
       call from_par("clip", clip) ! command-line parameter
 
-#ifdef _DBG_XXXXXXX
+#ifdef _DEBUG___
       write(0,*)'  ** UR9Z >> ======================='
-      write(0,*)'  ** UR9Z >> Testando modulo com programa ', nomerotina
+      write(0,*)'  ** UR9Z >> Testando programa ', nomerotina
       write(0,*)'  ** UR9Z >> ======================='
       flush(0)
 #endif
@@ -52,5 +50,4 @@
       deallocate (trace)
       END PROGRAM MAIN_XXXXXXX
 !=======================================================================
-#endif
 .

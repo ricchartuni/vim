@@ -57,6 +57,10 @@ func! NOVOc(carregaarq)
       silent! execute a:carregaarq
 
       let sbrt = expand('%:t:r')
+      if sbrt =~# "^M"
+         let sbrt = substitute(sbrt, "^.", "", "")
+      end
+
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
       let sbrt = strftime("%d.%m.%Y")
       silent! execute '%s/* Criado em:.*/* Criado em: ..................... '.sbrt.'/g'
@@ -68,6 +72,10 @@ func! NOVOh(carregaarq)
    if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
       silent! execute a:carregaarq
       let sbrt = expand('%:t:r')
+      if sbrt =~# "^M"
+         let sbrt = substitute(sbrt, "^.", "", "")
+      end
+
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
 endfunc

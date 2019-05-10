@@ -8,8 +8,8 @@
 !         *** Criado em: ..................... XX.XX.XXXX
 !         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
 !=======================================================================
-#ifndef _DBG_XXXXXXX
-#define _DBG_XXXXXXX
+#ifndef _DEBUG___
+!#define _DEBUG___
 #endif
       IMPLICIT NONE
       PRIVATE

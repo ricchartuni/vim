@@ -8,7 +8,11 @@ let pmx = expand('%:p:h:t')
 if pmx ==? "Promax"
     autocmd BufNewFile *Promax/*.f90 call TipoPMX()
 else
-   autocmd BufNewFile *.f90          call TipoF90()
+   if expand('%:t:r') =~# "^M"
+      autocmd BufNewFile M*.f90         call TipoProgF90()
+   else
+      autocmd BufNewFile *.f90          call TipoModF90()
+   endif
 endif
 autocmd BufNewFile *.f               call TipoF77()
 
@@ -17,11 +21,15 @@ function! TipoF77()
   call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR_')
 endfunction
 
-function! TipoF90()
-  echo "  > Modulo Fortran.............."
+function! TipoProgF90()
+  echo "  > Programa Fortran90............"
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR3')
+endfunction
+
+function! TipoModF90()
+  echo "  > Modulo Fortran90............"
   call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR1')
   call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR2')
-  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR3')
 endfunction
 
 function! TipoPMX()
