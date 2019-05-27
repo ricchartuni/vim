@@ -84,6 +84,7 @@ runtime macros/matchit.vim
 silent! set nofoldenable
 noremap  zz :call SWAPfold()<CR>
 noremap  tt dd<BAR>p<BAR>k<CR>
+noremap  ss yy<BAR>p<BAR>k<CR>
 func! SWAPfold()
   silent! set foldmethod=marker
   silent! set foldmarker=#if,#endif
