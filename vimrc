@@ -44,6 +44,13 @@ nmap ,r :exec "source" . g:vimdir . "vimrc" <BAR> echo "vimrc recarregado!"<CR>
  " Mostrar identacao:
 "set list listchars=tab:»·,trail:·,eol:$
 
+ " Jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+
  " Reconhecer maiusculas na hora de salvar e sair:
 cab W w
 cab Q q
@@ -73,6 +80,9 @@ nnoremap g# g#zz:%s///gn<CR><C-o>
 
  " Mostra todas as ocorrencias da busca em separado
 nmap <C-f> :vimgrep /<C-r>//g %<CR> \| !:copen \| set modifiable <Enter>
+
+ " procura a medida que vai digitando palavra
+set incsearch
 
  " Procura sem case sensitive
 set ic
