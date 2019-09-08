@@ -85,7 +85,7 @@ nmap <C-f> :vimgrep /<C-r>//g %<CR> \| !:copen \| set modifiable <Enter>
 set incsearch
 
  " Procura sem case sensitive
-set ic
+"set ic
  " Procura com case sensitive
 "set noic
  " Smart case matching
