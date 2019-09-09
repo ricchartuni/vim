@@ -41,6 +41,9 @@ nmap ,r :exec "source" . g:vimdir . "vimrc" <BAR> echo "vimrc recarregado!"<CR>
 
 "syntax on
 
+ " Fonte
+set guifont=Monospace\ 9
+
  " Mostrar identacao:
 "set list listchars=tab:»·,trail:·,eol:$
 
