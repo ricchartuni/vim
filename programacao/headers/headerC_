@@ -35,10 +35,10 @@
       if (!sf_getfloat("clip",&clip)) sf_error("Need clip=");
 
 #ifdef _DEBUG___
-      fprintf(stderr,"  ** UR9Z >> =======================");
-      fprintf(stderr,"  ** UR9Z >> Testando programa"      );
-      fprintf(stderr,"  ** UR9Z >> =======================");
-      fflush (stderr)
+      fprintf(stderr,"  ** UR9Z >> =======================\n");
+      fprintf(stderr,"  ** UR9Z >> Testando programa\n"      );
+      fprintf(stderr,"  ** UR9Z >> =======================\n");
+      fflush (stderr);
 #endif
 
       trace = sf_floatalloc(n1);
