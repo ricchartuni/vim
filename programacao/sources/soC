@@ -5,8 +5,23 @@ exec "source" . g:vimdir . "programacao/sources/auC"
 
 let b:comentario = "//"
 
-autocmd BufNewFile *.c       call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
+if expand('%:t:r') =~# "^M"
+   autocmd BufNewFile M*.c   call TipoProgC()
+else
+   autocmd BufNewFile *.c    call TipoModC()
+endif
 autocmd BufNewFile *.h       call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
+
+function! TipoProgC()
+  echo "  > Programa C............"
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerC_')
+endfunction
+
+function! TipoModC()
+  echo "  > Funcoes C............"
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
+endfunction
+
 
  " tab com espacos ..................
 set smarttab
