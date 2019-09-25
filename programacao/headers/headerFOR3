@@ -11,7 +11,6 @@
 !         *** Criado em: ..................... XX.XX.XXXX
 !=======================================================================
       use rsf
-      use XXXXXXX
       IMPLICIT NONE
       character(len=*), parameter     :: nomerotina = "<<MAIN_XXXXXXX>>"
       type(file)                      :: sfin, sfout

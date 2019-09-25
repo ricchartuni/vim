@@ -2,13 +2,6 @@
 #ifndef __XXXXXXX_H__
 #define __XXXXXXX_H__
 
-#include <assert.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #ifndef         _pi
 #define         _pi 3.141592653589793116
 #endif
