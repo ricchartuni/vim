@@ -1,82 +1,13 @@
 "===================================================================
 " PROGRAMACOES ---------------------------------------------
 "===================================================================
-exec "source" . g:vimdir . "programacao/vimfuncs"
-
-func! ___Tipos__EXT___()
-   echo "  <F2> BASH"
-   exec 'map <F2> :so' . g:vimdir . 'programacao/sources/soBASH  <CR>'
-   echo "  <F3> C"
-   exec 'map <F3> :so' . g:vimdir . 'programacao/sources/soC     <CR>'
-   echo "  <F4> CUDA"
-   exec 'map <F4> :so' . g:vimdir . 'programacao/sources/soCUDA  <CR>'
-   echo "  <F5> FOR"
-   exec 'map <F5> :so' . g:vimdir . 'programacao/sources/soFOR   <CR>'
-   echo "  <F6> MENU"
-   exec 'map <F6> :so' . g:vimdir . 'programacao/sources/soMENU  <CR>'
-   echo "  <F7> PYTHON"
-   exec 'map <F7> :so' . g:vimdir . 'programacao/sources/soPYTHON<CR>'
-   echo "  <F8> TEXTO"
-   map     <F8> :set spell spelllang=pt,en<CR>
-endfunc
-
  " HEADERS para PROGRAMACAO
 autocmd BufNewFile *.tex     call NOVOc('so ~/.vim/headers/headerTEX')
 autocmd BufWritePre,FileWritePre
 \ *.c,*.cu,*.f,*.f90,*.sh,*.tex,*.py,SConstruct*
 \                            call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
 
- " opcoes de acordo com formato
-if     g:arqext == "f90" || g:arqext == "f"
-   "silent! so ~/.vim/sources/soFOR
-   exec "source" . g:vimdir . "programacao/sources/soFOR"
-elseif g:arqext == "c" || g:arqext == "h" || g:arqext == "cpp"
-   "silent! so ~/.vim/sources/soC
-   exec "source" . g:vimdir . "programacao/sources/soC"
-elseif g:arqext == "cu" || g:arqext == "cuh"
-   "silent! so ~/.vim/sources/soCUDA
-   exec "source" . g:vimdir . "programacao/sources/soCUDA"
-elseif g:arqext == "sh"
-   "silent! so ~/.vim/sources/soBASH
-   exec "source" . g:vimdir . "programacao/sources/soBASH"
-elseif g:arqext == "menu" || g:arqext == "rule"
-   "silent! so ~/.vim/sources/soMENU
-   exec "source" . g:vimdir . "programacao/sources/soMENU"
-elseif g:arqext == "py"
-   "silent! so ~/.vim/sources/soPYTHON
-   exec "source" . g:vimdir . "programacao/sources/soPYTHON"
-
-elseif g:arqext == "make"
-   let b:com_leader = '# ** UR9Z >>'
-
-elseif g:arqext == "tex" || g:arqext == "sty"
-   let b:com_leader = '% ** UR9Z >>'
-
-elseif g:arqext == "m"
-   let b:com_leader = '% ** UR9Z >>'
-
-elseif g:arqext == "vim"
-   let b:com_leader = '" ** UR9Z >>'
-
-elseif g:arqext == "java"
-   let b:com_leader = '// * UR9Z >>'
-else
-   let s:arqfname = expand("%:t")
-      if s:arqfname =~ "SConstruct"
-         let b:com_leader = '# ** UR9Z >>'
-         silent! exec 'so' . g:vimdir . 'programacao/sources/soPYTHON'
-         syntax on
-         set filetype=python
-         set tabstop=8
-         set expandtab
-         set shiftwidth=4
-         set softtabstop=4
-         set modeline
-         autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerSCONS')
-      else
-         map <F2> :call ___Tipos__EXT___()<CR>
-      endif
-endif
+call CARREGAprg(g:arqext)
 
  " Pular entre o if-endif/do-enddo/...
 runtime macros/matchit.vim

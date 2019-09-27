@@ -118,9 +118,6 @@ map <BS> X
 noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 imap <silent> <Home> <C-O><Home>
 
- " Carregando ......
-exec "source" . g:vimdir . "vimload"
-
  " gravar arquivo ao sair do foco da janela
 "au FocusLost * :w
  augroup focus_buffer_check " (160715) {{{
@@ -145,4 +142,8 @@ exec "source" . g:vimdir . "vimload"
  au FocusLost   * endif
 
  augroup END	" focus_buffer_check }}}
+
+ " Carregando ......
+exec "source" . g:vimdir . "vimstartup"
+exec "source" . g:vimdir . "vimload"
 

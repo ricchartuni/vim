@@ -57,9 +57,9 @@ func! NOVOc(carregaarq)
       silent! execute a:carregaarq
 
       let sbrt = expand('%:t:r')
-      if sbrt =~# "^M"
-         let sbrt = substitute(sbrt, "^.", "", "")
-      end
+      "if sbrt =~# "^M"
+      "   let sbrt = substitute(sbrt, "^.", "", "")
+      "end
 
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
       let sbrt = strftime("%d.%m.%Y")
@@ -72,9 +72,9 @@ func! NOVOh(carregaarq)
    if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
       silent! execute a:carregaarq
       let sbrt = expand('%:t:r')
-      if sbrt =~# "^M"
-         let sbrt = substitute(sbrt, "^.", "", "")
-      end
+      "if sbrt =~# "^M"
+      "   let sbrt = substitute(sbrt, "^.", "", "")
+      "end
 
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
@@ -89,5 +89,94 @@ func! INFOgravacao()
       call histdel('search', -1)
       call setpos('.', save_cursor)
   endif
+endfunc
+
+func! ___Tipos__EXT___()
+   echo "  <F2> BASH"
+   exec 'map <F2> :call  CARREGAprg("sh"  , "y") <CR>'
+   echo "  <F3> C"                                    
+   exec 'map <F3> :call  CARREGAprg("c"   , "y") <CR>'
+   echo "  <F4> CUDA"                                 
+   exec 'map <F4> :call  CARREGAprg("cu"  , "y") <CR>'
+   echo "  <F5> FOR"                                  
+   exec 'map <F5> :call  CARREGAprg("f90" , "y") <CR>'
+   echo "  <F6> MENU"                                 
+   exec 'map <F6> :call  CARREGAprg("menu", "y") <CR>'
+   echo "  <F7> PYTHON"                               
+   exec 'map <F7> :call  CARREGAprg("py"  , "y") <CR>'
+   echo "  <F8> TEXTO"
+   map     <F8> :set spell spelllang=pt,en<CR>
+endfunc
+
+func! CARREGAprg(tipo, ...)
+    silent! unmap <F2>
+    silent! unmap <F3>
+    silent! unmap <F4>
+    silent! unmap <F5>
+    silent! unmap <F6>
+    silent! unmap <F7>
+    silent! unmap <F8>
+     " opcoes de acordo com formato
+    if     a:tipo == "f90" || a:tipo == "f"
+       "silent! so ~/.vim/sources/soFOR
+       exec "source" . g:vimdir . "programacao/sources/soFOR"
+    elseif a:tipo == "c" || a:tipo == "h" || a:tipo == "cpp"
+       "silent! so ~/.vim/sources/soC
+       exec "source" . g:vimdir . "programacao/sources/soC"
+    elseif a:tipo == "cu" || a:tipo == "cuh"
+       "silent! so ~/.vim/sources/soCUDA
+       exec "source" . g:vimdir . "programacao/sources/soCUDA"
+    elseif a:tipo == "sh"
+       "silent! so ~/.vim/sources/soBASH
+       exec "source" . g:vimdir . "programacao/sources/soBASH"
+    elseif a:tipo == "menu" || a:tipo == "rule"
+       "silent! so ~/.vim/sources/soMENU
+       exec "source" . g:vimdir . "programacao/sources/soMENU"
+    elseif a:tipo == "py"
+       "silent! so ~/.vim/sources/soPYTHON
+       exec "source" . g:vimdir . "programacao/sources/soPYTHON"
+
+    elseif a:tipo == "make"
+       let b:com_leader = '# ** UR9Z >>'
+
+    elseif a:tipo == "tex" || a:tipo == "sty"
+       let b:com_leader = '% ** UR9Z >>'
+
+    elseif a:tipo == "m"
+       let b:com_leader = '% ** UR9Z >>'
+
+    elseif a:tipo == "vim"
+       let b:com_leader = '" ** UR9Z >>'
+
+    elseif a:tipo == "java"
+       let b:com_leader = '// * UR9Z >>'
+    else
+       let s:arqfname = expand("%:t")
+       if s:arqfname =~ "SConstruct"
+          let b:com_leader = '# ** UR9Z >>'
+          silent! exec 'so' . g:vimdir . 'programacao/sources/soPYTHON'
+          syntax on
+          set filetype=python
+          set tabstop=8
+          set expandtab
+          set shiftwidth=4
+          set softtabstop=4
+          set modeline
+          autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerSCONS')
+       else
+          map <F2> :call ___Tipos__EXT___()<CR>
+       endif
+    endif
+
+    if a:0 > 0
+       let recarrega = a:1
+    else
+       let recarrega = 'n'
+    endif
+    if recarrega == 'y'
+       let g:arqext  = expand('%:e')
+        " Recarregando ......
+       exec "source" . g:vimdir . "vimload"
+    endif
 endfunc
 
