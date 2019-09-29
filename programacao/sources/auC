@@ -1,4 +1,13 @@
 "===================================================================
+" ; no fim da linha
+"===================================================================
+function! PontoVirgula()
+   call DeleteTrailingWS()
+   s/$/;/e
+endfunction
+noremap ,; :call PontoVirgula()<CR>
+
+"===================================================================
 " ATALHO
 "===================================================================
 map <F2> :call Subrotina()<CR>
@@ -209,4 +218,5 @@ function! DefineDBG()
     let sbrt = NPad(g:TSTprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
 endfunction
+
 
