@@ -141,6 +141,9 @@ func! CARREGAprg(tipo, ...)
 
     elseif a:tipo == "tex" || a:tipo == "sty"
        let b:com_leader = '% ** UR9Z >>'
+       set tw=72
+       set colorcolumn=72
+       autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
 
     elseif a:tipo == "m"
        let b:com_leader = '% ** UR9Z >>'

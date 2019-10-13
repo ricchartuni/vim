@@ -2,7 +2,6 @@
 " PROGRAMACOES ---------------------------------------------
 "===================================================================
  " HEADERS para PROGRAMACAO
-autocmd BufNewFile *.tex     call NOVOc('so ~/.vim/headers/headerTEX')
 autocmd BufWritePre,FileWritePre
 \ *.c,*.cu,*.f,*.f90,*.sh,*.tex,*.py,SConstruct*
 \                            call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
