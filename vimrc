@@ -87,10 +87,15 @@ nmap <C-f> :vimgrep /<C-r>//g %<CR> \| !:copen \| set modifiable <Enter>
  " procura a medida que vai digitando palavra
 set incsearch
 
- " Procura sem case sensitive
-"set ic
- " Procura com case sensitive
-"set noic
+   " Procura sem case sensitive
+   set ic
+   if exists("g:startic")
+      if g:startic == "no"
+         " Procura com case sensitive
+         set noic
+      end
+   end
+
  " Smart case matching
 set sc
 
