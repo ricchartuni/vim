@@ -113,7 +113,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-set dictionary+=~/.vim/dic/menu.dic
+exec 'set dictionary+=' . g:vimdir . 'dic/menu.dic'
 au BufNewFile,BufRead * set filetype=lisp
 set filetype=lisp
 
