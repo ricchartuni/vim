@@ -43,6 +43,10 @@ nmap ,r :exec "source" . g:vimdir . "vimrc" <BAR> echo "vimrc recarregado!"<CR>
 
  " Fonte
 set guifont=Monospace\ 8.9
+ " The encoding displayed
+set encoding=utf-8
+ " The encoding written to file
+set fileencoding=utf-8
 
  " Mostrar identacao:
 "set list listchars=tab:»·,trail:·,eol:$
