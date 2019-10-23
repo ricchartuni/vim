@@ -10,15 +10,15 @@ function! Subrotina()
 \\!----------------------------------------------------------------------\n
 \\! Descricao:\n
 \\!----------------------------------------------------------------------\n
-\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado por: .............. XXXNAMEXXX\n
 \\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \\!=======================================================================\n
 \      IMPLICIT NONE\n
 \      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
 \\n
-\      write(0,*)'  ** UR9Z >> ======================='\n
-\      write(0,*)'  ** UR9Z >> Inicio da subrotina ' // nomerotina\n
-\      write(0,*)'  ** UR9Z >> ======================='\n
+\      write(0,*)'  ** XXXINITXXX>> ======================='\n
+\      write(0,*)'  ** XXXINITXXX>> Inicio da subrotina ' // nomerotina\n
+\      write(0,*)'  ** XXXINITXXX>> ======================='\n
 \      flush(0)\n
 \\n
 \      END SUBROUTINE ___ZZZ_subrotina_ZZZ___\n
@@ -29,6 +29,7 @@ function! Subrotina()
     silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
     let sbrt = strftime('%d.%m.%Y')
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -43,15 +44,15 @@ function! FuncaoF()
 \\!----------------------------------------------------------------------\n
 \\! Descricao:\n
 \\!----------------------------------------------------------------------\n
-\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado por: .............. XXXNAMEXXX\n
 \\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \\!=======================================================================\n
 \      IMPLICIT NONE\n
 \      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
 \\n
-\      write(0,*)'  ** UR9Z >> ======================='\n
-\      write(0,*)'  ** UR9Z >> Inicio da funcao ' // nomerotina\n
-\      write(0,*)'  ** UR9Z >> ======================='\n
+\      write(0,*)'  ** XXXINITXXX>> ======================='\n
+\      write(0,*)'  ** XXXINITXXX>> Inicio da funcao ' // nomerotina\n
+\      write(0,*)'  ** XXXINITXXX>> ======================='\n
 \      flush(0)\n
 \\n
 \      END FUNCTION ___ZZZ_subrotina_ZZZ___\n
@@ -62,6 +63,7 @@ function! FuncaoF()
     silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
     let sbrt = strftime('%d.%m.%Y')
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -70,12 +72,12 @@ endfunction
 map <F3> :call WriteTest()<CR>
 function! WriteTest()
     r! echo -e "
-\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
-\      write(0,*)'  ** UR9Z >> ============================================'\n
-\      write(0,*)'  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
-\      write(0,*)'  ** UR9Z >> ============================================'\n
+\\!\!\! XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\      write(0,*)'  ** XXXINITXXX>> ============================================'\n
+\      write(0,*)'  ** XXXINITXXX>> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
+\      write(0,*)'  ** XXXINITXXX>> ============================================'\n
 \      flush(0)\n
-\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\\!\!\! XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
 \"
 
     let sbrt = expand('%:t')
@@ -89,6 +91,7 @@ function! WriteTest()
     end
     let sbrt = NPad(g:TSTprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -97,12 +100,13 @@ endfunction
 map <F4> :call Comentario()<CR>
 function! Comentario()
     r! echo -e "
-\\!\!\! UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
-\\!\!\! UR9Z >>> ...........................................................
+\\!\!\! XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\!\!\! XXXINITXXX>>> ...........................................................
 \"
     let sbst = strftime('%B-%Y')
     let sbrt = NPad(sbst, 14)
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -117,7 +121,7 @@ function! TravaCOD()
 \\! Descricao: Subrotina para travar codigo (usado para DEBUG)\n
 \\! OBS.2: AINDA NAO TESTADO\n
 \\!-------------------------------------------------------------------\n
-\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado por: .............. XXXNAMEXXX\n
 \\!====================================================================\n
 \         INTEGER, INTENT(IN) :: i_entra\n
 \         INTEGER, INTENT(IN) :: i_atual\n
@@ -125,8 +129,8 @@ function! TravaCOD()
 \         i_debug = 1\n
 \         IF (i_atual .EQ. i_entra) THEN\n
 \            WRITE(0,*)\n
-\            WRITE(0,*)'  ** UR9Z >> Teste de parada para DEBUG'\n
-\            WRITE(0,*)'  ** UR9Z >> =========================='\n
+\            WRITE(0,*)'  ** XXXINITXXX>> Teste de parada para DEBUG'\n
+\            WRITE(0,*)'  ** XXXINITXXX>> =========================='\n
 \            FLUSH(0)\n
 \            DO WHILE(i_debug == 1)\n
 \               i_debug = 1\n
@@ -135,6 +139,7 @@ function! TravaCOD()
 \      END SUBROUTINE debugTravaCOD\n
 \\!=======================================================================\n
 \"
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -149,7 +154,7 @@ function! DBGBin()
 \\! Descricao: Leitura/Escrita de arquivo binario\n
 \\! OBS.: AINDA NAO TESTADO\n
 \\!-------------------------------------------------------------------\n
-\\!         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\\!         *** Criado por: .............. XXXNAMEXXX\n
 \\!=======================================================================\n
 \         IMPLICIT NONE\n
 \         INTEGER     ,           INTENT(IN   ) :: tip\n
@@ -232,6 +237,7 @@ function! DBGBin()
 \      END SUBROUTINE debugBIN\n
 \\!=======================================================================\n
 \"
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -240,11 +246,12 @@ endfunction
 map <F8> :call ChamaDBGBin()<CR>
 function! ChamaDBGBin()
     r! echo -e "
-\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\\!\!\! XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
 \\!\!\! OBS.: AINDA NAO TESTADO\n
 \      CALL debugBIN(55, reshape(array, (/n1*n2*n3/)), bin=\"out.bin\")\n
-\\!\!\! UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\\!\!\! XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
 \"
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -254,9 +261,9 @@ map <F9> :call DefineDBG()<CR>
 function! DefineDBG()
     r! echo -e "
 \\#if(DEBUG==1)\n
-\      write(0,*)'  ** UR9Z >> ============================================'\n
-\      write(0,*)'  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
-\      write(0,*)'  ** UR9Z >> ============================================'\n
+\      write(0,*)'  ** XXXINITXXX>> ============================================'\n
+\      write(0,*)'  ** XXXINITXXX>> ___ZZZ_arquivo_ZZZ___ :: ', nomerotina, '(___ZZZ_00000_ZZZ___)'\n
+\      write(0,*)'  ** XXXINITXXX>> ============================================'\n
 \      flush(0)\n
 \\#else\n
 \\n
@@ -274,5 +281,6 @@ function! DefineDBG()
     end
     let sbrt = NPad(g:TSTprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
 endfunction
 

@@ -2,7 +2,7 @@
 echo "  > Carregando LISP ...................."
 
 let s:extfname = expand("%:e")
-let b:comentario = ';; * UR9Z >>'
+let b:comentario = ';'
 
 "autocmd BufNewFile *.menu    call NOVOc('so ~/.vim/headers/headerMENU')
 

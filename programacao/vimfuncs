@@ -18,6 +18,9 @@ func! CMDcomenta()
       call setpos('.', window_position)
       normal! zt
       call setpos('.', cursor_position)
+   else
+      let b:comentario = input(' >caracter de comentario: ')
+      exec "source" . g:vimdir . "vimvars"
    end
 endfunc
 
@@ -37,6 +40,9 @@ func! CMDdescomenta()
       call setpos('.', window_position)
       normal! zt
       call setpos('.', cursor_position)
+   else
+      let nomerotina = b:comentario(' >caracter de comentario: ')
+      exec "source" . g:vimdir . "vimvars"
    end
 endfunc
 
@@ -62,6 +68,7 @@ func! NOVOc(carregaarq)
       "end
 
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
+      call SUBS_name_init()
       let sbrt = strftime("%d.%m.%Y")
       silent! execute '%s/* Criado em:.*/* Criado em: ..................... '.sbrt.'/g'
       call PrimeiraLinha()
@@ -78,6 +85,11 @@ func! NOVOh(carregaarq)
 
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
+endfunc
+
+func! SUBS_name_init()
+   silent! execute '%s/XXXNAMEXXX/'.b:com_nome.'/g'
+   silent! execute '%s/XXXINITXXX/'.b:com_assina.'/g'
 endfunc
 
 func! INFOgravacao()
@@ -137,27 +149,27 @@ func! CARREGAprg(tipo, ...)
        exec "source" . g:vimdir . "programacao/sources/soPYTHON"
 
     elseif a:tipo == "make"
-       let b:com_leader = '# ** UR9Z >>'
+       let b:comentario = '#'
 
-    elseif a:tipo == "tex" || a:tipo == "sty"
-       let b:com_leader = '% ** UR9Z >>'
+    elseif a:tipo == "tex" || a:tipo == "sty" || a:tipo == "bib"
+       let b:comentario = '%'
        set tw=72
        set colorcolumn=72
        autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
        exec 'set dictionary+=' . g:vimdir . 'dic/latex.dic'
 
     elseif a:tipo == "m"
-       let b:com_leader = '% ** UR9Z >>'
+       let b:comentario = '%'
 
     elseif a:tipo == "vim"
-       let b:com_leader = '" ** UR9Z >>'
+       let b:comentario = '"'
 
     elseif a:tipo == "java"
-       let b:com_leader = '// * UR9Z >>'
+       let b:comentario = '//'
     else
        let s:arqfname = expand("%:t")
        if s:arqfname =~ "SConstruct"
-          let b:com_leader = '# ** UR9Z >>'
+          let b:comentario = '#'
           silent! exec 'so' . g:vimdir . 'programacao/sources/soPYTHON'
           syntax on
           set filetype=python

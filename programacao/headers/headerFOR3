@@ -7,7 +7,7 @@
 !         -I$RSFROOT/include -L$RSFROOT/lib -lrsff90 -lrsf -lm  [-lfftw3f]
 !         -cpp [-D_DEBUG___]
 !----------------------------------------------------------------------
-!         *** Criado por: ....... Ricardo Chartuni - UR9Z
+!         *** Criado por: .............. XXXNAMEXXX
 !         *** Criado em: ..................... XX.XX.XXXX
 !=======================================================================
       use rsf
@@ -29,9 +29,9 @@
       call from_par("clip", clip) ! command-line parameter
 
 #ifdef _DEBUG___
-      write(0,*)'  ** UR9Z >> ======================='
-      write(0,*)'  ** UR9Z >> Testando programa ', nomerotina
-      write(0,*)'  ** UR9Z >> ======================='
+      write(0,*)'  ** XXXINITXXX>> ======================='
+      write(0,*)'  ** XXXINITXXX>> Testando programa ', nomerotina
+      write(0,*)'  ** XXXINITXXX>> ======================='
       flush(0)
 #endif
 

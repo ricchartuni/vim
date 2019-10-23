@@ -15,7 +15,7 @@
 //  OBS.: compilar com as opcoes:
 //          -I$RSFROOT/include -L$RSFROOT/lib -lrsf -lm [-D_NOBLAS]
 //---------------------------------------------------------------------
-//        *** Criado por: ....... Ricardo Chartuni - UR9Z
+//        *** Criado por: .............. XXXNAMEXXX
 //        *** Criado em: ..................... XX.XX.XXXX
 //        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
 //======================================================================
@@ -41,9 +41,9 @@
       if (!sf_getfloat("clip",&clip)) sf_error("Need clip=");
 
 #ifdef _DEBUG___
-      fprintf(stderr,"  ** UR9Z >> =======================\n");
-      fprintf(stderr,"  ** UR9Z >> Testando programa\n"      );
-      fprintf(stderr,"  ** UR9Z >> =======================\n");
+      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
+      fprintf(stderr,"  ** XXXINITXXX>> Testando programa\n"      );
+      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
       fflush (stderr);
 #endif
 

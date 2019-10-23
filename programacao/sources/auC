@@ -20,7 +20,7 @@ function! Subrotina()
 \//---------------------------------------------------------------------\n
 \// Descricao:\n
 \//---------------------------------------------------------------------\n
-\//         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\//         *** Criado por: .............. XXXNAMEXXX\n
 \//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
 \\n
@@ -31,6 +31,7 @@ function! Subrotina()
     silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
     let sbrt = strftime('%d.%m.%Y')
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 "===================================================================
@@ -46,7 +47,7 @@ function! FuncaoF()
 \//---------------------------------------------------------------------\n
 \// Descricao:\n
 \//---------------------------------------------------------------------\n
-\//         *** Criado por: ....... Ricardo Chartuni - UR9Z\n
+\//         *** Criado por: .............. XXXNAMEXXX\n
 \//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
 \\n
@@ -58,6 +59,7 @@ function! FuncaoF()
     silent! execute '%s/___ZZZ_subrotina_ZZZ___/'.nomerotina.'/g'
     let sbrt = strftime('%d.%m.%Y')
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 "===================================================================
@@ -66,12 +68,12 @@ endfunction
 map <F3> :call WriteTest()<CR>
 function! WriteTest()
     r! echo -e "
-\/// UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
-\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
-\      fprintf(stderr,\"  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
-\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
 \      fflush (stderr);\n
-\/// UR9Z   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
 \"
 
     let sbrt = expand('%:t')
@@ -85,6 +87,7 @@ function! WriteTest()
     end
     let sbrt = NPad(g:TSTprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 "===================================================================
@@ -93,12 +96,13 @@ endfunction
 map <F4> :call Comentario()<CR>
 function! Comentario()
     r! echo -e "
-\/// UR9Z >>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
-\/// UR9Z >>> ...........................................................\n
+\/// XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\/// XXXINITXXX>>> ...........................................................\n
 \"
     let sbst = strftime('%B-%Y')
     let sbrt = NPad(sbst, 14)
     silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 "===================================================================
@@ -107,20 +111,21 @@ endfunction
 map <F6> :call TravaCOD()<CR>
 function! TravaCOD()
     r! echo -e "
-\/// UR9Z   > > >   T E S T E    P A R A   D E B U G = = = = I N I C I O\n
+\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = I N I C I O\n
 \      int i_entra = 1;\n
 \      int i_atual = 1;\n
 \      if (i_atual == i_entra){\n
 \         fprintf(stderr,\"\\\n\");\n
-\         fprintf(stderr,\"  ** UR9Z >> Teste de parada para DEBUG\\\n\");\n
-\         fprintf(stderr,\"  ** UR9Z >> ==========================\\\n\");\n
+\         fprintf(stderr,\"  ** XXXINITXXX>> Teste de parada para DEBUG\\\n\");\n
+\         fprintf(stderr,\"  ** XXXINITXXX>> ==========================\\\n\");\n
 \         fflush (stderr);\n
 \         int i_debug = 1;\n
 \         do{\n
 \         }while(i_debug == 1);\n
 \      }\n
-\/// UR9Z   > > >   T E S T E    P A R A   D E B U G = = = = = = = F I M\n
+\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = = = = F I M\n
 \"
+    call SUBS_name_init()
 endfunction
 
 "===================================================================
@@ -135,15 +140,15 @@ function! DBGBin(tipo)
        let dim = input(' >ESCRITA de array [1][2][3]D? ')
     end
     r! echo -e "
-\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = = = V A R S\n
+\/// XXXINITXXX   > > >   L E / E S C R E V E   B I N A R I O  = = = = V A R S\n
 \      char carq[1024];\n
 \      FILE * farq;\n
 \      int nn1 = 1001;\n
 \      ___ZZZ_ii2_ZZZ___int nn2 = 1;\n
 \      ___ZZZ_ii3_ZZZ___int nn3 = 1;\n
-\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = I N I C I O\n
+\/// XXXINITXXX   > > >   L E / E S C R E V E   B I N A R I O  = = I N I C I O\n
 \      sprintf(carq, \"./___ZZZ_arquivo_ZZZ____\%d___ZZZ_dimensao_ZZZ___.bin\", nn1___ZZZ_formato_ZZZ___);\n
-\      fprintf(stderr,\"  ** UR9Z >> ABRINDO Arquivo \%s para ___ZZZ_tipo_ZZZ___\\\n\", carq);\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ABRINDO Arquivo \%s para ___ZZZ_tipo_ZZZ___\\\n\", carq);\n
 \      fflush (stderr);\n
 \      farq = fopen(carq, \"___ZZZ_abrefecha_ZZZ___\");\n
 \      setvbuf(farq, NULL, _IONBF, 0);\n
@@ -151,7 +156,7 @@ function! DBGBin(tipo)
 \      ___ZZZ_ii2_ZZZ___for(int ii2=0; ii2<nn2; ii2=ii2+1)\n
 \         ___ZZZ_read_write_ZZZ___(array___ZZZ_indices_ZZZ___, sizeof(float), nn1, farq);\n
 \      fclose(farq);\n
-\/// UR9Z   > > >   L E / E S C R E V E   B I N A R I O  = = = = = F I M\n
+\/// XXXINITXXX   > > >   L E / E S C R E V E   B I N A R I O  = = = = = F I M\n
 \"
 
     if a:tipo == 0
@@ -188,6 +193,7 @@ function! DBGBin(tipo)
     silent! execute '%s/___ZZZ_indices_ZZZ___/'.sbst.'/g'
     silent! execute '%s/___ZZZ_dimensao_ZZZ___/'.sdim.'/g'
     silent! execute '%s/___ZZZ_formato_ZZZ___/'.sfmt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 "===================================================================
@@ -197,9 +203,9 @@ map <F9> :call DefineDBG()<CR>
 function! DefineDBG()
     r! echo -e "
 \\#if(DEBUG==1)\n
-\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
-\      fprintf(stderr,\"  ** UR9Z >> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
-\      fprintf(stderr,\"  ** UR9Z >> ============================================\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
 \      fflush (stderr);\n
 \\#else\n
 \\n
@@ -217,6 +223,7 @@ function! DefineDBG()
     end
     let sbrt = NPad(g:TSTprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()    
 endfunction
 
 

@@ -1,3 +1,4 @@
+let b:com_nome = "Ricardo Chartuni"
 let b:com_assina = "RChartuni"
 
 if exists("b:comentario")
