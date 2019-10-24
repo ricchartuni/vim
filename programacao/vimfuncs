@@ -155,7 +155,7 @@ func! CARREGAprg(tipo, ...)
        let b:comentario = '%'
        set tw=72
        set colorcolumn=72
-       autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
+       autocmd BufNewFile *.tex call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
        exec 'set dictionary+=' . g:vimdir . 'dic/latex.dic'
 
     elseif a:tipo == "m"
