@@ -25,11 +25,10 @@ local arq=${1:-$BASHES/bash_load}
 }
 #=======================================================================
 
-carrega_dependencia
-
 if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
    echo " carregando ${BASH_SOURCE[0]}"
 else
+   carrega_dependencia
    main_XXXXXXX $@
 fi
 .
