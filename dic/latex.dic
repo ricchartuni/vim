@@ -1,19 +1,27 @@
+#https://www.overleaf.com/learn/latex/Aligning%20equations%20with%20amsmath
+
 \chapter{}
 \documentclass[]{}
 \footnote{}
 \hyphenation{}
 \shortcite{}
 \shortciteN{}
+\shortciteNP{}
 \textit{}
+\textbf{}
+\boldsymbol{}
 \usepackage[]{}
 \begin{}
 \end
 \href{}{}
+\ref{}{}
 \usepackage{}
 \LaTeX{}
 \section{}
+\subsection{}
 \item
 
+\hat
 
 \alpha
 \approx
@@ -48,6 +56,7 @@
 \kappa
 \lambda
 \Lambda
+\left(
 \leftarrow
 \Leftarrow
 \leftharpoondown
@@ -81,6 +90,7 @@
 \Re
 \rho
 \varrho
+\right)
 \rightarrow
 \Rightarrow
 \rightharpoondown
