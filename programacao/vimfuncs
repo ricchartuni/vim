@@ -21,6 +21,7 @@ func! CMDcomenta()
    else
       let b:comentario = input(' >caracter de comentario: ')
       exec "source" . g:vimdir . "vimvars"
+      call CMDcomenta()
    end
 endfunc
 
@@ -43,6 +44,8 @@ func! CMDdescomenta()
    else
       let nomerotina = b:comentario(' >caracter de comentario: ')
       exec "source" . g:vimdir . "vimvars"
+      call CMDdescomenta()
+   end
    end
 endfunc
 
