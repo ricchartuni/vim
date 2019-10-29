@@ -46,7 +46,6 @@ func! CMDdescomenta()
       exec "source" . g:vimdir . "vimvars"
       call CMDdescomenta()
    end
-   end
 endfunc
 
 function! ToggleComment()
