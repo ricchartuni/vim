@@ -108,7 +108,7 @@ let eqfig = "aaa"
        silent! execute 'g/___ZZZ_ii6_ZZZ___/d'
     else
        if dim == 6
-          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.28/g'
           silent! execute '%s/___ZZZ_ii4_ZZZ___\\qquad/\\\\/g'
        end
        silent! execute '%s/___ZZZ_ii6_ZZZ___//g'
@@ -118,7 +118,7 @@ let eqfig = "aaa"
        silent! execute 'g/___ZZZ_ii5_ZZZ___/d'
     else
        if dim == 5
-          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.28/g'
           silent! execute '%s/___ZZZ_ii3_ZZZ___\\qquad/\\\\/g'
        end
        silent! execute '%s/___ZZZ_ii5_ZZZ___//g'
@@ -138,7 +138,7 @@ let eqfig = "aaa"
        silent! execute 'g/___ZZZ_ii3_ZZZ___/d'
     else
        if dim == 3
-          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.28/g'
        end
        silent! execute '%s/___ZZZ_ii3_ZZZ___//g'
     end
