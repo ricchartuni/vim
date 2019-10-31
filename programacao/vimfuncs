@@ -5,19 +5,10 @@ noremap  ,t :call ToggleComment()<CR>
 
 func! CMDcomenta()
    if exists("b:com_leader")
-      let search = @/
-      let cursor_position = getpos('.')
-      normal! H
-      let window_position = getpos('.')
-      call setpos('.', cursor_position)
-
+      call PRECMDpreserva()
       let comentario = substitute(b:com_leader, '/', '\\/', 'g')
       silent! execute 's/^/' . comentario . '/'
-
-      let @/ = search
-      call setpos('.', window_position)
-      normal! zt
-      call setpos('.', cursor_position)
+      call POSCMDpreserva()
    else
       let b:comentario = input(' >caracter de comentario: ')
       exec "source" . g:vimdir . "vimvars"
@@ -27,20 +18,11 @@ endfunc
 
 func! CMDdescomenta()
    if exists("b:com_leader")
-      let search = @/
-      let cursor_position = getpos('.')
-      normal! H
-      let window_position = getpos('.')
-      call setpos('.', cursor_position)
-
+      call PRECMDpreserva()
       let comentario = substitute(b:com_leader, '/', '\\/', 'g')
       let comentario = substitute(  comentario    , '*', '\\*', 'g')
       silent! execute 's,^' . comentario . ',,'
-
-      let @/ = search
-      call setpos('.', window_position)
-      normal! zt
-      call setpos('.', cursor_position)
+      call POSCMDpreserva()
    else
       let nomerotina = b:comentario(' >caracter de comentario: ')
       exec "source" . g:vimdir . "vimvars"

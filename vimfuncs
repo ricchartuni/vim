@@ -55,12 +55,12 @@ set complete=.,k,w,i
 :noremap <silent> <Space> :silent noh<Bar>echo<CR>
 
  " remover os espacos no inicio da linha
-noremap <silent> ,l :<C-B>sil <C-E>s/^[ \t]*\V<C-R><CR>//e<CR>:noh<CR>
+noremap <silent> ,l :call PRECMDpreserva() <BAR> <C-B>sil <C-E>s/^[ \t]*\V<C-R><CR>//e<CR>:noh <BAR> call POSCMDpreserva()<CR>
 
  " remover os espacos repetidos na linha
 "noremap <silent> ,s :<C-B>sil <C-E>s/ \+\V<C-R><CR>/ /ge<CR>:noh<CR>
  " remover os espacos repetidos na linha - PRESERVAR PARAGRAFO
-noremap <silent> ,s :<C-B>sil <C-E>s/[^ ]\zs \+\V<C-R><CR>/ /ge<CR>:noh<CR>
+noremap <silent> ,s :call PRECMDpreserva() <BAR> <C-B>sil <C-E>s/[^ ]\zs \+\V<C-R><CR>/ /ge<CR>:noh <BAR> call POSCMDpreserva()<CR>
 
  " remover os espacos no fim da linha de todo o arquivo
 func! DeleteTrailingWS()
