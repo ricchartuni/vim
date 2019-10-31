@@ -85,8 +85,8 @@ endfunction
 map <F4> :call Comentario()<CR>
 function! Comentario()
     r! echo -e "
-\\#\#\# XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
-\\#\#\# XXXINITXXX>>> ...........................................................\n
+\\#\#\# XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\#\#\# XXXINITXXX>>> .......................................................\n
 \"
     let sbrt = strftime('%B-%Y')
     let sbrt = NPad(sbrt, 14)

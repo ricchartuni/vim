@@ -70,14 +70,11 @@ function! WriteTest()
     r! echo -e "
 \/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
 \      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
-\      fprintf(stderr,\"  ** XXXINITXXX>> ___ZZZ_arquivo_ZZZ___ :: ___ZZZ_00000_ZZZ___\\\n\");\n
+\      fprintf(stderr,\"  ** XXXINITXXX>> % :: ___ZZZ_00000_ZZZ___\\\n\");\n
 \      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
 \      fflush (stderr);\n
 \/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
 \"
-
-    let sbrt = expand('%:t')
-    silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
 
     if exists("g:TSTprint")
        let g:TSTprint = g:TSTprint + 1
@@ -96,8 +93,8 @@ endfunction
 map <F4> :call Comentario()<CR>
 function! Comentario()
     r! echo -e "
-\/// XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
-\/// XXXINITXXX>>> ...........................................................\n
+\/// XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\/// XXXINITXXX>>> .......................................................\n
 \"
     let sbst = strftime('%B-%Y')
     let sbrt = NPad(sbst, 14)
