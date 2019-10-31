@@ -64,9 +64,9 @@ noremap <silent> ,s :<C-B>sil <C-E>s/[^ ]\zs \+\V<C-R><CR>/ /ge<CR>:noh<CR>
 
  " remover os espacos no fim da linha de todo o arquivo
 func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
+   call PRECMDpreserva()
+   %s/\s\+$//ge
+   call POSCMDpreserva()
 endfunc
 noremap ,w :call DeleteTrailingWS()<CR>
 
@@ -75,16 +75,24 @@ noremap ,w :call DeleteTrailingWS()<CR>
 au FileType * setl fo-=cro
 
 func! CMDpreserva(comando)
-   let search = @/
-   let cursor_position = getpos('.')
-   normal! H
-   let window_position = getpos('.')
-   call setpos('.', cursor_position)
+   call PRECMDpreserva()
    execute a:comando
-   let @/ = search
-   call setpos('.', window_position)
+   call POSCMDpreserva()
+endfunc
+
+func! PRECMDpreserva()
+   let s:search = @/
+   let s:cursor_position = getpos('.')
+   normal! H
+   let s:window_position = getpos('.')
+   call setpos('.', s:cursor_position)
+endfunc
+
+func! POSCMDpreserva()
+   let @/ = s:search
+   call setpos('.', s:window_position)
    normal! zt
-   call setpos('.', cursor_position)
+   call setpos('.', s:cursor_position)
 endfunc
 
  "convert the text to UPPER CASE, then to lower case, then to Title Case
