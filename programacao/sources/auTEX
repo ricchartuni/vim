@@ -27,8 +27,7 @@ endfunction
 map <F3> :call Figura()<CR>
 function! Figura()
     let dim   = input(' >quantidade de figuras [1-6]? ')
-    "let eqfig = input(' >label da figura: ')
-let eqfig = "aaa"
+    let eqfig = input(' >label da figura: ')
     r! echo -e "
 \\%=======================================================================\n
 \\\\begin{figure}\n
@@ -98,6 +97,8 @@ let eqfig = "aaa"
 \    ___ZZZ_ii6_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____F}\n
 \___ZZZ_ii6_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \  ___ZZZ_ii6_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii2_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii2_ZZZ___\\\caption{}\n
 \___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \  ___ZZZ_ii2_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ___}\n
 \___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
