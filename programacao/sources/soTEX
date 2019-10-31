@@ -1,0 +1,52 @@
+" Carregar para programacao TEX ...........
+echo "  > Carregando TEX .................."
+exec "source" . g:vimdir . "programacao/sources/auTEX"
+
+let b:comentario = '%'
+
+autocmd BufNewFile *.tex      call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
+
+ " tab com espacos ..................
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
+ " maximo de colunas ................
+set tw=72
+set colorcolumn=72
+
+ " dicionario .......................
+autocmd Filetype * set spell spelllang=pt,en
+exec 'set dictionary+=' . g:vimdir . 'dic/latex.dic'
+
+"set smartindent
+set autoindent
+ "fechar automaticamente parentesis, colchetes, ....
+inoremap (      ()<Left>
+inoremap ((     (
+inoremap ()     ()
+inoremap (<CR>  (<CR>)<Esc>O
+
+inoremap [      []<Left>
+inoremap [[     [
+inoremap []     []
+inoremap [<CR>  [<CR>]<Esc>O
+
+inoremap {      {}<Left>
+inoremap {{     {
+inoremap {}     {}
+inoremap {<CR>  {<CR>}<Esc>O<TAB>
+
+inoremap $      $$<Left>
+inoremap $$     $
+inoremap $<CR>  $<CR>$<Esc>O
+
+inoremap "      ""<Left>
+inoremap ""     "
+inoremap "<CR>  "<CR>"<Esc>O
+
+inoremap '      ''<Left>
+inoremap ''     '
+inoremap '<CR>  '<CR>'<Esc>O
+" ===================================================
+

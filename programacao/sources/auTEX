@@ -1,0 +1,180 @@
+"===================================================================
+" ATALHO
+"===================================================================
+map <F2> :call Equacao()<CR>
+function! Equacao()
+    let eqlabel = input(' >label da equacao: ')
+    r! echo -e "
+\\%=======================================================================\n
+\\\\begin{equation}\n
+\\%.......................................................................\n
+\  \\\begin{split}\n
+\\%----------------------------------------------------------------------\n
+\\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    \label{eq:___ZZZ_eqlabel_ZZZ___}\n
+\\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  \\\end{split}\n
+\\%.......................................................................\n
+\\\\end{equation}\n
+\\%=======================================================================\n
+\"
+    silent! execute '%s/___ZZZ_eqlabel_ZZZ___/'.eqlabel.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F3> :call Figura()<CR>
+function! Figura()
+    let dim   = input(' >quantidade de figuras [1-6]? ')
+    "let eqfig = input(' >label da figura: ')
+let eqfig = "aaa"
+    r! echo -e "
+\\%=======================================================================\n
+\\\\begin{figure}\n
+\\%.......................................................................\n
+\  \\\centering\n
+\\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii1_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii1_ZZZ___\\\centering\n
+\    \includegraphics[width=\\\textwidth]{xxxA}\n
+\    \\\caption{}\n
+\\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    \label{fig:___ZZZ_figlabel_ZZZ____A}\n
+\\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii1_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii2_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii2_ZZZ___\qquad\n
+\___ZZZ_ii2_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii2_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii2_ZZZ___\\\centering\n
+\    ___ZZZ_ii2_ZZZ___\includegraphics[width=\\\textwidth]{xxxB}\n
+\    ___ZZZ_ii2_ZZZ___\\\caption{}\n
+\___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    ___ZZZ_ii2_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____B}\n
+\___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii2_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii3_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii3_ZZZ___\qquad\n
+\___ZZZ_ii3_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii3_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii3_ZZZ___\\\centering\n
+\    ___ZZZ_ii3_ZZZ___\includegraphics[width=\\\textwidth]{xxxC}\n
+\    ___ZZZ_ii3_ZZZ___\\\caption{}\n
+\___ZZZ_ii3_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    ___ZZZ_ii3_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____C}\n
+\___ZZZ_ii3_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii3_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii4_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii4_ZZZ___\qquad\n
+\___ZZZ_ii4_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii4_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii4_ZZZ___\\\centering\n
+\    ___ZZZ_ii4_ZZZ___\includegraphics[width=\\\textwidth]{xxxD}\n
+\    ___ZZZ_ii4_ZZZ___\\\caption{}\n
+\___ZZZ_ii4_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    ___ZZZ_ii4_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____D}\n
+\___ZZZ_ii4_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii4_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii5_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii5_ZZZ___\qquad\n
+\___ZZZ_ii5_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii5_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii5_ZZZ___\\\centering\n
+\    ___ZZZ_ii5_ZZZ___\includegraphics[width=\\\textwidth]{xxxE}\n
+\    ___ZZZ_ii5_ZZZ___\\\caption{}\n
+\___ZZZ_ii5_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    ___ZZZ_ii5_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____E}\n
+\___ZZZ_ii5_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii5_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii6_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii6_ZZZ___\qquad\n
+\___ZZZ_ii6_ZZZ___\%----------------------------------------------------------------------\n
+\  ___ZZZ_ii6_ZZZ___\\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
+\    ___ZZZ_ii6_ZZZ___\\\centering\n
+\    ___ZZZ_ii6_ZZZ___\includegraphics[width=\\\textwidth]{xxxF}\n
+\    ___ZZZ_ii6_ZZZ___\\\caption{}\n
+\___ZZZ_ii6_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\    ___ZZZ_ii6_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ____F}\n
+\___ZZZ_ii6_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii6_ZZZ___\\\end{subfigure}\n
+\___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\  ___ZZZ_ii2_ZZZ___\label{fig:___ZZZ_figlabel_ZZZ___}\n
+\___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
+\\\\end{figure}\n
+\\%=======================================================================\n
+\"
+    if dim < 6
+       silent! execute 'g/___ZZZ_ii6_ZZZ___/d'
+    else
+       if dim == 6
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+          silent! execute '%s/___ZZZ_ii4_ZZZ___\\qquad/\\\\/g'
+       end
+       silent! execute '%s/___ZZZ_ii6_ZZZ___//g'
+    end
+
+    if dim < 5
+       silent! execute 'g/___ZZZ_ii5_ZZZ___/d'
+    else
+       if dim == 5
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+          silent! execute '%s/___ZZZ_ii3_ZZZ___\\qquad/\\\\/g'
+       end
+       silent! execute '%s/___ZZZ_ii5_ZZZ___//g'
+    end
+
+    if dim < 4
+       silent! execute 'g/___ZZZ_ii4_ZZZ___/d'
+    else
+       if dim == 4
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.4/g'
+          silent! execute '%s/___ZZZ_ii3_ZZZ___\\qquad/\\\\/g'
+       end
+       silent! execute '%s/___ZZZ_ii4_ZZZ___//g'
+    end
+
+    if dim < 3
+       silent! execute 'g/___ZZZ_ii3_ZZZ___/d'
+    else
+       if dim == 3
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.3/g'
+       end
+       silent! execute '%s/___ZZZ_ii3_ZZZ___//g'
+    end
+
+    if dim < 2
+       silent! execute 'g/___ZZZ_ii2_ZZZ___/d'
+    else
+       if dim == 2
+          silent! execute '%s/___ZZZ_tamanho_ZZZ___/0.4/g'
+       end
+       silent! execute '%s/___ZZZ_ii2_ZZZ___//g'
+    end
+
+    if dim == 1
+       silent! execute 'g/___ZZZ_ii1_ZZZ___/d'
+       silent! execute '%s/___ZZZ_figlabel_ZZZ____A/___ZZZ_figlabel_ZZZ___/g'
+    else
+       silent! execute '%s/___ZZZ_ii1_ZZZ___//g'
+    end
+
+
+    silent! execute '%s/___ZZZ_figlabel_ZZZ___/'.eqfig.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
+map <F4> :call Comentario()<CR>
+function! Comentario()
+    r! echo -e "
+\\%\%\% XXXINITXXX>>> C O M E N T A R I O  = = = = = = = = = = ___ZZZ_data_sbrt_ZZZ___\n
+\\%\%\% XXXINITXXX>>> .......................................................\n
+\"
+    let sbrt = strftime('%B-%Y')
+    let sbrt = NPad(sbrt, 14)
+    silent! execute '%s/___ZZZ_data_sbrt_ZZZ___/'.sbrt.'/g'
+    call SUBS_name_init()
+endfunction
+
