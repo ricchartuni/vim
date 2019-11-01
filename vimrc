@@ -85,8 +85,10 @@ nnoremap  #  #zz:%s///gn<CR><C-o>
 nnoremap g* g*zz:%s///gn<CR><C-o>
 nnoremap g# g#zz:%s///gn<CR><C-o>
  " Busca verticalmente erros de ortografia
-nmap m ]s
-nmap M [s
+nnoremap ]s ]szz
+nnoremap [s [szz
+nmap ,m ]szz
+nmap <M [szz
 
  " Mostra todas as ocorrencias da busca em separado
 nmap <C-f> :vimgrep /<C-r>//g %<CR> \| !:copen \| set modifiable <Enter>
