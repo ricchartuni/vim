@@ -132,6 +132,9 @@ map <BS> X
 noremap <expr> <silent> <Home> col('.') == match(getline('.'),'\S')+1 ? '0' : '^'
 imap <silent> <Home> <C-O><Home>
 
+ " visualizar todas opcoes ao inves de completar
+set wildmode=longest,list,full
+
  " gravar arquivo ao sair do foco da janela
 "au FocusLost * :w
  augroup focus_buffer_check " (160715) {{{
