@@ -18,6 +18,9 @@ au BufWritePost * if getline(1) =~ "^#!/usr/bin/env python" | silent execute "!c
 au BufNewFile,BufRead * set filetype=sh
 set filetype=python
 
+ " dicionario .......................
+exec 'set dictionary+=' . g:vimdir . 'dic/python.dic'
+
 "set smartindent
 set autoindent
  "fechar automaticamente parentesis, colchetes, ....
