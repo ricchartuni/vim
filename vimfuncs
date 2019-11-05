@@ -2,8 +2,10 @@ map <silent> <leader>d :call SWAPignorecase()<CR>
 func! SWAPignorecase()
   if &ignorecase
     set noic
+    echo "search noignorecase"
   else
     set ic
+    echo "search ignorecase"
   endif
 endfunc
 
@@ -212,3 +214,22 @@ function! GvimClean()
    set guioptions-=L  "remove left-hand scroll bar
 endfunction
 
+function! Dicionario(tdic)
+  let tst = g:vimdir.'dic/en_US.dic'
+  if a:tdic ==# "us"
+    exe "set dictionary+=".tst
+    echo "english added"
+  else
+    exe "set dictionary-=".tst
+    echo "english removed"
+  endif
+endfunction
+command! -nargs=1 Dic call Dicionario(<f-args>)
+
+ "EXEMPLO> :Sts 4
+function! SetTabSize(size)
+    execute "set tabstop=".a:size
+    execute "set shiftwidth=".a:size
+    execute "set softtabstop=".a:size
+endfunction
+command! -nargs=1 Sts call SetTabSize(<f-args>)

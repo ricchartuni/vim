@@ -16,8 +16,14 @@ set tw=72
 set colorcolumn=72
 
  " dicionario .......................
-autocmd Filetype * set spell spelllang=pt,en
 exec 'set dictionary+=' . g:vimdir . 'dic/latex.dic'
+augroup txt_files "{{{
+    au!
+    autocmd BufRead,BufNewFile * setlocal filetype=tex
+    autocmd FileType * setlocal wrap
+    autocmd FileType * setlocal spell
+    autocmd FileType * setlocal spelllang=en,pt_br
+augroup end "}}}
 
 "set smartindent
 set autoindent
