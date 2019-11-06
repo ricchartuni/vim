@@ -215,13 +215,17 @@ function! GvimClean()
 endfunction
 
 function! Dicionario(tdic)
-  let tst = g:vimdir.'dic/en_US.dic'
-  if a:tdic ==# "us"
-    exe "set dictionary+=".tst
+  let dicus = g:vimdir.'dic/en_US.dic'
+  exe "set dictionary-=".dicus
+  let dicpt = g:vimdir.'dic/pt_BR.dic'
+  exe "set dictionary-=".dicpt
+  if a:tdic =~ "us"
+    exe "set dictionary+=".dicus
     echo "english added"
-  else
-    exe "set dictionary-=".tst
-    echo "english removed"
+  endif
+  if a:tdic =~ "pt"
+    exe "set dictionary+=".dicpt
+    echo "adicionado portugues"
   endif
 endfunction
 command! -nargs=1 Dic call Dicionario(<f-args>)
