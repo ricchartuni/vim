@@ -22,7 +22,7 @@ augroup txt_files "{{{
     autocmd BufRead,BufNewFile * setlocal filetype=tex
     autocmd FileType * setlocal wrap
     autocmd FileType * setlocal spell
-    autocmd FileType * setlocal spelllang=en,pt_br
+    autocmd FileType * setlocal spelllang=en,pt
 augroup end "}}}
 
 "set smartindent
