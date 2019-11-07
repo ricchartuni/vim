@@ -1,4 +1,4 @@
-*.swp
+*.sw?
 Vundle.vim
 vimrc_org
 vim-spell-pt-br

@@ -41,7 +41,8 @@ set omnifunc=syntaxcomplete#Complete
 inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 "inoremap <Tab> <C-R>=Smart_TabComplete()<CR>
 "inoremap <Tab> <C-R>=TabCompletion()<CR>
-imap <c-tab> <c-x><c-o>
+imap <c-tab> <c-x><c-o> "tags programacao
+imap <s-tab> <c-x><c-u> "sinonimos thesaurus
 
  "  .: The current buffer
  "  w: Buffers in other windows
