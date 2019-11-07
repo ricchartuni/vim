@@ -163,4 +163,6 @@ set wildmode=longest,list,full
  " Carregando ......
 exec "source" . g:vimdir . "vimstartup"
 exec "source" . g:vimdir . "vimload"
+exec "source" . g:vimdir . "vimvundle"
 
+Bundle 'ron89/thesaurus_query.vim'
