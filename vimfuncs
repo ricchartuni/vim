@@ -21,11 +21,12 @@ endfunc
 
  " Complementar palavras
 function! Tab_Or_Complete()
-  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-    return "\<C-N>"
-  else
+  let tst = strpart( getline('.'), col('.')-2, 3 )
+  if col('.')==1 || (tst =~ '^\s')
     return "\<Tab>"
     "return "   "
+  else
+    return "\<C-N>"
   endif
 endfunction
  " Completion using a syntax file
