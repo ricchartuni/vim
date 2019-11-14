@@ -237,5 +237,6 @@ function! SetTabSize(size)
     execute "set tabstop=".a:size
     execute "set shiftwidth=".a:size
     execute "set softtabstop=".a:size
+    retab
 endfunction
 command! -nargs=1 Sts call SetTabSize(<f-args>)
