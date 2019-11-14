@@ -7,9 +7,12 @@ let b:comentario = '#'
 autocmd BufNewFile *.py      call NOVOc('so'.g:vimdir.'programacao/headers/headerPYTHON')
 
  " tab com espacos ..................
+set smarttab
+set softtabstop=3
 set tabstop=3
 set shiftwidth=3
 set expandtab
+retab
 
  "permissao de execucao a arquivos comecando por
  "#!/usr/bin/perl ou #!/bin/sh

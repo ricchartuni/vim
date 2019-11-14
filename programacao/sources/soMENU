@@ -109,9 +109,12 @@ map <F5> O<CR>
 \              )<CR>
 \            )<CR>
  " tab com espacos ..................
+set smarttab
+set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
+retab
 
 exec 'set dictionary+=' . g:vimdir . 'dic/menu.dic'
 au BufNewFile,BufRead * set filetype=lisp

@@ -7,9 +7,12 @@ let b:comentario = '%'
 autocmd BufNewFile *.tex      call NOVOc('so'.g:vimdir.'programacao/headers/headerTEX')
 
  " tab com espacos ..................
+set smarttab
+set softtabstop=2
 set tabstop=2
 set shiftwidth=2
 set expandtab
+retab
 
  " maximo de colunas ................
 set tw=72
