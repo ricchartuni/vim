@@ -155,6 +155,7 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 nnoremap <leader>t :call ToggleIt(1)<CR>
 vnoremap <leader>t <esc>:call ToggleIt(2)<CR>
 function! ToggleIt(tst)
+    call PRECMDpreserva()
     call inputsave()
     let valor_rep = @/
     let valor_org = substitute(valor_rep, '^..', '', '')
@@ -177,6 +178,7 @@ function! ToggleIt(tst)
        silent! execute "'<,'>s/".toggle_rep."/".valor_org."/g"
        silent! execute "'<,'>s/__XXXXXXXXxxxxxxXXXXXXXX__/".toggle_org."/g"
     endif
+    call POSCMDpreserva()
 endfunction
 
  "resize window ...........................
