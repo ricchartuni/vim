@@ -34,9 +34,10 @@ let g:arqdir  = expand('%:p:h')
 let g:arqfull = expand('%:p')
 let g:arqname = expand('%:t')
 let g:arqext  = expand('%:e')
+silent! unlet b:com_leader
+silent! unlet b:comentario
 
  " Recarregar o vimrc
-"nmap ,r :source ~/.vimrc <BAR> echo "vimrc recarregado!"<CR>
 nmap ,r :exec "source" . g:vimdir . "vimrc" <BAR> echo "vimrc recarregado!"<CR>
 
 "syntax on
