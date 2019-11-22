@@ -9,6 +9,7 @@
 \shortciteNP{}
 \textit{}
 \textbf{}
+\textnormal{}
 \boldsymbol{}
 \usepackage[]{}
 \begin{}
@@ -20,6 +21,7 @@
 \section{}
 \subsection{}
 \item
+\noindent
 
 \hat
 
