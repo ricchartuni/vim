@@ -119,7 +119,7 @@ func! CARREGAprg(tipo, ...)
        exec "source" . g:vimdir . "programacao/sources/soC"
     elseif a:tipo == "cu" || a:tipo == "cuh"
        exec "source" . g:vimdir . "programacao/sources/soCUDA"
-    elseif a:tipo == "f90" || a:tipo == "f"
+    elseif a:tipo == "f90"  || a:tipo == "f" || a:tipo == "cuf"
        exec "source" . g:vimdir . "programacao/sources/soFOR"
     elseif a:tipo == "menu" || a:tipo == "rule"
        exec "source" . g:vimdir . "programacao/sources/soMENU"
