@@ -45,7 +45,7 @@ set softtabstop=3
 set tabstop=3
 set shiftwidth=3
 set expandtab
-retab
+autocmd FileType * retab
 
 "let fortran_do_enddo=1
 "let fortran_more_precise=1
