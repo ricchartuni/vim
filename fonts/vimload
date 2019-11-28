@@ -1,0 +1,3 @@
+"if ! file_readable($HOME . '/.fonts/Vera.ttf')
+"    call system('cp' . g:vimdir . 'fonts/Vera.ttf ~/.fonts/')
+"endif

@@ -43,6 +43,7 @@ nmap ,r :exec "source" . g:vimdir . "vimrc" <BAR> echo "vimrc recarregado!"<CR>
 "syntax on
 
  " Fonte
+"exec "source" . g:vimdir . "fonts/vimload"
 set guifont=Monospace\ 8.9
  " The encoding displayed
 set encoding=utf-8
