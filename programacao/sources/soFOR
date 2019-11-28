@@ -23,7 +23,7 @@ endfunction
 
 function! TipoProgF90()
   echo "  > Programa Fortran90............"
-  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR3')
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerFOR3', "s")
 endfunction
 
 function! TipoModF90()

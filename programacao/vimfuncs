@@ -41,17 +41,15 @@ function! ToggleComment()
    end
 endfunction
 
-func! NOVOc(carregaarq)
+func! NOVOc(carregaarq, ...)
    if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
       call UltimaLinha()
-      silent! execute a:carregaarq
-
-      let sbrt = expand('%:t:r')
-      "if sbrt =~# "^M"
-      "   let sbrt = substitute(sbrt, "^.", "", "")
-      "end
-
-      silent! execute '%s/XXXXXXX/'.sbrt.'/g'
+      if a:0 > 0
+         let remove = a:1
+      else
+         let remove = 'n'
+      endif
+      call NOVOh(a:carregaarq, remove)
       call SUBS_name_init()
       let sbrt = strftime("%d.%m.%Y")
       silent! execute '%s/* Criado em:.*/* Criado em: ..................... '.sbrt.'/g'
@@ -59,13 +57,21 @@ func! NOVOc(carregaarq)
    endif
 endfunc
 
-func! NOVOh(carregaarq)
+func! NOVOh(carregaarq, ...)
    if @% == "" || filereadable(@%) == 0 || line('$') == 1 && col('$') == 1
       silent! execute a:carregaarq
       let sbrt = expand('%:t:r')
-      "if sbrt =~# "^M"
-      "   let sbrt = substitute(sbrt, "^.", "", "")
-      "end
+
+      if a:0 > 0
+         let remove = a:1
+      else
+         let remove = 'n'
+      endif
+      if remove == "s"
+         if sbrt =~# "^M"
+            let sbrt = substitute(sbrt, "^.", "", "")
+         end
+      end
 
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
