@@ -17,6 +17,7 @@
       INTEGER         , PARAMETER ::         DP = kind(0.d0)
       INTEGER         , PARAMETER ::      INULO = -99999
       REAL            , PARAMETER ::      RNULO = -99999.
+      CHARACTER(LEN=*), PARAMETER ::      CNULO = '<<__NULL__>>'
       REAL            , PARAMETER ::         PI =  3.141592653589793116
       REAL            , PARAMETER ::    DEG2RAD =   .0174532925199
       REAL            , PARAMETER ::    RAD2DEG = 57.29577951319
@@ -29,6 +30,7 @@
       PUBLIC  ::         DP
       PUBLIC  ::      INULO
       PUBLIC  ::      RNULO
+      PUBLIC  ::      CNULO
       PUBLIC  ::         PI
       PUBLIC  ::    DEG2RAD
       PUBLIC  ::    RAD2DEG
