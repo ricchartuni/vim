@@ -6,6 +6,7 @@ autocmd BufWritePre,FileWritePre
 \ *.c,*.cu,*.f,*.f90,*.sh,*.tex,*.py,SConstruct*
 \                            call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
 
+let g:tstprint = 0
 call CARREGAprg(g:arqext)
 
  " Pular entre o if-endif/do-enddo/...

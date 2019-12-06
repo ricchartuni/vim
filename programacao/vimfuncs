@@ -77,6 +77,17 @@ func! NOVOh(carregaarq, ...)
    endif
 endfunc
 
+func! SUBS_tstprint()
+    if exists("g:tstprint")
+       let g:tstprint = g:tstprint + 1
+    else
+       let g:tstprint = 1
+       "set sessionoptions+=globals 
+    end
+    let sbrt = NPad(g:tstprint, 5, 0)
+    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
+endfunc
+
 func! SUBS_name_init()
    silent! execute '%s/XXXNAMEXXX/'.b:com_nome.'/g'
    silent! execute '%s/XXXINITXXX/'.b:com_assina.'/g'

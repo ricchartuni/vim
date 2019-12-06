@@ -76,15 +76,8 @@ function! WriteTest()
 \/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
 \"
 
-    if exists("g:TSTprint")
-       let g:TSTprint = g:TSTprint + 1
-    else
-       let g:TSTprint = 1
-       "set sessionoptions+=globals 
-    end
-    let sbrt = NPad(g:TSTprint, 5, 0)
-    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
     call SUBS_name_init()    
+    call SUBS_tstprint()
 endfunction
 
 "===================================================================
@@ -212,15 +205,8 @@ function! DefineDBG()
     let sbrt = expand('%:t')
     silent! execute '%s/___ZZZ_arquivo_ZZZ___/'.sbrt.'/g'
 
-    if exists("g:TSTprint")
-       let g:TSTprint = g:TSTprint + 1
-    else
-       let g:TSTprint = 1
-       "set sessionoptions+=globals 
-    end
-    let sbrt = NPad(g:TSTprint, 5, 0)
-    silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
     call SUBS_name_init()    
+    call SUBS_tstprint()
 endfunction
 
 
