@@ -2,27 +2,29 @@
 " PROGRAMACOES ---------------------------------------------
 "===================================================================
  " HEADERS para PROGRAMACAO
-autocmd BufWritePre,FileWritePre
-\ *.c,*.cu,*.f,*.f90,*.sh,*.tex,*.py,SConstruct*
-\                            call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
 
-let g:tstprint = 0
-call CARREGAprg(g:arqext)
+if CARREGAprg(g:arqext) == 1
+   autocmd BufWritePre,FileWritePre *
+\    call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
 
- " Pular entre o if-endif/do-enddo/...
-runtime macros/matchit.vim
+   let g:tstprint = 0
+   set relativenumber
+   "set cursorline
+    " Pular entre o if-endif/do-enddo/...
+   runtime macros/matchit.vim
 
-silent! set nofoldenable
-noremap  zz :call SWAPfold()<CR>
-noremap  tt dd<BAR>p<BAR>k<CR>
-noremap  ss yy<BAR>p<BAR>k<CR>
-func! SWAPfold()
-  silent! set foldmethod=marker
-  silent! set foldmarker=#if,#endif
-  if &foldenable
-    silent! set nofoldenable
-  else
-    silent! set foldenable
-  endif
-endfunc
+   silent! set nofoldenable
+   noremap  zz :call SWAPfold()<CR>
+   noremap  tt dd<BAR>p<BAR>k<CR>
+   noremap  ss yy<BAR>p<BAR>k<CR>
+   func! SWAPfold()
+     silent! set foldmethod=marker
+     silent! set foldmarker=#if,#endif
+     if &foldenable
+       silent! set nofoldenable
+     else
+       silent! set foldenable
+     endif
+   endfunc
+endif
 

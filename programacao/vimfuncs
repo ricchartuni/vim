@@ -129,21 +129,29 @@ func! CARREGAprg(tipo, ...)
     silent! unmap <F6>
     silent! unmap <F7>
     silent! unmap <F8>
+    let key = 0
      " opcoes de acordo com formato
     if     a:tipo == "sh"
        exec "source" . g:vimdir . "programacao/sources/soBASH"
+       let key = 1
     elseif a:tipo == "c" || a:tipo == "h" || a:tipo == "cpp"
        exec "source" . g:vimdir . "programacao/sources/soC"
+       let key = 1
     elseif a:tipo == "cu" || a:tipo == "cuh"
        exec "source" . g:vimdir . "programacao/sources/soCUDA"
+       let key = 1
     elseif a:tipo == "f90"  || a:tipo == "f" || a:tipo == "cuf"
        exec "source" . g:vimdir . "programacao/sources/soFOR"
+       let key = 1
     elseif a:tipo == "menu" || a:tipo == "rule"
        exec "source" . g:vimdir . "programacao/sources/soMENU"
+       let key = 1
     elseif a:tipo == "py"
        exec "source" . g:vimdir . "programacao/sources/soPYTHON"
+       let key = 1
     elseif a:tipo == "tex" || a:tipo == "sty" || a:tipo == "bib"
        exec "source" . g:vimdir . "programacao/sources/soTEX"
+       let key = 1
 
     elseif a:tipo == "make"
        let b:comentario = '#'
@@ -169,6 +177,7 @@ func! CARREGAprg(tipo, ...)
           set softtabstop=4
           set modeline
           autocmd BufNewFile * call NOVOc('so'.g:vimdir.'programacao/headers/headerSCONS')
+          let key = 1
        else
           map <F2> :call ___Tipos__EXT___()<CR>
        endif
@@ -184,5 +193,7 @@ func! CARREGAprg(tipo, ...)
         " Recarregando ......
        exec "source" . g:vimdir . "vimload"
     endif
+
+    return key
 endfunc
 
