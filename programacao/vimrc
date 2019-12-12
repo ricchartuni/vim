@@ -15,7 +15,7 @@ if CARREGAprg(g:arqext) == 1
 
    silent! set nofoldenable
    noremap  zz :call SWAPfold()<CR>
-   noremap  tt dd<BAR>p<BAR>k<CR>
+   noremap  tt dd<BAR>]p<BAR>k<BAR>==<BAR>k<CR>
    noremap  ss yy<BAR>p<BAR>k<CR>
    func! SWAPfold()
      silent! set foldmethod=marker
