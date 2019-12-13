@@ -26,8 +26,8 @@
       PUBLIC  ::         SN
       PUBLIC  ::        NAO
       PUBLIC  ::        SIM
-      PUBLIC  ::         SP
-      PUBLIC  ::         DP
+      PUBLIC  ::     SPKIND 
+      PUBLIC  ::     DPKIND 
       PUBLIC  ::      INULO
       PUBLIC  ::      RNULO
       PUBLIC  ::      CNULO
