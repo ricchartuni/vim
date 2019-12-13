@@ -13,8 +13,8 @@
       CHARACTER(LEN=3), PARAMETER ::    SN(0:1) = (/'nao', 'sim'/)
       INTEGER         , PARAMETER ::        NAO = 0
       INTEGER         , PARAMETER ::        SIM = 1
-      INTEGER         , PARAMETER ::         SP = kind( 0.0)
-      INTEGER         , PARAMETER ::         DP = kind(0.d0)
+      INTEGER         , PARAMETER ::     SPKIND = kind( 0.0)
+      INTEGER         , PARAMETER ::     DPKIND = kind(0.d0)
       INTEGER         , PARAMETER ::      INULO = -99999
       REAL            , PARAMETER ::      RNULO = -99999.
       CHARACTER(LEN=*), PARAMETER ::      CNULO = '<<__NULL__>>'
