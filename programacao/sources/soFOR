@@ -89,3 +89,7 @@ inoremap '<CR>  '<CR>'<Esc>O
 " ===================================================
 
 "source ~/.vim/sources/fortran.vim
+
+if g:arqext == 'cuf'
+   noremap  ,a :silent! call PRECMDpreserva()<BAR>s/\(SUBROUTINE\)/ATTRIBUTES(GLOBAL) \1/<BAR>call POSCMDpreserva()<CR>
+endif
