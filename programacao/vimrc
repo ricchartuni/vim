@@ -8,7 +8,7 @@ if CARREGAprg(g:arqext) == 1
 \    call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
 
    let g:tstprint = 0
-   set relativenumber
+   silent! set relativenumber
    "set cursorline
     " Pular entre o if-endif/do-enddo/...
    runtime macros/matchit.vim
