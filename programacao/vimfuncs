@@ -189,8 +189,10 @@ func! CARREGAprg(tipo, ...)
        let recarrega = 'n'
     endif
     if recarrega == 'y'
-       let g:arqext  = expand('%:e')
+       "let g:arqext = expand('%:e')
+       let g:arqext = a:tipo
         " Recarregando ......
+       exec "source" . g:vimdir . "programacao/vimrc"
        exec "source" . g:vimdir . "vimload"
     endif
 
