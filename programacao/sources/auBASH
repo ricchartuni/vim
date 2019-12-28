@@ -23,7 +23,6 @@ function! Subrotina()
 \local verb=\"n\"\n
 \local ___parametros_de_chamada___=\$(argopcao \"\$@\")\n
 \local ___parametros_de_entrada___=\$(arglocal \"\$@\")\n
-\eval \$___parametros_de_entrada___\n
 \\n
 \local OPTIND\n
 \local OPTARG\n
@@ -41,6 +40,7 @@ function! Subrotina()
 \         esac\n
 \      done\n
 \      shift \$((OPTIND-1))\n
+\      eval \$___parametros_de_entrada___\n
 \\n
 \}\n
 \\#=======================================================================\n
