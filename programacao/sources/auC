@@ -134,6 +134,7 @@ function! DBGBin(tipo)
 \      char carq[1024];\n
 \      FILE * farq;\n
 \      int nn1 = 1001;\n
+\      ___ZZZ_tp0ok_ZZZ___int nnread;\n
 \      ___ZZZ_ii2_ZZZ___int nn2 = 1;\n
 \      ___ZZZ_ii3_ZZZ___int nn3 = 1;\n
 \/// XXXINITXXX   > > >   L E / E S C R E V E   B I N A R I O  = = I N I C I O\n
@@ -143,46 +144,67 @@ function! DBGBin(tipo)
 \      farq = fopen(carq, \"___ZZZ_abrefecha_ZZZ___\");\n
 \      setvbuf(farq, NULL, _IONBF, 0);\n
 \      ___ZZZ_ii3_ZZZ___for(int ii3=0; ii3<nn3; ii3=ii3+1)\n
-\      ___ZZZ_ii2_ZZZ___for(int ii2=0; ii2<nn2; ii2=ii2+1)\n
+\      ___ZZZ_ii2_ZZZ___for(int ii2=0; ii2<nn2; ii2=ii2+1){\n
 \         ___ZZZ_read_write_ZZZ___(array___ZZZ_indices_ZZZ___, sizeof(float), nn1, farq);\n
+\         ___ZZZ_tp0_ZZZ___if (nnread \!= nn1){\n
+\         ___ZZZ_tp0_ZZZ___   fprintf(stderr,\" *traces read error___ZZZ_dimensao2_ZZZ___\\\n\"___ZZZ_formato2_ZZZ___);\n
+\         ___ZZZ_tp0_ZZZ___   fflush (stderr);\n
+\         ___ZZZ_tp0_ZZZ___   return 1;\n
+\         ___ZZZ_tp0_ZZZ___}\n
+\      ___ZZZ_ii2_ZZZ___}\n
 \      fclose(farq);\n
 \/// XXXINITXXX   > > >   L E / E S C R E V E   B I N A R I O  = = = = = F I M\n
 \"
 
+    let sbst  = ''
+    let sdim  = ''
+    let sfmt  = ''
+    let sdim2 = ''
+    let sfmt2 = ''
+    if dim < 3
+       silent! execute 'g/___ZZZ_ii3_ZZZ___/d'
+    else
+       let sbst  = "".sbst."[ii3]"
+       let sdim  = "".sdim."_%d"
+       let sfmt  = ", nn3".sfmt.""
+       let sdim2 = "".sdim2." %d"
+       let sfmt2 = ", ii3+1".sfmt2.""
+       silent! execute '%s/___ZZZ_ii3_ZZZ___//g'
+    end
+    if dim < 2
+       silent! execute 'g/___ZZZ_ii2_ZZZ___/d'
+       silent! execute '%s/   \(___ZZZ_read_write_ZZZ___\)/\1/g'
+       silent! execute '%s/   \(___ZZZ_tp0_ZZZ___\)/\1/g'
+    else
+       let sbst  = "".sbst."[ii2]"
+       let sdim  = "".sdim."_%d"
+       let sfmt  = ", nn2".sfmt.""
+       let sdim2 = "".sdim2." %d"
+       let sfmt2 = ", ii2+1".sfmt2.""
+       silent! execute '%s/___ZZZ_ii2_ZZZ___//g'
+    end
+    silent! execute '%s/___ZZZ_indices_ZZZ___/'.sbst.'/g'
+    silent! execute '%s/___ZZZ_dimensao_ZZZ___/'.sdim.'/g'
+    silent! execute '%s/___ZZZ_formato_ZZZ___/'.sfmt.'/g'
+    silent! execute '%s/___ZZZ_dimensao2_ZZZ___/'.sdim2.'/g'
+    silent! execute '%s/___ZZZ_formato2_ZZZ___/'.sfmt2.'/g'
+
     if a:tipo == 0
+       silent! execute '%s/___ZZZ_tp0_ZZZ___//g'
+       silent! execute '%s/___ZZZ_tp0ok_ZZZ___//g'
        silent! execute '%s/___ZZZ_arquivo_ZZZ___/inp/g'
        silent! execute '%s/___ZZZ_tipo_ZZZ___/LEITURA/g'
        silent! execute '%s/___ZZZ_abrefecha_ZZZ___/rb/g'
-       silent! execute '%s/___ZZZ_read_write_ZZZ___/fread/g'
+       silent! execute '%s/___ZZZ_read_write_ZZZ___/nnread = fread/g'
     else
+       silent! execute 'g/___ZZZ_tp0_ZZZ___/d'
+       silent! execute 'g/___ZZZ_tp0ok_ZZZ___/d'
        silent! execute '%s/___ZZZ_arquivo_ZZZ___/out/g'
        silent! execute '%s/___ZZZ_tipo_ZZZ___/ESCRITA/g'
        silent! execute '%s/___ZZZ_abrefecha_ZZZ___/wb/g'
        silent! execute '%s/___ZZZ_read_write_ZZZ___/fwrite/g'
     end
 
-    let sbst = ''
-    let sdim = ''
-    let sfmt = ''
-    if dim < 3
-       silent! execute 'g/___ZZZ_ii3_ZZZ___/d'
-    else
-       let sbst = "".sbst."[ii3]"
-       let sdim = "".sdim."_%d"
-       let sfmt = ", nn3".sfmt.""
-       silent! execute '%s/___ZZZ_ii3_ZZZ___//g'
-    end
-    if dim < 2
-       silent! execute 'g/___ZZZ_ii2_ZZZ___/d'
-    else
-       let sbst = "".sbst."[ii2]"
-       let sdim = "".sdim."_%d"
-       let sfmt = ", nn2".sfmt.""
-       silent! execute '%s/___ZZZ_ii2_ZZZ___//g'
-    end
-    silent! execute '%s/___ZZZ_indices_ZZZ___/'.sbst.'/g'
-    silent! execute '%s/___ZZZ_dimensao_ZZZ___/'.sdim.'/g'
-    silent! execute '%s/___ZZZ_formato_ZZZ___/'.sfmt.'/g'
     call SUBS_name_init()    
 endfunction
 
