@@ -169,6 +169,7 @@ func! CARREGAprg(tipo, ...)
        if s:arqfname =~ "SConstruct"
           let b:comentario = '#'
           silent! exec 'so' . g:vimdir . 'programacao/sources/soPYTHON'
+          silent! exec 'set dictionary+=' . g:vimdir . 'dic/scons.dic'
           syntax on
           set filetype=python
           set tabstop=8
