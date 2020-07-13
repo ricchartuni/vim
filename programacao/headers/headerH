@@ -24,7 +24,7 @@
 #define  rad2deg(x) ((57.2957795131   )*(x))
 #endif
 #ifndef        swap
-#define   swap(x,y) {dum=(x); (x)=(y); (y)=dum;}
+#define   swap(x,y) {typeof(x) dum=(x); (x)=(y); (y)=dum;}
 #endif
 #ifndef        sim
 #define        sim 1
