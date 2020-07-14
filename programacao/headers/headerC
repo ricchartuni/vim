@@ -1,8 +1,8 @@
 :insert
 #include "XXXXXXX.h"
 
-#ifndef _DEBUG___
 //#define _DEBUG___
+#ifdef _DEBUG___
 #endif
 
 .
