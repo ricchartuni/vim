@@ -24,7 +24,7 @@ func! CMDdescomenta()
       silent! execute 's,^' . comentario . ',,'
       call POSCMDpreserva()
    else
-      let nomerotina = b:comentario(' >caracter de comentario: ')
+      let b:comentario = input(' >caracter de comentario: ')
       exec "source" . g:vimdir . "vimvars"
       call CMDdescomenta()
    end
