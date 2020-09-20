@@ -115,11 +115,11 @@ set sc
 "set mouse=r
 "set mouse=v
 
- " Copiar
-"vmap <C-Y> y
- " Colar
-"nmap <C-P> p
-"imap <C-P> <C-O>p
+ " Copiar para externo
+vmap <C-Y> "+y
+ " Colar de externo
+nmap <C-P> "+p
+imap <C-P> <C-O>"+p
  " Cortar
 "vmap <C-X> x
  " Desfazer

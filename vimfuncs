@@ -158,17 +158,24 @@ function! ToggleIt(tst)
     call PRECMDpreserva()
     call inputsave()
     let valor_rep = @/
-    let valor_org = substitute(valor_rep, '^..', '', '')
-    let valor_org = substitute(valor_org, '..$', '', '')
+    let valor_org = substitute(valor_rep, '^\\<', '', '')
+    let valor_org = substitute(valor_org, '\\>$', '', '')
     if a:tst == 1
        let toggle_org = input(' >trocar com: ')
     else
        let toggle_org = input(' >trocar na selecao com: ')
     endif
     let toggle_org = substitute(toggle_org, '/', '\\/', 'g')
-    let toggle_rep = substitute(toggle_org, '^', '\\<', '')
-    let toggle_rep = substitute(toggle_rep, '$', '\\>', '')
+    if valor_rep == valor_org 
+       let toggle_rep = toggle_org
+    else
+       let toggle_rep = substitute(toggle_org, '^', '\\<', '')
+       let toggle_rep = substitute(toggle_rep, '$', '\\>', '')
+    endif
     call inputrestore()
+
+" ** RChartuni >>    let tstaa = input(' *vo: ' .valor_org. ' vr: ' .valor_rep. ' to: ' .toggle_org. ' tr: ' .toggle_rep)
+
     if a:tst == 1
        silent! execute '%s/'.valor_rep.'/__XXXXXXXXxxxxxxXXXXXXXX__/g'
        silent! execute '%s/'.toggle_rep.'/'.valor_org.'/g'
