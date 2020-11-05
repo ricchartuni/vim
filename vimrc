@@ -121,7 +121,8 @@ vmap <C-Y> "+y
 nmap <C-P> "+p
 imap <C-P> <C-O>"+p
  " Cortar
-"vmap <C-X> x
+vmap <C-X> "+x
+imap <C-X> <C-O>"+x
  " Desfazer
 noremap <C-Z> u
 inoremap <C-Z> <C-O>u
