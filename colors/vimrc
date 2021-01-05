@@ -1,29 +1,66 @@
 "===================================================================
-" ESQUEMA DE CORES --- ESCOLHA -----------------------------
-"===================================================================
-if has("gui_running")
-"   colorscheme codeschool
-"   colorscheme inkpot
-"   colorscheme ir_black
-"   colorscheme ir_blue
-"   colorscheme ir_dark
-"   colorscheme PaperColor
-"   colorscheme railscasts
-"   colorscheme vcbc
-   "colorscheme wombat
-   colorscheme desert_
-"   colorscheme jellybeans
-"   colorscheme gruvbox
-   "colorscheme badwolf
-   "colorscheme solarized
-else
-   colorscheme desert_
-   "colorscheme solarized
-endif
-
-"===================================================================
 " ESQUEMA DE CORES --- ESCURO ------------------------------
 "===================================================================
 "set background=dark
 "hi Normal guifg=White guibg=grey20
+
+"===================================================================
+" ESQUEMA DE CORES --- ESCOLHA -----------------------------
+"===================================================================
+" colorschemes :::
+"   codeschool  inkpot      ir_black  ir_blue    ir_dark
+"   PaperColor  railscasts  vcbc      wombat     desert_
+"   jellybeans  gruvbox     badwolf   solarized
+silent! unlet g:colgui
+silent! unlet g:colnog
+silent! unlet g:guiact
+silent! unlet g:guidea
+silent! unlet g:guierr
+
+" https://www.color-hex.com/color-names.html
+if $USER == 'root'
+ " root
+    let g:colgui = 'PaperColor'
+    let g:colnog = 'PaperColor'
+    let g:guiact = '#F5F5F5'
+    let g:guidea = '#CDCDC1'
+    let g:guierr = '#FFA07A'
+else
+ " nao-root
+    let g:colgui = 'desert_'
+    let g:colnog = 'desert_'
+    let g:guiact = 'grey20'
+    let g:guidea = 'grey30'
+    let g:guierr = '#CD5C5C' "'#910000'
+end
+
+if has("gui_running")
+   exe "colorscheme ".g:colgui
+else
+   exe "colorscheme ".g:colnog
+endif
+
+"===================================================================
+if exists("g:guiact") && exists("g:guidea") && exists("g:guierr")
+  augroup focus_buffer_check " (160715) {{{
+ "--------------- FOCUS GAINED: Set your working GUI BACKGROUND COLOR
+  exe "au FocusGained *  :hi Normal guibg=".g:guiact
+ "--------------- FOCUS LOST: check the 'modified' option of all visible buffers
+  au      FocusLost   * let i = 0
+  au      FocusLost   * while i < bufnr('$')
+  au      FocusLost   *  if getbufvar(winbufnr(i), '&modified')
+  au      FocusLost   *   break
+  au      FocusLost   *  endif
+  au      FocusLost   *  let i = i+1
+  au      FocusLost   * endwhile
+ "---------------- SET GUI_BACKGROUND_COLOR ACCORDINGLY
+  au      FocusLost   * if i < bufnr("$")        " FOUND SOME 'modified' buffer
+  exe "au FocusLost   *  :hi Normal guibg=".g:guierr
+  au      FocusLost   * else                     " FOUND   NO 'modified' buffer
+  exe "au FocusLost   *  :hi Normal guibg=".g:guidea
+  au      FocusLost   *  cclose                  " -> close quickfix window
+  au      FocusLost   * endif
+  augroup END	" focus_buffer_check }}}
+end
+"===================================================================
 

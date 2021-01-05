@@ -140,28 +140,6 @@ set wildmode=longest,list,full
 
  " gravar arquivo ao sair do foco da janela
 "au FocusLost * :w
- augroup focus_buffer_check " (160715) {{{
-
- "---------------- FOCUS GAINED: Set your working GUI BACKGROUND COLOR
- au FocusGained *  :hi Normal guibg='grey20'
-
- "---------------- FOCUS LOST: check the 'modified' option of all visible buffers
- au FocusLost   * let i = 0
- au FocusLost   * while i < bufnr('$')
- au FocusLost   *  if getbufvar(winbufnr(i), '&modified')
- au FocusLost   *   break
- au FocusLost   *  endif
- au FocusLost   *  let i = i+1
- au FocusLost   * endwhile
- "---------------- SET GUI_BACKGROUND_COLOR ACCORDINGLY
- au FocusLost   * if i < bufnr("$")            " FOUND SOME 'modified' buffer
- au FocusLost   *  :hi Normal guibg='#910000'  " -> [ALARM-COLOR]
- au FocusLost   * else"                        " FOUND   NO 'modified' buffer
- au FocusLost   *  :hi Normal guibg='grey20' "'#000033'  " -> [OK-COLOR]
- au FocusLost   *  cclose                      " -> close quickfix window
- au FocusLost   * endif
-
- augroup END	" focus_buffer_check }}}
 
  " Carregando ......
 exec "source" . g:vimdir . "vimstartup"
