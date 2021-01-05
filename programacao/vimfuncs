@@ -82,7 +82,7 @@ func! SUBS_tstprint()
        let g:tstprint = g:tstprint + 1
     else
        let g:tstprint = 1
-       "set sessionoptions+=globals 
+       "set sessionoptions+=globals
     end
     let sbrt = NPad(g:tstprint, 5, 0)
     silent! execute '%s/___ZZZ_00000_ZZZ___/'.sbrt.'/g'
@@ -99,6 +99,7 @@ func! INFOgravacao()
       let save_cursor = getpos(".")
       let n = min([20, line("$")])
       silent! keepjumps exe '1,' . n . "/* Ultima modificacao:.*/s//* Ultima modificacao: .... " .strftime("%H:%M - %d.%m.%Y")
+      silent! keepjumps exe '1,' . n . "/* Modificado por: .........*/s//* Modificado por: ........ " . NPad($USER, 18)
       call histdel('search', -1)
       call setpos('.', save_cursor)
   endif
@@ -107,15 +108,15 @@ endfunc
 func! ___Tipos__EXT___()
    echo "  <F2> BASH"
    exec 'map <F2> :call  CARREGAprg("sh"  , "y") <CR>'
-   echo "  <F3> C"                                    
+   echo "  <F3> C"
    exec 'map <F3> :call  CARREGAprg("c"   , "y") <CR>'
-   echo "  <F4> CUDA"                                 
+   echo "  <F4> CUDA"
    exec 'map <F4> :call  CARREGAprg("cu"  , "y") <CR>'
-   echo "  <F5> FOR"                                  
+   echo "  <F5> FOR"
    exec 'map <F5> :call  CARREGAprg("f90" , "y") <CR>'
-   echo "  <F6> MENU"                                 
+   echo "  <F6> MENU"
    exec 'map <F6> :call  CARREGAprg("menu", "y") <CR>'
-   echo "  <F7> PYTHON"                               
+   echo "  <F7> PYTHON"
    exec 'map <F7> :call  CARREGAprg("py"  , "y") <CR>'
    echo "  <F8> TEX ==> z=: visualiza opções | zg/zug: adiciona/remove ao dicionario"
    exec 'map <F8> :call  CARREGAprg("tex" , "y") <CR>'
