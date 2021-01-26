@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 
+#define  ERR_CUDA  -999
 #define  CUDA_ASYNC(call) do{\
    cudaError_t err=call;\
    if (err != cudaSuccess){\
