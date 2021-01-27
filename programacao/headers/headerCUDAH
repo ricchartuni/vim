@@ -18,8 +18,8 @@
    }\
 }while(0)
 #define  CUDA_CALL(call) do {\
-   CUDA_ASYNC(cudaThreadSynchronize());\
-	CUDA_ASYNC(call);\
+   CUDA_ASYNC(cudaDeviceSynchronize());\
+   CUDA_ASYNC(call);\
 }while(0)
 
 //=========================================
