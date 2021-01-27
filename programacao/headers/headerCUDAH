@@ -3,6 +3,7 @@
 #define __XXXXXXX_CUH__
 
 #include <cstdlib>
+#include <cassert>
 #include <iostream>
 
 #define  ERR_CUDA  -999
@@ -11,6 +12,8 @@
    if (err != cudaSuccess){\
       fprintf(stderr,"CudaERR: %s(%i)\n  *%s %s\n",\
        __FILE__, __LINE__, cudaGetErrorString(err), #call);\
+      cudaDeviceReset();\
+      assert(0);\
       return ERR_CUDA;\
    }\
 }while(0)
