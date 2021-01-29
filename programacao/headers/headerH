@@ -5,11 +5,11 @@
 #ifndef         _pi
 #define         _pi 3.141592653589793116
 #endif
-#ifndef         max
-#define    max(x,y) ((x)>(y)?(x):(y))
+#ifndef       mymax
+#define  mymax(x,y) ((x)>(y)?(x):(y))
 #endif
-#ifndef         min
-#define    min(x,y) ((x)<(y)?(x):(y))
+#ifndef       mymin
+#define  mymin(x,y) ((x)<(y)?(x):(y))
 #endif
 #ifndef        nint
 #define     nint(x) ((int)((x)>0.0?(x)+0.5:(x)-0.5))
@@ -23,8 +23,8 @@
 #ifndef     rad2deg
 #define  rad2deg(x) ((57.2957795131   )*(x))
 #endif
-#ifndef        swap
-#define   swap(x,y) {typeof(x) dum=(x); (x)=(y); (y)=dum;}
+#ifndef      myswap
+#define myswap(x,y) {typeof(x) dum=(x); (x)=(y); (y)=dum;}
 #endif
 #ifndef        sim
 #define        sim 1
