@@ -23,19 +23,19 @@
 }while(0)
 
 //=========================================
-#define  nbx     (gridDim.x)
-#define  ibx     (blockIdx.x)
-#define  ntx     (blockDim.x)
-#define  itx     (threadIdx.x)
+#define  _nbx     (gridDim.x)
+#define  _ibx     (blockIdx.x)
+#define  _ntx     (blockDim.x)
+#define  _itx     (threadIdx.x)
 //---------------------------------------
-#define  nby     (gridDim.y)
-#define  iby     (blockIdx.y)
-#define  nty     (blockDim.y)
-#define  ity     (threadIdx.y)
+#define  _nby     (gridDim.y)
+#define  _iby     (blockIdx.y)
+#define  _nty     (blockDim.y)
+#define  _ity     (threadIdx.y)
 //---------------------------------------
-#define  indx    (ibx*ntx+itx)
-#define  indy    (iby*nty+ity)
-#define  tid     (ntx*ity+itx)
+#define  _indx    ((ibx)*(ntx)+(itx))
+#define  _indy    ((iby)*(nty)+(ity))
+#define  _tid     ((ntx)*(ity)+(itx))
 // __ind__ valido apenas para multiplo --
 // do WARPSIZE --------------------------
 #define  __ind__ ((nbx*indy+ibx)*ntx+itx)
