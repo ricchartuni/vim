@@ -68,6 +68,7 @@ noremap <silent> ,l :call DeleteTrailingINI()<CR>
  " remover os espacos repetidos da linha especifica, preservando paragrafo
 func! DeleteEspacosREP()
    call PRECMDpreserva()
+   call DeleteTrailingWS()
    s/[^ ]\zs\s\+/ /g
    call POSCMDpreserva()
 endfunc
@@ -79,6 +80,15 @@ func! DeleteTrailingWS()
    call POSCMDpreserva()
 endfunc
 noremap ,w :call DeleteTrailingWS()<CR>
+ " arruma virgulas na linha, preservando paragrafo
+func! DeleteVirgulasREP()
+   call PRECMDpreserva()
+   s/,/ , /g
+   s/\s\+,\s\+/, /g
+   call DeleteEspacosREP()
+   call POSCMDpreserva()
+endfunc
+noremap <silent> ,k :call DeleteVirgulasREP()<CR>
 
  " remover a insercao automatica de comentarios
 "autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
