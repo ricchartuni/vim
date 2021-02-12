@@ -119,7 +119,7 @@ set sc
 vmap <C-Y> "+y
  " Colar de externo
 nmap <C-P> "+p
-imap <C-P> <C-O>"+p
+imap <C-P> <C-O>"+P
  " Cortar
 vmap <C-X> "+x
 imap <C-X> <C-O>"+x
