@@ -9,7 +9,7 @@
 !         *** Criado por: .............. XXXNAMEXXX
 !         *** Criado em: ..................... XX.XX.XXXX
 !         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
-!         ***Modificado por: ........  
+!         *** Modificado por: ........  
 !=======================================================================
       USE rsf
       IMPLICIT NONE

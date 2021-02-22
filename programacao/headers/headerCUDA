@@ -25,7 +25,7 @@
 //        *** Criado por: .............. XXXNAMEXXX
 //        *** Criado em: ..................... XX.XX.XXXX
 //        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
-//        ***Modificado por: ........  
+//        *** Modificado por: ........  
 //======================================================================
       clock_t tbeg, tend;
       double  trun;
