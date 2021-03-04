@@ -1,5 +1,8 @@
-let b:com_nome = "Ricardo Chartuni"
+let b:com_nome   = "Ricardo Chartuni"
 let b:com_assina = "RChartuni"
+let b:usr        = $USER
+let b:host       = substitute(system('hostname'),'\n','','')
+let b:usrhost    = b:usr . "@" . b:host
 
 if exists("b:comentario")
    let b:com_leader = b:comentario." ** ".b:com_assina." >>"
