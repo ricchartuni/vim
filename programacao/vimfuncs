@@ -31,13 +31,19 @@ func! CMDdescomenta()
 endfunc
 
 function! ToggleComment()
-   let str = getline('.')
-   let comentario = substitute(b:com_leader, '/', '\\/', 'g')
-   let comentario = substitute(  comentario    , '*', '\\*', 'g')
-   if str =~ comentario
-      call CMDdescomenta()
+   if exists("b:com_leader")
+      let str = getline('.')
+      let comentario = substitute(b:com_leader, '/', '\\/', 'g')
+      let comentario = substitute(  comentario    , '*', '\\*', 'g')
+      if str =~ comentario
+         call CMDdescomenta()
+      else
+         call CMDcomenta()
+      end
    else
-      call CMDcomenta()
+      let b:comentario = input(' >caracter de comentario: ')
+      exec "source" . g:vimdir . "vimvars"
+      call ToggleComment()
    end
 endfunction
 
