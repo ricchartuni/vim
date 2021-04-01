@@ -50,6 +50,20 @@ set encoding=utf-8
  " The encoding written to file
 set fileencoding=utf-8
 
+"No bell
+set visualbell t_vb=
+
+"Cursor settings:
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
+let &t_SI.="\e[5 q" "SI = INSERT mode
+let &t_SR.="\e[4 q" "SR = REPLACE mode
+let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+
  " Mostrar identacao:
 "set list listchars=tab:»·,trail:·,eol:$
 
@@ -58,7 +72,6 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 endif
-
 
  " Reconhecer maiusculas na hora de salvar e sair:
 cab W w
