@@ -7,10 +7,15 @@ let b:comentario = "//"
 
 if expand('%:t:r') =~# "^M"
    autocmd BufNewFile M*.c   call TipoProgC()
+   autocmd BufNewFile M*.cc  call TipoProgC()
+   autocmd BufNewFile M*.cpp call TipoProgC()
 else
-   autocmd BufNewFile *.c    call TipoModC()
+   autocmd BufNewFile  *.c   call TipoModC()
+   autocmd BufNewFile  *.cc  call TipoModC()
+   autocmd BufNewFile  *.cpp call TipoModC()
 endif
 autocmd BufNewFile *.h       call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
+autocmd BufNewFile *.hh      call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
 
 function! TipoProgC()
   echo "  > Programa C............"

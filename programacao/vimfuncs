@@ -79,6 +79,9 @@ func! NOVOh(carregaarq, ...)
          end
       end
 
+      if g:arqext == "hh"
+         silent! execute '%s/XXXXXXX_H__/'.sbrt.'_HH__/g'
+      endif
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
 endfunc
@@ -141,7 +144,7 @@ func! CARREGAprg(tipo, ...)
     if     a:tipo == "sh"
        exec "source" . g:vimdir . "programacao/sources/soBASH"
        let key = 1
-    elseif a:tipo == "c" || a:tipo == "h" || a:tipo == "cpp"
+    elseif a:tipo == "c" || a:tipo == "h" || a:tipo == "cc" || a:tipo == "hh" || a:tipo == "cpp"
        exec "source" . g:vimdir . "programacao/sources/soC"
        let key = 1
     elseif a:tipo == "cu" || a:tipo == "cuh"
