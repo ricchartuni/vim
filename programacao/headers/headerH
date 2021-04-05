@@ -2,58 +2,64 @@
 #ifndef __XXXXXXX_H__
 #define __XXXXXXX_H__
 
-#ifndef         _pi
-#define         _pi 3.141592653589793116
+#ifndef         mypi
+#define         mypi 3.141592653589793116
 #endif
-#ifndef       mymax
-#define  mymax(x,y) ((x)>(y)?(x):(y))
+#ifndef        mymax
+#define   mymax(x,y) ((x)>(y)?(x):(y))
 #endif
-#ifndef       mymin
-#define  mymin(x,y) ((x)<(y)?(x):(y))
+#ifndef        mymin
+#define   mymin(x,y) ((x)<(y)?(x):(y))
 #endif
-#ifndef        nint
-#define     nint(x) ((int)((x)>0.0?(x)+0.5:(x)-0.5))
+#ifndef       mynint
+#define    mynint(x) ((int)((x)>0.0?(x)+0.5:(x)-0.5))
 #endif
-#ifndef         sqr
-#define      sqr(x) ((x)*(x))
+#ifndef        mysqr
+#define     mysqr(x) ((x)*(x))
 #endif
-#ifndef     deg2rad
-#define  deg2rad(x) ((  .0174532925199)*(x))
+#ifndef    mydeg2rad
+#define mydeg2rad(x) ((  .0174532925199)*(x))
 #endif
-#ifndef     rad2deg
-#define  rad2deg(x) ((57.2957795131   )*(x))
+#ifndef    myrad2deg
+#define myrad2deg(x) ((57.2957795131   )*(x))
 #endif
-#ifndef      myswap
-#define myswap(x,y) {typeof(x) dum=(x); (x)=(y); (y)=dum;}
+#ifndef       myswap
+#define  myswap(x,y) {typeof(x) dum=(x); (x)=(y); (y)=dum;}
 #endif
-#ifndef        sim
-#define        sim 1
+#ifndef        mysim
+#define        mysim 1
 #endif
-#ifndef        nao
-#define        nao 0
+#ifndef        mynao
+#define        mynao 0
 #endif
-#ifndef      inulo
-#define      inulo -99999
+#ifndef      myinulo
+#define      myinulo -99999
 #endif
-#ifndef      rnulo
-#define      rnulo -99999.
+#ifndef      mylnulo
+#define      mylnulo (long) inulo
+#endif
+#ifndef      myrnulo
+#define      myrnulo -99999.
+#endif
+#ifndef      mydnulo
+#define      mydnulo (double) rnulo
 #endif
 
 
-#ifndef ind2D
-#define ind2D(i1,i2,             n1            ) (((n1)*(i2)                    ) +      (i1                        ))
+#ifndef myind2D
+#define myind2D(i1,i2,             n1            ) (((n1)                    *(i2)) +        (i1                        ))
 #endif
-#ifndef ind3D
-#define ind3D(i1,i2,i3,          n1,n2         ) (((n1)*(n2)*(i3)               ) + ind2D(i1,i2,      n1            ))
+#ifndef myind3D
+#define myind3D(i1,i2,i3,          n1,n2         ) (((n1)*(n2)               *(i3)) + myind2D(i1,i2,         n1         ))
 #endif
-#ifndef ind4D
-#define ind4D(i1,i2,i3,i4,       n1,n2,n3      ) (((n1)*(n2)*(n3)*(i4)          ) + ind3D(i1,i2,i3,   n1,n2         ))
+#ifndef myind4D
+#define myind4D(i1,i2,i3,i4,       n1,n2,n3      ) (((n1)*(n2)*(n3)          *(i4)) + myind3D(i1,i2,i3,      n1,n2      ))
 #endif
-#ifndef ind5D
-#define ind5D(i1,i2,i3,i4,i5,    n1,n2,n3,n4   ) (((n1)*(n2)*(n3)*(n4)*(i5)     ) + ind4D(i1,i2,i3,i4,n1,n2,n3      ))
+#ifndef myind5D
+#define myind5D(i1,i2,i3,i4,i5,    n1,n2,n3,n4   ) (((n1)*(n2)*(n3)*(n4)     *(i5)) + myind4D(i1,i2,i3,i4,   n1,n2,n3   ))
 #endif
-#ifndef ind6D
-#define ind6D(i1,i2,i3,i4,i5,i6, n1,n2,n3,n4,n5) (((n1)*(n2)*(n3)*(n4)*(n5)*(i6)) + ind5D(i1,i2,i3,i4,i5,n1,n2,n3,n4))
+#ifndef myind6D
+#define myind6D(i1,i2,i3,i4,i5,i6, n1,n2,n3,n4,n5) (((n1)*(n2)*(n3)*(n4)*(n5)*(i6)) + myind5D(i1,i2,i3,i4,i5,n1,n2,n3,n4))
 #endif
 
 //---------------------------------------
