@@ -200,6 +200,21 @@ endfunction
 
  "resize window ...........................
 map <silent> <leader>r :set columns=200 lines=50<CR>
+ "toggle font..............................
+map <silent> ,f :call SetGuiFont()<CR>
+function! SetGuiFont(...)
+   if a:0 > 0
+      let fsize = a:1
+   else
+      let aux = getfontname()
+      if aux =~# "10$"
+         let fsize = '20'
+      else
+         let fsize = '10'
+      endif
+   endif
+   execute ':set guifont=Monospace\ '.fsize
+endfunction
 
 function! ViewVARS()
    let replacement = input(' **Caso queira exportar para saida >>>> :redir END e depois "ap')
