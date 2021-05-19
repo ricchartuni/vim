@@ -98,6 +98,19 @@ endfunction
 "===================================================================
 " ATALHO
 "===================================================================
+map <F5> :call Structure()<CR>
+function! Structure()
+    r! echo -e "
+\typedef struct struct_XXXSTRUCTXXX{\n
+\   \n
+\}XXXSTRUCTXXX_str;\n"
+    let sbrt = input(' >nome da estrutura: ')
+    silent! execute '%s/XXXSTRUCTXXX/'.sbrt.'/g'
+endfunction
+
+"===================================================================
+" ATALHO
+"===================================================================
 map <F6> :call TravaCOD()<CR>
 function! TravaCOD()
     r! echo -e "
