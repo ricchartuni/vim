@@ -107,8 +107,10 @@ func! INFOgravacao()
    if &modified
       let save_cursor = getpos(".")
       let n = min([20, line("$")])
-      silent! keepjumps exe '1,' . n . "/* Ultima modificacao:.*/s//* Ultima modificacao: .... " .strftime("%H:%M - %d.%m.%Y")
-      silent! keepjumps exe '1,' . n . "/* Modificado por: .........*/s//* Modificado por: ........ " . NPad(b:usrhost, 18)
+      let o = "Ultima modificacao: ...."
+      silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".strftime("%H:%M - %d.%m.%Y")
+      let o = "Modificado por: ........"
+      silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".NPad(b:usrhost, 18)
       call histdel('search', -1)
       call setpos('.', save_cursor)
   endif
