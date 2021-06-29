@@ -1,0 +1,166 @@
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+ " colocando funcao: --- Basta presionar <F2>
+map <F2> :call ParamFUNC0()<CR>
+function! ParamFUNC0()
+    r! echo -e "
+\;;; ........................................................\n
+\;;; FUNCOES ................................................\n
+\;;; ........................................................\n
+\            (DEFUNS\n
+\              t\n
+\              (progn\n
+\;;; ........................................................\n
+\                (defun x()\n
+\                   \n
+\                )\n
+\;;; ........................................................\n
+\;;; ...................................... FIM DAS FUNCOES .\n
+\              )\n
+\            )\n
+\;;; ........................................................\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+ " colocando funcao: --- Basta presionar <F3>
+map <F3> :call ParamFUNC()<CR>
+function! ParamFUNC()
+    r! echo -e "
+\;;; ........................................................\n
+\                (defun x()\n
+\                   \n
+\                )\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+ " colocando if: --- Basta presionar <F4>
+map <F4> :call ParamIF()<CR>
+function! ParamIF()
+    r! echo -e "
+\                (if (= (value 'AAA) 5)\n
+\                  (progn\n
+\                   \n
+\                  )\n
+\                  (progn\n
+\                   \n
+\                  )\n
+\                )\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+ " colocando regras: --- Basta presionar <F5>
+map <F5> :call ParamRULES()<CR>
+function! ParamRULES()
+    r! echo -e "
+\            (rule_x\n
+\              (= (value 'AAA) 5)\n
+\              (progn\n
+\                \n
+\              )\n
+\              (progn\n
+\                 \n
+\              )\n
+\            )\n
+\"
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+" colocando parametros int: --- Basta presionar <F6>
+map <F6> :call ParamINT()<CR>
+function! ParamINT()
+    r! echo -e "
+\  parameter: TESTE_INT\n
+\  text: \" << XXXINITXXX >> Chave para teste de inteiro\"\n
+\  mouse_text: \"\"\n
+\  type: typein:\n
+\  type_desc: ( int: 8 0 nil )\n
+\  value: 0\n
+\  showp: nil\n
+\;;; ........................................................\n
+\"
+    call SUBS_name_init()
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+" colocando parametros real: --- Basta presionar <F7>
+map <F7> :call ParamREAL()<CR>
+function! ParamREAL()
+    r! echo -e "
+\  parameter: TESTE_REAL\n
+\  text: \" << XXXINITXXX >> Chave para teste de real\"\n
+\  mouse_text: \"\"\n
+\  type: typein:\n
+\  type_desc: ( real: 8 0 nil )\n
+\  value: 0.\n
+\  showp: nil\n
+\;;; ........................................................\n
+\"
+    call SUBS_name_init()
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+ " colocando parametros char: --- Basta presionar <F8>
+map <F8> :call ParamSTR()<CR>
+function! ParamSTR()
+    r! echo -e "
+\  parameter: TESTE_STR\n
+\  text: \" << XXXINITXXX >> Chave para teste de string\"\n
+\  mouse_text: \"\"\n
+\  type: typein:\n
+\  type_desc: ( string: 80 )\n
+\  value: \"\"\n
+\  showp: nil\n
+\;;; ........................................................\n
+\"
+    call SUBS_name_init()
+endfunction
+
+"===================================================================
+" ATALHO --- MENU -----------------------------------------
+"===================================================================
+map <F9> :call StandAlone()<CR>
+function! StandAlone()
+    r! echo -e "
+\               (\"UTIL\"\n
+\                 (\"SPECIAL\"\n
+\                   (\"TOOLTYPE\" implicit: \"STAND_ALONE\")\n
+\                   (\"PATHNAME\" implicit: \"util.exe\")\n
+\                 )\n
+\                 (\"GENERAL\"\n
+\                   (\"TASK\" implicit: \"UNIXCOMM\")\n
+\                   (\"TYPEITIN\" implicit: 1)\n
+\                   (\"TYPECOMM\" implicit:\n
+\                    (string_concatinate\n
+\                      \"echo -e \\\"\"\n
+\                       \"  ** XXXINITXXX>> =======================___ZZZ_ZZZ___\\\n\"\n
+\                       \"  ** XXXINITXXX>> Teste de passagem 00000___ZZZ_ZZZ___\\\n\"\n
+\                       \"  ** XXXINITXXX>> =======================___ZZZ_ZZZ___\\\n\"\n
+\                       \"\\\"\\\n\"\n
+\                    )\n
+\                   )\n
+\                   (\"PICKCOMM\" implicit: \"\")\n
+\                   (\"LIST_MAN\" implicit: 0)\n
+\                 )\n
+\               )\n
+\;;; ........................................................\n
+\"
+    silent! execute '%s/___ZZZ_ZZZ___/\\/g'
+    call SUBS_name_init()
+endfunction
+

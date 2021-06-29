@@ -1,113 +1,11 @@
 " Carregar para programacao LISP .............
 echo "  > Carregando LISP ...................."
+exec "source" . g:vimdir . "programacao/sources/auMENU"
 
-let s:extfname = expand("%:e")
 let b:comentario = ';'
 
 "autocmd BufNewFile *.menu    call NOVOc('so ~/.vim/headers/headerMENU')
 
-"===================================================================
-" ATALHOS --- MENU -----------------------------------------
-"===================================================================
-" colocando parametros int: --- Basta presionar <F8>
-map <F9> O<CR>
-\               ("UTIL"<CR>
-\                 ("SPECIAL"<CR>
-\                   ("TOOLTYPE" implicit: "STAND_ALONE")<CR>
-\                   ("PATHNAME" implicit: "util.exe")<CR>
-\                 )<CR>
-\                 ("GENERAL"<CR>
-\                   ("TASK" implicit: "UNIXCOMM")<CR>
-\                   ("TYPEITIN" implicit: 1)<CR>
-\                   ("TYPECOMM" implicit:<CR>
-\                    (string_concatinate<CR>
-\                      "echo -e \""<CR>
-\                       "  ** UR9Z>> =======================\\n"<CR>
-\                       "  ** UR9Z>> Teste de passagem 00000\\n"<CR>
-\                       "  ** UR9Z>> =======================\\n"<CR>
-\                       "\"\n"<CR>
-\                    )<CR>
-\                   )<CR>
-\                   ("PICKCOMM" implicit: "")<CR>
-\                   ("LIST_MAN" implicit: 0)<CR>
-\                 )<CR>
-\               )<CR>
-\;;; ........................................................<CR>
-" colocando parametros int: --- Basta presionar <F5>
-map <F6> O<CR>
-\  parameter: TESTE_INT<CR>
-\  text: " << UR9Z >> Chave para teste de inteiro"<CR>
-\  mouse_text: ""<CR>
-\  type: typein:<CR>
-\  type_desc: ( int: 8 0 nil )<CR>
-\  value: 0<CR>
-\  showp: nil<CR><CR>
-\;;; ........................................................<CR>
- " colocando parametros real: --- Basta presionar <F6>
-map <F7> O<CR>
-\  parameter: TESTE_REAL<CR>
-\  text: " << UR9Z >> Chave para teste de real"<CR>
-\  mouse_text: ""<CR>
-\  type: typein:<CR>
-\  type_desc: ( real: 8 0 nil )<CR>
-\  value: ""<CR>
-\  showp: nil<CR>
-\;;; ........................................................<CR>
- " colocando parametros char: --- Basta presionar <F7>
-map <F8> O<CR>
-\  parameter: TESTE_STR<CR>
-\  text: " << UR9Z >> Chave para teste de string"<CR>
-\  mouse_text: ""<CR>
-\  type: typein:<CR>
-\  type_desc: ( string: 80 )<CR>
-\  value: ""<CR>
-\  showp: nil<CR>
-\;;; ........................................................<CR>
-
- " colocando funcao: --- Basta presionar <F1>
-map <F2> O<CR>
-\;;; ........................................................<CR>
-\;;; FUNCOES ................................................<CR>
-\;;; ........................................................<CR>
-\            (DEFUNS<CR>
-\              t<CR>
-\              (progn<CR>
-\;;; ........................................................<CR>
-\                (defun x()<CR>
-\                   <CR>
-\                )<CR>
-\;;; ........................................................<CR>
-\;;; ...................................... FIM DAS FUNCOES .<CR>
-\              )<CR>
-\            )<CR>
-\;;; ........................................................<CR>
- " colocando funcao: --- Basta presionar <F2>
-map <F3> O<CR>
-\;;; ........................................................<CR>
-\                (defun x()<CR>
-\                   <CR>
-\                )<CR>
- " colocando if: --- Basta presionar <F3>
-map <F4> O<CR>
-\                (if (= (value 'AAA) 5)<CR>
-\                  (progn<CR>
-\                   <CR>
-\                  )<CR>
-\                  (progn<CR>
-\                   <CR>
-\                  )<CR>
-\                )<CR>
- " colocando regras: --- Basta presionar <F4>
-map <F5> O<CR>
-\            (rule_x<CR>
-\              (= (value 'AAA) 5)<CR>
-\              (progn<CR>
-\                <CR>
-\              )<CR>
-\              (progn<CR>
-\                 <CR>
-\              )<CR>
-\            )<CR>
  " tab com espacos ..................
 set smarttab
 set softtabstop=2
@@ -119,28 +17,6 @@ autocmd FileType * retab
 exec 'set dictionary+=' . g:vimdir . 'dic/menu.dic'
 au BufNewFile,BufRead * set filetype=lisp
 set filetype=lisp
-
-"set smartindent
-set autoindent
- "fechar automaticamente parentesis, colchetes, ....
-inoremap (      ()<Left>
-inoremap ((     (
-inoremap ()     ()
-inoremap (<CR>  (<CR>)<Esc>O<TAB>
-
-inoremap [      []<Left>
-inoremap [[     [
-inoremap []     []
-inoremap [<CR>  [<CR>]<Esc>O
-
-inoremap {      {}<Left>
-inoremap {{     {
-inoremap {}     {}
-inoremap {<CR>  {<CR>}<Esc>O<TAB>
-
-inoremap "      ""<Left>
-inoremap ""     "
-inoremap "<CR>  "<CR>"<Esc>O
 " ===================================================
 
 noremap  ,q :call TrocaSHOW()<CR>
