@@ -70,22 +70,6 @@ set ft=fortran
 " trocar fortran 77 > 90
 """ nmap <S-F>
 nmap <silent> <leader>f :set syntax=fortran<CR>:let b:fortran_fixed_source=!b:fortran_fixed_source<CR>:set syntax=text<CR>:set syntax=fortran<CR>
-
-"set smartindent
-set autoindent
- "fechar automaticamente parentesis, colchetes, ....
-inoremap (      ()<Left>
-inoremap ((     (
-inoremap ()     ()
-inoremap (<CR>  (<CR>)<Esc>O
-
-inoremap "      ""<Left>
-inoremap ""     "
-inoremap "<CR>  "<CR>"<Esc>O
-
-inoremap '      ''<Left>
-inoremap ''     '
-inoremap '<CR>  '<CR>'<Esc>O
 " ===================================================
 
 "source ~/.vim/sources/fortran.vim

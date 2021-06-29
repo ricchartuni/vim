@@ -1,0 +1,174 @@
+function! AutoCompleteAll(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   if a:0 > 1
+      let tp = a:2
+   else
+      let tp = 'none'
+   endif
+   "------------------------------
+   call AutoCompletePar( set    )
+   call AutoCompleteCol( set    )
+   call AutoCompleteCha( set    )
+   call AutoCompleteM_M( set    )
+   call AutoCompleteDol( set, tp)
+   call AutoCompleteAsps(set    )
+   call AutoCompleteAspd(set    )
+endfunction
+
+function! AutoCompletePar(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   (
+   silent! iunmap   (<CR>
+   silent! iunmap   ((
+   silent! iunmap   ()
+   "------------------------------
+   if set == 'y'
+      inoremap (       ()<Left>
+      inoremap (<CR>   (<CR>)<Esc>O
+      inoremap ((      (
+      inoremap ()      ()
+   endif
+endfunction
+
+function! AutoCompleteCol(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   [
+   silent! iunmap   [<CR>
+   silent! iunmap   [[
+   silent! iunmap   []
+   "------------------------------
+   if set == 'y'
+      inoremap {       {}<Left>
+      inoremap {<CR>   {<CR>}<Esc>O
+      inoremap {{      {
+      inoremap {}      {}
+   endif
+endfunction
+
+function! AutoCompleteCha(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   {
+   silent! iunmap   {<CR>
+   silent! iunmap   {{
+   silent! iunmap   {}
+   "------------------------------
+   if set == 'y'
+      inoremap {       {}<Left>
+      inoremap {<CR>   {<CR>}<Esc>O
+      inoremap {{      {
+      inoremap {}      {}
+   endif
+endfunction
+
+function! AutoCompleteM_M(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   <
+   silent! iunmap   <<CR>
+   silent! iunmap   <<
+   silent! iunmap   <>
+   "------------------------------
+   if set == 'y'
+      inoremap <       <><Left>
+      inoremap <<CR>   <<CR>><Esc>O
+      inoremap <<      <
+      inoremap <>      <>
+   endif
+endfunction
+
+function! AutoCompleteDol(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   $
+   silent! iunmap   ${
+   silent! iunmap   ${{
+   silent! iunmap   ${}
+   silent! iunmap   $(
+   silent! iunmap   $((
+   silent! iunmap   $()
+   silent! iunmap   $$
+   "------------------------------
+   if set == 'y'
+      if a:0 > 1
+         let tp = a:2
+      else
+         let tp = 'none'
+      endif
+      if tp == 'sh'
+         inoremap $      ${}<Left>
+         inoremap ${     ${}<Left>
+         inoremap ${{    ${
+         inoremap ${}    ${}
+         inoremap $(     $()<Left>
+         inoremap $((    $(
+         inoremap $()    $()
+      else
+         inoremap $      $$<Left>
+         inoremap $<CR>  $<CR>$<Esc>O
+         inoremap $$     $
+      endif
+   endif
+endfunction
+
+function! AutoCompleteAsps(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   '
+   silent! iunmap   '<CR>
+   silent! iunmap   ''
+   "------------------------------
+   if set == 'y'
+      inoremap '       ''<Left>
+      inoremap '<CR>   '<CR>'<Esc>O
+      inoremap ''      '
+   endif
+endfunction
+
+function! AutoCompleteAspd(...)
+   if a:0 > 0
+      let set = a:1
+   else
+      let set = 'n'
+   endif
+   "------------------------------
+   silent! iunmap   "
+   silent! iunmap   "<CR>
+   silent! iunmap   ""
+   "------------------------------
+   if set == 'y'
+      inoremap "       ""<Left>
+      inoremap "<CR>   "<CR>"<Esc>O
+      inoremap ""      "
+   endif
+endfunction

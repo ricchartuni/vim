@@ -3,6 +3,15 @@
 "===================================================================
  " HEADERS para PROGRAMACAO
 
+exec "source" . g:vimdir . "programacao/sources/soCOMPLETE"
+"set smartindent
+set autoindent
+call AutoCompletePar( 'y')
+call AutoCompleteCol( 'y')
+call AutoCompleteCha( 'y')
+call AutoCompleteAsps('y')
+call AutoCompleteAspd('y')
+
 if CARREGAprg(g:arqext) == 1
    autocmd BufWritePre,FileWritePre *
 \    call CMDpreserva('call DeleteTrailingWS() |call INFOgravacao()')
