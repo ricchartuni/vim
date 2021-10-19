@@ -15,6 +15,7 @@ set expandtab
 autocmd FileType * retab
 
  " maximo de colunas ................
+ " apply: select line and gq ........
 set tw=72
 set colorcolumn=72
 
