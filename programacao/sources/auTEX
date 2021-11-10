@@ -38,6 +38,7 @@ function! Figura()
 \___ZZZ_ii1_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii1_ZZZ___    \\\centering\n
 \    \includegraphics[width=\\\textwidth]{xxxA}\n
+\___ZZZ_ii1_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii1_ZZZ___    \\\caption{}\n
 \___ZZZ_ii1_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii1_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____A}\n
@@ -49,6 +50,7 @@ function! Figura()
 \___ZZZ_ii2_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii2_ZZZ___    \\\centering\n
 \___ZZZ_ii2_ZZZ___    \includegraphics[width=\\\textwidth]{xxxB}\n
+\___ZZZ_ii2_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii2_ZZZ___    \\\caption{}\n
 \___ZZZ_ii2_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii2_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____B}\n
@@ -60,6 +62,7 @@ function! Figura()
 \___ZZZ_ii3_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii3_ZZZ___    \\\centering\n
 \___ZZZ_ii3_ZZZ___    \includegraphics[width=\\\textwidth]{xxxC}\n
+\___ZZZ_ii3_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii3_ZZZ___    \\\caption{}\n
 \___ZZZ_ii3_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii3_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____C}\n
@@ -71,6 +74,7 @@ function! Figura()
 \___ZZZ_ii4_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii4_ZZZ___    \\\centering\n
 \___ZZZ_ii4_ZZZ___    \includegraphics[width=\\\textwidth]{xxxD}\n
+\___ZZZ_ii4_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii4_ZZZ___    \\\caption{}\n
 \___ZZZ_ii4_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii4_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____D}\n
@@ -82,6 +86,7 @@ function! Figura()
 \___ZZZ_ii5_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii5_ZZZ___    \\\centering\n
 \___ZZZ_ii5_ZZZ___    \includegraphics[width=\\\textwidth]{xxxE}\n
+\___ZZZ_ii5_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii5_ZZZ___    \\\caption{}\n
 \___ZZZ_ii5_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii5_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____E}\n
@@ -93,12 +98,14 @@ function! Figura()
 \___ZZZ_ii6_ZZZ___  \\\begin{subfigure}[b]{___ZZZ_tamanho_ZZZ___\\\textwidth}\n
 \___ZZZ_ii6_ZZZ___    \\\centering\n
 \___ZZZ_ii6_ZZZ___    \includegraphics[width=\\\textwidth]{xxxF}\n
+\___ZZZ_ii6_ZZZ___    \\\vspace*{-0.25cm}\n
 \___ZZZ_ii6_ZZZ___    \\\caption{}\n
 \___ZZZ_ii6_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii6_ZZZ___    \label{fig:___ZZZ_figlabel_ZZZ____F}\n
 \___ZZZ_ii6_ZZZ___\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \___ZZZ_ii6_ZZZ___  \\\end{subfigure}\n
 \___ZZZ_ii6_ZZZ___\%----------------------------------------------------------------------\n
+\  \\\vspace*{-0.10cm}\n
 \  \\\caption{}\n
 \\%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n
 \  \label{fig:___ZZZ_figlabel_ZZZ___}\n
