@@ -16,9 +16,63 @@ autocmd FileType * retab
 
  " maximo de colunas ................
  " apply: select line and gq ........
-nmap ,j {jv}kJvgq
+" ** RChartuni >>nmap ,j {jv}kJvgq
+" ** RChartuni >>nmap ,j ,w{jv}k,l{jv}kJ,svgq
+nmap ,j :call TSTLinewrap()<CR>
 set tw=72
 set colorcolumn=72
+
+func! TSTLinewrap()
+   " achar primeira linha ...................
+   call PRECMDpreserva()
+   " ir ao inicio do paragrafo ..............
+   norm {j
+   let apos = getpos('.')
+   let alin = line('.')
+   call POSCMDpreserva()
+   call PRECMDpreserva()
+   " ir ao ponto anterior ......???..........
+   norm {k
+   let bpos = getpos('.')
+   let blin = line('.')
+   call POSCMDpreserva()
+   if alin > blin
+     let pos1 = apos
+     let lin1 = alin
+   else
+     let pos1 = bpos
+     let lin1 = blin
+   endif
+
+   " achar ultima linha .....................
+   call PRECMDpreserva()
+   " ir ao fim do paragrafo .................
+   norm }
+   let apos = getpos('.')
+   let alin = line('.')
+   call POSCMDpreserva()
+   call PRECMDpreserva()
+   " ir ao ponto posterior .....???..........
+   norm }k
+   let bpos = getpos('.')
+   let blin = line('.')
+   call POSCMDpreserva()
+   if lin1 > blin
+     norm vgq
+     return
+   else
+     if alin < blin
+       let pos2 = apos
+     else
+       let pos2 = bpos
+     endif
+   endif
+
+   call setpos('.', pos1)
+   norm v
+   call setpos('.', pos2)
+   norm Jvgq
+endfunc
 
  " dicionario .......................
 exec 'set dictionary+=' . g:vimdir . 'dic/latex.dic'
