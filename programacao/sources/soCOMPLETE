@@ -33,6 +33,7 @@ function! AutoCompletePar(...)
    "------------------------------
    if set == 'y'
       inoremap (       ()<Left>
+      inoremap (<BS>   <Left><Right>
       inoremap (<CR>   (<CR>)<Esc>O
       inoremap ((      (
       inoremap ()      ()
@@ -53,6 +54,7 @@ function! AutoCompleteCol(...)
    "------------------------------
    if set == 'y'
       inoremap [       []<Left>
+      inoremap [<BS>   <Left><Right>
       inoremap [<CR>   [<CR>}<Esc>O
       inoremap [[      [
       inoremap []      []
@@ -73,6 +75,7 @@ function! AutoCompleteCha(...)
    "------------------------------
    if set == 'y'
       inoremap {       {}<Left>
+      inoremap {<BS>   <Left><Right>
       inoremap {<CR>   {<CR>}<Esc>O
       inoremap {{      {
       inoremap {}      {}
@@ -93,6 +96,7 @@ function! AutoCompleteM_M(...)
    "------------------------------
    if set == 'y'
       inoremap <       <><Left>
+      inoremap <<BS>   <Left><Right>
       inoremap <<CR>   <<CR>><Esc>O
       inoremap <<      <
       inoremap <>      <>
@@ -123,7 +127,9 @@ function! AutoCompleteDol(...)
       endif
       if tp == 'sh'
          inoremap $      ${}<Left>
+         inoremap $<BS>  <BS><Right><BS>
          inoremap ${     ${}<Left>
+         inoremap ${<BS> <BS><Right><BS>
          inoremap ${{    ${
          inoremap ${}    ${}
          inoremap $(     $()<Left>
@@ -131,6 +137,7 @@ function! AutoCompleteDol(...)
          inoremap $()    $()
       else
          inoremap $      $$<Left>
+         inoremap $<BS>  <Right><BS>
          inoremap $<CR>  $<CR>$<Esc>O
          inoremap $$     $
       endif
