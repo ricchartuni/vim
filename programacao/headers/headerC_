@@ -9,6 +9,14 @@
 #include <rsf.h>
 
 //======================================================================
+   static void trun(char *cmsg, const clock_t t1, const clock_t t2){
+//---------------------------------------------------------------------
+      double tr = (double) (t2-t1)/CLOCKS_PER_SEC;
+      fprintf(stderr,"  ** RChartuni>> %s %lf\n", cmsg, tr);
+   }
+//======================================================================
+
+//======================================================================
    int main(int argc, char *argv[]){
 //---------------------------------------------------------------------
 // Descricao: Programa principal para processamento no Madagascar
@@ -18,7 +26,7 @@
 //        *** Criado por: .............. XXXNAMEXXX
 //        *** Criado em: ..................... XX.XX.XXXX
 //        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
-//        *** Modificado por: ........  
+//        *** Modificado por: ........
 //======================================================================
       int   n1;
       int   n2;
@@ -26,8 +34,21 @@
       int   i2;
       float clip;
       float *trace = NULL;
+      clock_t t000;
+      clock_t tbeg;
+      clock_t tend;
       sf_file sfin  = NULL;
       sf_file sfout = NULL;
+
+#ifdef _DEBUG___
+      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
+      fprintf(stderr,"  ** XXXINITXXX>> Testando programa\n"      );
+      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
+      fflush (stderr);
+#endif
+
+      tbeg  = clock();
+      t000  = tbeg;
 
       // Initialize RSF
       sf_init(argc,argv);
@@ -41,15 +62,15 @@
 
       if (!sf_getfloat("clip",&clip)) sf_error("Need clip=");
 
-#ifdef _DEBUG___
-      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
-      fprintf(stderr,"  ** XXXINITXXX>> Testando programa\n"      );
-      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
-      fflush (stderr);
-#endif
+      tend  = clock();
+      trun("Inicializacao ..........", tbeg, tend);
 
+      tbeg  = clock();
       trace = sf_floatalloc(n1);
+      tend  = clock();
+      trun("Alocacao ...............", tbeg, tend);
 
+      tbeg  = clock();
       for (i2=0; i2 < n2; i2++){
          sf_floatread(trace,n1,sfin);
          for (i1=0; i1 < n1; i1++){
@@ -58,9 +79,17 @@
          }
          sf_floatwrite(trace,n1,sfout);
       }
+      tend  = clock();
+      trun("Processamento ..........", tbeg, tend);
 
+      tbeg  = clock();
       free(trace);
       sf_close();
+      tend  = clock();
+      trun("Liberacao de memoria ...", tbeg, tend);
+
+      fprintf(stderr,"  ** RChartuni>> =======================\n");
+      trun("Total do programa ......", t000, tend);
       exit(0);
    }
 //======================================================================
