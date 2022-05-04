@@ -11,7 +11,7 @@ main_XXXXXXX(){
 #         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
 #         *** Modificado por: ........
 #=======================================================================
-local dirscr=${BASH_SOURCE%/*}
+local dirsrc=${BASH_SOURCE%/*}
 
 }
 #=======================================================================
