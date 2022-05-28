@@ -9,10 +9,10 @@
 #include <rsf.h>
 
 //======================================================================
-   static void trun(char *cmsg, const clock_t t1, const clock_t t2){
+   static void trun(char *cmsg, const clock_t t1, const clock_t t2, FILE *fp){
 //---------------------------------------------------------------------
       double tr = (double) (t2-t1)/CLOCKS_PER_SEC;
-      fprintf(stderr,"  ** RChartuni>> %s %lf\n", cmsg, tr);
+      fprintf(fp,"  ** RChartuni>> %s %lf\n", cmsg, tr);
    }
 //======================================================================
 
@@ -63,12 +63,12 @@
       if (!sf_getfloat("clip",&clip)) sf_error("Need clip=");
 
       tend  = clock();
-      trun("Inicializacao ..........", tbeg, tend);
+      trun("Inicializacao ..........", tbeg, tend, stderr);
 
       tbeg  = clock();
       trace = sf_floatalloc(n1);
       tend  = clock();
-      trun("Alocacao ...............", tbeg, tend);
+      trun("Alocacao ...............", tbeg, tend, stderr);
 
       tbeg  = clock();
       for (i2=0; i2 < n2; i2++){
@@ -80,16 +80,16 @@
          sf_floatwrite(trace,n1,sfout);
       }
       tend  = clock();
-      trun("Processamento ..........", tbeg, tend);
+      trun("Processamento ..........", tbeg, tend, stderr);
 
       tbeg  = clock();
       free(trace);
       sf_close();
       tend  = clock();
-      trun("Liberacao de memoria ...", tbeg, tend);
+      trun("Liberacao de memoria ...", tbeg, tend, stderr);
 
       fprintf(stderr,"  ** RChartuni>> =======================\n");
-      trun("Total do programa ......", t000, tend);
+      trun("Total do programa ......", t000, tend, stderr);
       exit(0);
    }
 //======================================================================
