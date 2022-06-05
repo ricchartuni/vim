@@ -32,17 +32,23 @@
 #ifndef        mynao
 #define        mynao 0
 #endif
+#ifndef  myfunc_fail
+#define  myfunc_fail 1
+#endif
+#ifndef  myfunc___ok
+#define  myfunc___ok 0
+#endif
 #ifndef      myinulo
 #define      myinulo -99999
 #endif
 #ifndef      mylnulo
-#define      mylnulo (long) inulo
+#define      mylnulo (long) myinulo
 #endif
 #ifndef      myrnulo
 #define      myrnulo -99999.
 #endif
 #ifndef      mydnulo
-#define      mydnulo (double) rnulo
+#define      mydnulo (double) myrnulo
 #endif
 
 
