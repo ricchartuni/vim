@@ -9,6 +9,8 @@
 !----------------------------------------------------------------------
 !         *** Criado por: .............. XXXNAMEXXX
 !         *** Criado em: ..................... XX.XX.XXXX
+!         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+!         *** Modificado por: ........  
 !=======================================================================
       use rsf
       IMPLICIT NONE
@@ -17,6 +19,13 @@
       integer                         :: n1, n2, i1, i2
       real                            :: clip
       real, dimension(:), allocatable :: trace
+
+#ifdef _DEBUG___
+      write(0,*)'  ** XXXINITXXX>> ======================='
+      write(0,*)'  ** XXXINITXXX>> Testando programa ', nomerotina
+      write(0,*)'  ** XXXINITXXX>> ======================='
+      flush(0)
+#endif
 
       call sf_init() ! initialize RSF
       sfin  = rsf_input()
@@ -27,13 +36,6 @@
       call from_par(sfin,"n1",n1)
       n2 = filesize(sfin,1)
       call from_par("clip", clip) ! command-line parameter
-
-#ifdef _DEBUG___
-      write(0,*)'  ** XXXINITXXX>> ======================='
-      write(0,*)'  ** XXXINITXXX>> Testando programa ', nomerotina
-      write(0,*)'  ** XXXINITXXX>> ======================='
-      flush(0)
-#endif
 
       allocate (trace(n1))
 
