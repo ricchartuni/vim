@@ -1,4 +1,8 @@
 :insert
+//#define _DEBUG___
+#ifdef _DEBUG___
+#endif
+
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
