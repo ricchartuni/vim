@@ -14,7 +14,9 @@
 !=======================================================================
       use rsf
       IMPLICIT NONE
+#ifdef _DEBUG___
       character(len=*), parameter     :: nomerotina = "<<MAIN_XXXXXXX>>"
+#endif
       type(file)                      :: sfin, sfout
       integer                         :: n1, n2, i1, i2
       real                            :: clip

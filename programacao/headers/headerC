@@ -2,6 +2,7 @@
 #include "XXXXXXX_static.h"
 
 //#define _DEBUG___
+#include "mydbg.h"
 #ifdef _DEBUG___
 #endif
 

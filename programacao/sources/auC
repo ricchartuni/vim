@@ -23,8 +23,11 @@ function! Subrotina()
 \//         *** Criado por: .............. XXXNAMEXXX\n
 \//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
+\      MYDBG_BEGINROUTINE();\n
 \\n
 \\n
+\\n
+\      MYDBG_ENDROUTINE();\n
 \   }\n
 \//======================================================================\n
 \"
@@ -50,8 +53,11 @@ function! FuncaoF()
 \//         *** Criado por: .............. XXXNAMEXXX\n
 \//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
+\      MYDBG_BEGINFUNCTION();\n
 \\n
 \\n
+\\n
+\      MYDBG_ENDFUNCTION();\n
 \      return 0;\n
 \   }\n
 \//======================================================================\n
@@ -68,16 +74,17 @@ endfunction
 map <F3> :call WriteTest()<CR>
 function! WriteTest()
     r! echo -e "
-\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
-\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
-\      fprintf(stderr,\"  ** XXXINITXXX>> % :: ___ZZZ_00000_ZZZ___\\\n\");\n
-\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
-\      fflush (stderr);\n
-\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+\      MYDBG_TEST();\n
 \"
 
-    call SUBS_name_init()    
-    call SUBS_tstprint()
+" ** RChartuni >>\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
+" ** RChartuni >>\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
+" ** RChartuni >>\      fprintf(stderr,\"  ** XXXINITXXX>> % :: ___ZZZ_00000_ZZZ___\\\n\");\n
+" ** RChartuni >>\      fprintf(stderr,\"  ** XXXINITXXX>> ============================================\\\n\");\n
+" ** RChartuni >>\      fflush (stderr);\n
+" ** RChartuni >>\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = = = = F I M\n
+" ** RChartuni >>    call SUBS_name_init()    
+" ** RChartuni >>    call SUBS_tstprint()
 endfunction
 
 "===================================================================
@@ -114,21 +121,22 @@ endfunction
 map <F6> :call TravaCOD()<CR>
 function! TravaCOD()
     r! echo -e "
-\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = I N I C I O\n
-\      int i_entra = 1;\n
-\      int i_atual = 1;\n
-\      if (i_atual == i_entra){\n
-\         fprintf(stderr,\"\\\n\");\n
-\         fprintf(stderr,\"  ** XXXINITXXX>> Teste de parada para DEBUG\\\n\");\n
-\         fprintf(stderr,\"  ** XXXINITXXX>> ==========================\\\n\");\n
-\         fflush (stderr);\n
-\         int i_debug = 1;\n
-\         do{\n
-\         }while(i_debug == 1);\n
-\      }\n
-\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = = = = F I M\n
+\      MYDBG_PAUSE();\n
 \"
-    call SUBS_name_init()
+" ** RChartuni >>\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = I N I C I O\n
+" ** RChartuni >>\      int i_entra = 1;\n
+" ** RChartuni >>\      int i_atual = 1;\n
+" ** RChartuni >>\      if (i_atual == i_entra){\n
+" ** RChartuni >>\         fprintf(stderr,\"\\\n\");\n
+" ** RChartuni >>\         fprintf(stderr,\"  ** XXXINITXXX>> Teste de parada para DEBUG\\\n\");\n
+" ** RChartuni >>\         fprintf(stderr,\"  ** XXXINITXXX>> ==========================\\\n\");\n
+" ** RChartuni >>\         fflush (stderr);\n
+" ** RChartuni >>\         int i_debug = 1;\n
+" ** RChartuni >>\         do{\n
+" ** RChartuni >>\         }while(i_debug == 1);\n
+" ** RChartuni >>\      }\n
+" ** RChartuni >>\/// XXXINITXXX   > > >   T E S T E    P A R A   D E B U G = = = = = = = F I M\n
+" ** RChartuni >>    call SUBS_name_init()
 endfunction
 
 "===================================================================

@@ -23,8 +23,8 @@
       real                            :: clip
       real, dimension(:), allocatable :: trace
 
-#ifdef DEBUG
-      write(0,*)'  ** XXXINITXXX>> Testando versao DUBUG RSF para CLIP de tracos :: -cpp -ffree-form -DDEBUG'
+#ifdef _DEBUG___
+      write(0,*)'  ** XXXINITXXX>> Testando versao DUBUG RSF para CLIP de tracos :: -cpp -ffree-form -D_DEBUG___'
 #else
       write(0,*)'  ** XXXINITXXX>> Testando versao NORMAL RSF para CLIP de tracos :: -cpp -ffree-form'
 #endif

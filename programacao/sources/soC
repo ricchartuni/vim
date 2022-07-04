@@ -19,6 +19,7 @@ autocmd BufNewFile *.hh      call NOVOh('so'.g:vimdir.'programacao/headers/heade
 
 function! TipoProgC()
   echo "  > Programa C............"
+  call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
   call NOVOc('so'.g:vimdir.'programacao/headers/headerC_')
 endfunction
 

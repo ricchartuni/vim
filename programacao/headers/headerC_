@@ -1,7 +1,4 @@
 :insert
-//#define _DEBUG___
-#ifdef _DEBUG___
-#endif
 
 #include <assert.h>
 #include <math.h>
@@ -10,7 +7,7 @@
 #include <string.h>
 #include <time.h>
 
-#include <rsf.h>
+#include "myrsf.h"
 
 //======================================================================
    int main(int argc, char *argv[]){
@@ -30,13 +27,7 @@
       float *trace = NULL;
       sf_file sfin  = NULL;
       sf_file sfout = NULL;
-
-#ifdef _DEBUG___
-      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
-      fprintf(stderr,"  ** XXXINITXXX>> Testando programa\n"      );
-      fprintf(stderr,"  ** XXXINITXXX>> =======================\n");
-      fflush (stderr);
-#endif
+      MYDBG_BEGINPROGRAM();
 
       // Initialize RSF
       sf_init(argc,argv);
@@ -63,6 +54,7 @@
 
       free(trace);
       sf_close();
+      MYDBG_ENDPROGRAM();
       exit(0);
    }
 //======================================================================

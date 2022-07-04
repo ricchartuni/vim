@@ -9,7 +9,9 @@
       !-------------------------
       ! Variaveis
       !-------------------------
+#ifdef _DEBUG___
       CHARACTER(LEN=*), PARAMETER :: nomemodulo = '<<XXXXXXX>>'
+#endif
       CHARACTER(LEN=3), PARAMETER ::    SN(0:1) = (/'nao', 'sim'/)
       INTEGER         , PARAMETER ::        NAO = 0
       INTEGER         , PARAMETER ::        SIM = 1
@@ -22,7 +24,9 @@
       REAL            , PARAMETER ::    DEG2RAD =   .0174532925199
       REAL            , PARAMETER ::    RAD2DEG = 57.29577951319
       !.........................
+#ifdef _DEBUG___
       PRIVATE :: nomemodulo
+#endif
       PUBLIC  ::         SN
       PUBLIC  ::        NAO
       PUBLIC  ::        SIM

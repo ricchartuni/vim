@@ -9,7 +9,7 @@
 !         *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
 !         *** Modificado por: ........  
 !=======================================================================
-//#define _DEBUG___
+!#define _DEBUG___
 #ifdef _DEBUG___
 #endif
       IMPLICIT NONE
