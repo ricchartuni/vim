@@ -1,0 +1,19 @@
+:insert
+#ifndef __myrsf_H__
+#define __myrsf_H__
+
+#ifdef __cplusplus
+#include <rsf.hh>
+#else
+#include <rsf.h>
+#endif
+
+#define rsfint       0
+#define rsffloat     1
+#define rsfcomplex   2
+#define rsfaint     50
+#define rsfafloat   51
+#define rsfacomplex 52
+
+#endif
+.

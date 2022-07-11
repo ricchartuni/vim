@@ -1,5 +1,6 @@
 :insert
 #include "XXXXXXX_static.h"
+#include "constantes.h"
 
 //#define _DEBUG___
 #include "mydbg.h"

@@ -1,0 +1,97 @@
+:insert
+#ifndef __mydbg_H__
+#define __mydbg_H__
+
+//===========================================
+#ifdef _TSTDBG__
+//-------------------------------------------
+#define MYDBG_FILE     stderr
+#define MYDBG_NL()     fprintf(MYDBG_FILE,"\n")
+#define MYDBG_INILIN() fprintf(MYDBG_FILE,"  ** ")
+//-------------------------------------------
+#define MYDBG_PRN(M,...)            do{\
+   MYDBG_INILIN();                     \
+   fprintf(MYDBG_FILE,M,##__VA_ARGS__);\
+}while(0)
+//-------------------------------------------
+#define MYDBG_INFO()   MYDBG_PRN("%s(%d) :: %s\n",__FILE__,__LINE__,__func__)
+//-------------------------------------------
+#define MYDBG_COM0()   MYDBG_PRN(">> =======================\n")
+#define MYDBG_BEG(c)   MYDBG_PRN(">> BEGIN %s %s\n",c,__func__)
+#define MYDBG_END(c)   MYDBG_PRN(">> END %s %s\n",c,__func__)
+#define MYDBG_COM1()   MYDBG_PRN(">> -----------------------\n")
+#define MYDBG_FLUSH()  fflush( MYDBG_FILE)
+//-------------------------------------------
+#define MYDBG_BEGAUX(c) do{\
+   MYDBG_COM0();           \
+   MYDBG_BEG(c);           \
+   MYDBG_COM0();           \
+   MYDBG_NL();             \
+   MYDBG_FLUSH();          \
+}while(0)
+//-------------------------------------------
+#define MYDBG_ENDAUX(c) do{\
+   MYDBG_NL();             \
+   MYDBG_COM0();           \
+   MYDBG_END(c);           \
+   MYDBG_COM0();           \
+   MYDBG_FLUSH();          \
+}while(0)
+//-------------------------------------------
+#define MYDBG_BEGINPROGRAM()  MYDBG_BEGAUX("PROGRAM")
+#define MYDBG_ENDPROGRAM()    MYDBG_ENDAUX("PROGRAM")
+//-------------------------------------------
+#define MYDBG_BEGINROUTINE()  MYDBG_BEGAUX("ROUTINE")
+#define MYDBG_ENDROUTINE()    MYDBG_ENDAUX("ROUTINE")
+//-------------------------------------------
+#define MYDBG_BEGINFUNCTION() MYDBG_BEGAUX("FUNCTION")
+#define MYDBG_ENDFUNCTION()   MYDBG_ENDAUX("FUNCTION")
+//-------------------------------------------
+#define MYDBG_PAUSE()                     do{\
+   MYDBG_NL();                               \
+   MYDBG_COM0();                             \
+   MYDBG_PRN("DEBUG PAUSE .......\n");       \
+   MYDBG_COM1();                             \
+   MYDBG_INFO();                             \
+   MYDBG_PRN(" Reset imydbg to continue\n"); \
+   MYDBG_COM0();                             \
+   MYDBG_NL();                               \
+   MYDBG_FLUSH();                            \
+   int imydbg = 1;                           \
+   do{                                       \
+   }while(imydbg == 1);                      \
+}while(0)
+//-------------------------------------------
+#define MYDBG_TEST()                     do{\
+   MYDBG_NL();                              \
+   MYDBG_COM0();                            \
+   MYDBG_PRN("DEBUG TEST ........\n");      \
+   MYDBG_COM1();                            \
+   MYDBG_INFO();                            \
+   MYDBG_COM0();                            \
+   MYDBG_NL();                              \
+   MYDBG_FLUSH();                           \
+}while(0)
+//-------------------------------------------
+//===========================================
+#else
+//-------------------------------------------
+#define MYDBG_NULL()          do{}while(0)
+//-------------------------------------------
+#define MYDBG_PRN(M,...)      MYDBG_NULL()
+//-------------------------------------------
+#define MYDBG_BEGINPROGRAM()  MYDBG_NULL()
+#define MYDBG_ENDPROGRAM()    MYDBG_NULL()
+#define MYDBG_BEGINROUTINE()  MYDBG_NULL()
+#define MYDBG_ENDROUTINE()    MYDBG_NULL()
+#define MYDBG_BEGINFUNCTION() MYDBG_NULL()
+#define MYDBG_ENDFUNCTION()   MYDBG_NULL()
+//-------------------------------------------
+#define MYDBG_PAUSE()         MYDBG_NULL()
+#define MYDBG_TEST()          MYDBG_NULL()
+//-------------------------------------------
+#endif
+//===========================================
+
+#endif
+.

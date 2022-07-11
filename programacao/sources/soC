@@ -5,6 +5,7 @@ exec "source" . g:vimdir . "programacao/sources/auC"
 
 let b:comentario = "//"
 
+" C files ..................................
 if expand('%:t:r') =~# "^M"
    autocmd BufNewFile M*.c   call TipoProgC()
    autocmd BufNewFile M*.cc  call TipoProgC()
@@ -14,8 +15,19 @@ else
    autocmd BufNewFile  *.cc  call TipoModC()
    autocmd BufNewFile  *.cpp call TipoModC()
 endif
-autocmd BufNewFile *.h       call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
-autocmd BufNewFile *.hh      call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
+" ..........................................
+" H files ..................................
+if     g:arqname == "myrsf.h"
+   autocmd BufNewFile *      call NOVOh('so'.g:vimdir.'programacao/headers/myrsfH')
+elseif g:arqname == "mydbg.h"
+   autocmd BufNewFile *      call NOVOh('so'.g:vimdir.'programacao/headers/mydbgH')
+elseif g:arqname == "constantes.h"
+   autocmd BufNewFile *      call NOVOh('so'.g:vimdir.'programacao/headers/constantesH')
+else
+   autocmd BufNewFile *.h    call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
+   autocmd BufNewFile *.hh   call NOVOh('so'.g:vimdir.'programacao/headers/headerH')
+endif
+" ..........................................
 
 function! TipoProgC()
   echo "  > Programa C............"
