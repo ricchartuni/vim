@@ -40,6 +40,8 @@ function! TipoModC()
   call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
 endfunction
 
+ " troca estrutura '.' '->' .........
+nnoremap st :call ToggleIt(3)<CR>
 
  " tab com espacos ..................
 set smarttab
