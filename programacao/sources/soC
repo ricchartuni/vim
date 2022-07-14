@@ -42,6 +42,7 @@ endfunction
 
  " troca estrutura '.' '->' .........
 nnoremap st :call ToggleIt(3)<CR>
+vnoremap st <esc>:call ToggleIt(4)<CR>
 
  " tab com espacos ..................
 set smarttab

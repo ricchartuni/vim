@@ -168,15 +168,15 @@ function! ToggleIt(tst)
     call PRECMDpreserva()
     call inputsave()
     let valor_rep = @/
-    if a:tst == 3
+    if a:tst == 1
+       let toggle_org = input(' >trocar com: ')
+    elseif a:tst == 2
+       let toggle_org = input(' >trocar na selecao com: ')
+    else
        let valor_rep = substitute(valor_rep, '^\\<', '', '')
        let valor_rep = substitute(valor_rep, '\\>$', '', '')
        let toggle_org = substitute(valor_rep, '$', '->', '')
        let valor_rep  = substitute(valor_rep, '$', '\\.', '')
-    elseif a:tst == 1
-       let toggle_org = input(' >trocar com: ')
-    else
-       let toggle_org = input(' >trocar na selecao com: ')
     endif
     let valor_org = substitute(valor_rep, '^\\<', '', '')
     let valor_org = substitute(valor_org, '\\>$', '', '')
@@ -191,14 +191,14 @@ function! ToggleIt(tst)
 
 " ** RChartuni >>    let tstaa = input(' *vo: ' .valor_org. ' vr: ' .valor_rep. ' to: ' .toggle_org. ' tr: ' .toggle_rep)
 
-    if a:tst == 2
-       silent! execute "'<,'>s/".valor_rep."/__XXXXXXXXxxxxxxXXXXXXXX__/g"
-       silent! execute "'<,'>s/".toggle_rep."/".valor_org."/g"
-       silent! execute "'<,'>s/__XXXXXXXXxxxxxxXXXXXXXX__/".toggle_org."/g"
-    else
+    if a:tst == 1 || a:tst == 3
        silent! execute '%s/'.valor_rep.'/__XXXXXXXXxxxxxxXXXXXXXX__/g'
        silent! execute '%s/'.toggle_rep.'/'.valor_org.'/g'
        silent! execute '%s/__XXXXXXXXxxxxxxXXXXXXXX__/'.toggle_org.'/g'
+    else
+       silent! execute "'<,'>s/".valor_rep."/__XXXXXXXXxxxxxxXXXXXXXX__/g"
+       silent! execute "'<,'>s/".toggle_rep."/".valor_org."/g"
+       silent! execute "'<,'>s/__XXXXXXXXxxxxxxXXXXXXXX__/".toggle_org."/g"
     endif
     call POSCMDpreserva()
 endfunction
