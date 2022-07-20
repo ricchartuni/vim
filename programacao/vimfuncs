@@ -131,6 +131,8 @@ func! ___Tipos__EXT___()
    exec 'map <F7> :call  CARREGAprg("py"  , "y") <CR>'
    echo "  <F8> TEX ==> z=: visualiza opções | zg/zug: adiciona/remove ao dicionario"
    exec 'map <F8> :call  CARREGAprg("tex" , "y") <CR>'
+   echo "  <F9> Make"
+   exec 'map <F9> :call  CARREGAprg("make", "y") <CR>'
 endfunc
 
 func! CARREGAprg(tipo, ...)
@@ -141,6 +143,7 @@ func! CARREGAprg(tipo, ...)
     silent! unmap <F6>
     silent! unmap <F7>
     silent! unmap <F8>
+    silent! unmap <F9>
     let key = 0
      " opcoes de acordo com formato
     if     a:tipo == "sh"
@@ -166,6 +169,7 @@ func! CARREGAprg(tipo, ...)
        let key = 1
 
     elseif a:tipo == "make"
+       set ft=make
        let b:comentario = '#'
 
     elseif a:tipo == "m"
