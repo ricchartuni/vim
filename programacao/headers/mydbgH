@@ -62,10 +62,13 @@
    }while(imydbg == 1);                      \
 }while(0)
 //-------------------------------------------
-#define MYDBG_TEST()                     do{\
+#define MYDBG_TEST(M,...)                do{\
    MYDBG_NL();                              \
    MYDBG_COM0();                            \
-   MYDBG_PRN("DEBUG TEST ........\n");      \
+   if(strlen(M) == 1)                       \
+      MYDBG_PRN("DEBUG TEST ........\n");   \
+   else                                     \
+      MYDBG_PRN(M,##__VA_ARGS__);           \
    MYDBG_COM1();                            \
    MYDBG_INFO();                            \
    MYDBG_COM0();                            \
