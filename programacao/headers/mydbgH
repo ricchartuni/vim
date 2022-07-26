@@ -91,7 +91,7 @@
 #define MYDBG_ENDFUNCTION()   MYDBG_NULL()
 //-------------------------------------------
 #define MYDBG_PAUSE()         MYDBG_NULL()
-#define MYDBG_TEST()          MYDBG_NULL()
+#define MYDBG_TEST(M,...)     MYDBG_NULL()
 //-------------------------------------------
 #endif
 //===========================================
