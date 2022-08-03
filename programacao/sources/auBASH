@@ -20,7 +20,7 @@ function! Subrotina()
 \local erro_echo=\" **__\${FUNCNAME}_err___**\"\n
 \local warn_echo=\" **__\${FUNCNAME}_warn__**\"\n
 \local opa=\"teste\"\n
-\local verb=\"n\"\n
+\local verb=\"\"\n
 \local ___parametros_de_chamada___=\$(argopcao \"\$@\")\n
 \local ___parametros_de_entrada___=\$(arglocal \"\$@\")\n
 \\n
@@ -31,7 +31,7 @@ function! Subrotina()
 \      while getopts 'a:vh' opts 2>/dev/null; do\n
 \         case \"\${opts}\" in\n
 \            a) opa=\${OPTARG} ;;\n
-\            v) verb=\"s\"      ;;\n
+\            v) verb=\"-v\"     ;;\n
 \            h)\n
 \               echo -n \"  $> \$funcao_atual\"\n
 \               echo\n
