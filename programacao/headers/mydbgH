@@ -4,10 +4,29 @@
 
 //===========================================
 #ifdef _TSTDBG__
+#include <string.h>
+#ifdef _USAR_MPI___
+#include <mpi.h>
+#endif
 //-------------------------------------------
 #define MYDBG_FILE     stderr
 #define MYDBG_NL()     fprintf(MYDBG_FILE,"\n")
-#define MYDBG_INILIN() fprintf(MYDBG_FILE,"  ** ")
+//-------------------------------------------
+#ifdef _USAR_MPI___
+#define MYDBG_INILIN()                    do{\
+   MYDBG_INIAUX();                           \
+   int isinit;                               \
+   MPI_Initialized(&isinit);                 \
+   if (isinit){                              \
+      int wrank;                             \
+      MPI_Comm_rank(MPI_COMM_WORLD, &wrank); \
+      fprintf(MYDBG_FILE,"(%08d) ", wrank);  \
+   }                                         \
+}while(0)
+#else
+#define MYDBG_INILIN() MYDBG_INIAUX()
+#endif
+#define MYDBG_INIAUX() fprintf(MYDBG_FILE,"  ** ")
 //-------------------------------------------
 #define MYDBG_PRN(M,...)            do{\
    MYDBG_INILIN();                     \
