@@ -3,6 +3,7 @@
 #define __mydbg_H__
 
 //===========================================
+#define MYDBG_COMM_WORLD -50
 #ifdef _TSTDBG__
 #include <string.h>
 #ifdef _USAR_MPI___
@@ -81,6 +82,28 @@
    }while(imydbg == 1);                      \
 }while(0)
 //-------------------------------------------
+#ifdef _USAR_MPI___
+#define MYDBG_MPITEST(R,M,...)               do{\
+   int mydbg_key=0;                             \
+   if(R==MYDBG_COMM_WORLD)                      \
+      mydbg_key=1;                              \
+   else{                                        \
+      int isinit;                               \
+      MPI_Initialized(&isinit);                 \
+      if (isinit){                              \
+         int wrank;                             \
+         MPI_Comm_rank(MPI_COMM_WORLD, &wrank); \
+         if(wrank==R)                           \
+            mydbg_key=1;                        \
+      }                                         \
+   }                                            \
+   if(mydbg_key==1)                             \
+      MYDBG_TEST(M,##__VA_ARGS__);              \
+}while(0)
+#else
+#define MYDBG_MPITEST(R,M,...)       \
+           MYDBG_TEST(M,##__VA_ARGS__)
+#endif
 #define MYDBG_TEST(M,...)                do{\
    MYDBG_NL();                              \
    MYDBG_COM0();                            \
@@ -100,7 +123,7 @@
 //-------------------------------------------
 #define MYDBG_NULL()          do{}while(0)
 //-------------------------------------------
-#define MYDBG_PRN(M,...)      MYDBG_NULL()
+#define MYDBG_PRN(...)        MYDBG_NULL()
 //-------------------------------------------
 #define MYDBG_BEGINPROGRAM()  MYDBG_NULL()
 #define MYDBG_ENDPROGRAM()    MYDBG_NULL()
@@ -110,7 +133,8 @@
 #define MYDBG_ENDFUNCTION()   MYDBG_NULL()
 //-------------------------------------------
 #define MYDBG_PAUSE()         MYDBG_NULL()
-#define MYDBG_TEST(M,...)     MYDBG_NULL()
+#define MYDBG_TEST(...)       MYDBG_NULL()
+#define MYDBG_MPITEST(...)    MYDBG_NULL()
 //-------------------------------------------
 #endif
 //===========================================
