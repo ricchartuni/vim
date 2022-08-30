@@ -1,0 +1,155 @@
+:insert
+
+#include <assert.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+#ifdef _USAR_MPI___
+//#define _USAR_MAINMPI___
+#endif
+
+#define __MYRSFCMDOPC__
+#ifdef __MYRSFCMDOPC__
+#define myrsfinit(AC,AV) rsfopcinit(AC,AV)
+#else
+#define myrsfinit(AC,AV) rsfinit(AC,AV)
+#endif
+
+#include "myrsf.h"
+#include "rsfutl.h"
+#include "alocacao.h"
+#include "mpiutl.h"
+#include "mylog.h"
+
+#define main_kill() main_kill0(0, NULL)
+#define PROG_KILL "Finalize program"
+
+#define ERR_INPUT_TYPE  51
+#define ERR_INPUT___N1  52
+#define ERR_INPUT_CLIP  53
+#define ERR_SEIS_ALLOC  54
+
+static int         n1;
+static int         n2;
+static float     clip;
+static float   **seis;
+static sf_file  sfinp;
+static sf_file  sfout;
+
+//======================================================================
+   int main(int argc, char *argv[]){
+//---------------------------------------------------------------------
+// Descricao: Programa principal
+//---------------------------------------------------------------------
+//        *** Criado por: .............. XXXNAMEXXX
+//        *** Criado em: ..................... XX.XX.XXXX
+//        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
+//        *** Modificado por: ........
+//======================================================================
+      // Initialize .........
+      main_init(argc, argv);
+
+      // Proccess ...........
+      main_proc();
+
+      // Finish program .....
+      main_kill();
+   }
+//======================================================================
+
+//======================================================================
+   static void main_proc(){
+//---------------------------------------------------------------------
+      size_t n = n1*n2;
+      sf_floatread(seis[0],n,sfinp);
+      for (int i2=0; i2<n2; i2++){
+         for (int i1=0; i1<n1; i1++){
+            if      (seis[i2][i1] >  clip) seis[i2][i1]= clip;
+            else if (seis[i2][i1] < -clip) seis[i2][i1]=-clip;
+         }
+      }
+      sf_floatwrite(seis[0],n,sfout);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_kill0(const int iend, char *cerr){
+//---------------------------------------------------------------------
+      // Program finalization
+//---------------------------------------------------------------------
+      if(seis) UTL_Free2(seis);
+//---------------------------------------------------------------------
+      // Finalize RSF
+      sf_close();
+      // Finalize LOGFILE
+      MYLOG_KILL(iend,cerr);
+#ifdef _USAR_MPI___
+      // Finalize MPI
+      mympi_finalize();
+#endif
+      // Finalize Program
+      exit(iend);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_init(int argc, char *argv[]) {
+//---------------------------------------------------------------------
+#ifdef _USAR_MAINMPI___
+      // Initialize MPI
+      mympi_init(argc,argv);
+#endif
+      // Initialize RSF
+      myrsfinit(argc,argv);
+      // Initialize LOGFILE
+      MYLOG_INIT(argv, sf_getstring("log"));
+//---------------------------------------------------------------------
+      // Program initialization
+//---------------------------------------------------------------------
+      seis  = NULL;
+      sfinp = sf_input("in");
+      sfout = sf_output("out");
+
+      main_err(SF_FLOAT!=sf_gettype(sfinp), ERR_INPUT_TYPE);
+      main_err(!sf_histint(sfinp,"n1",&n1), ERR_INPUT___N1);
+      n2 = sf_leftsize(sfinp,1);
+      main_err(!sf_getfloat("clip",&clip) , ERR_INPUT_CLIP);
+
+      seis = UTL_Malloc2F(n2,n1);
+      main_err(!seis, ERR_SEIS_ALLOC);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_err(const int iret, const int itype) {
+//---------------------------------------------------------------------
+      if(iret == 0)
+         return;
+
+      char cerr[1024];
+      switch(itype){
+         case ERR_INPUT_TYPE:
+            strcpy(cerr, "Need float input file .....");
+            break;
+         case ERR_INPUT___N1:
+            strcpy(cerr, "Input file must have n1 information .....");
+            break;
+         case ERR_INPUT_CLIP:
+            strcpy(cerr, "Must define clip  .....");
+            break;
+         case ERR_SEIS_ALLOC:
+            strcpy(cerr, "Could not allocate seis .....");
+            break;
+         default:
+            strcpy(cerr, "Error not defined .....");
+            break;
+      }
+      strcat(cerr, "\n");
+      main_kill0(itype, cerr);
+   }
+//======================================================================
+
+.
