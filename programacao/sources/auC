@@ -111,7 +111,8 @@ function! Structure()
 \typedef struct struct_XXXSTRUCTXXX{\n
 \   \n
 \}XXXSTRUCTXXX_str;\n"
-    let sbrt = input(' >nome da estrutura: ')
+" ** RChartuni >>    let sbrt = input(' >nome da estrutura: ')
+    let sbrt = expand('%:t:r')
     silent! execute '%s/XXXSTRUCTXXX/'.sbrt.'/g'
 endfunction
 
