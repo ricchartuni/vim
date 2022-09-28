@@ -2,9 +2,12 @@
 #include "XXXXXXX_static.h"
 #include "constantes.h"
 
+#include <math.h>
+
 //#define _DEBUG___
 #include "mydbg.h"
 #ifdef _DEBUG___
+//#define _LOCALDEBUG___
 #endif
 
 .
