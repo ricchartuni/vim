@@ -152,9 +152,11 @@ function! ReplaceIt(tst)
     let replacement = substitute(replacement, '/', '\\/', 'g')
     call inputrestore()
     if a:tst == 1
-       silent! execute '%s//'.replacement.'/g'
+       "silent! execute '%s//'.replacement.'/g'
+       silent! execute ':%SmartCase("'.replacement.'")'
     else
-       silent! execute "'<,'>s//".replacement."/g"
+       "silent! execute "'<,'>s//".replacement."/g"
+       silent! execute ':SmartCase("'.replacement.'")'
     endif
     call cursor(cursor_pos[1], cursor_pos[2])
 endfunction
