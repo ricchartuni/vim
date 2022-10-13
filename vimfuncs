@@ -139,8 +139,29 @@ map <silent> ,e :e ++enc=1252 <C-R>=expand("%:p")<CR><CR>
 map <C-w> <esc>/warning<CR>
 
  "substituir a palavra procurada por ......
-nnoremap <leader>s :call ReplaceIt(1)<CR>
-vnoremap <leader>s <esc>:call ReplaceIt(2)<CR>
+nnoremap <leader>sc :call SmartReplaceIt(1)<CR>
+vnoremap <leader>sc <esc>:call SmartReplaceIt(2)<CR>
+function! SmartReplaceIt(tst)
+    let cursor_pos = getpos(".")
+    call inputsave()
+    if a:tst == 1
+       let replacement = input(' >substituicao por: ')
+    else
+       let replacement = input(' >substituicao da selecao por: ')
+    endif
+    let replacement = substitute(replacement, '/', '\\/', 'g')
+    call inputrestore()
+    if a:tst == 1
+       silent! execute ':%SmartCase("'.replacement.'")'
+    else
+       silent! execute ':SmartCase("'.replacement.'")'
+    endif
+    call cursor(cursor_pos[1], cursor_pos[2])
+endfunction
+
+ "substituir a palavra procurada por ......
+nnoremap <leader>ss :call ReplaceIt(1)<CR>
+vnoremap <leader>ss <esc>:call ReplaceIt(2)<CR>
 function! ReplaceIt(tst)
     let cursor_pos = getpos(".")
     call inputsave()
@@ -152,15 +173,12 @@ function! ReplaceIt(tst)
     let replacement = substitute(replacement, '/', '\\/', 'g')
     call inputrestore()
     if a:tst == 1
-       "silent! execute '%s//'.replacement.'/g'
-       silent! execute ':%SmartCase("'.replacement.'")'
+       silent! execute '%s//'.replacement.'/g'
     else
-       "silent! execute "'<,'>s//".replacement."/g"
-       silent! execute ':SmartCase("'.replacement.'")'
+       silent! execute "'<,'>s//".replacement."/g"
     endif
     call cursor(cursor_pos[1], cursor_pos[2])
 endfunction
-
  "Substituir selecao com y/n ............
 vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
  "trocar as palavras procurada com ......
