@@ -4,16 +4,6 @@
 
 #include <stddef.h>
 
-#ifdef __cplusplus
-extern "C"{
-#endif
-
-
-
-#ifdef __cplusplus
-}
-#endif
-
-#include "XXXXXXX_func.h"
+#include "XXXXXXX_funcs.h"
 #endif
 .

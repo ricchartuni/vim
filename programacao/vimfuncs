@@ -79,9 +79,41 @@ func! NOVOh(carregaarq, ...)
          end
       end
 
-      if g:arqext == "hh"
-         silent! execute '%s/XXXXXXX_H__/'.sbrt.'_HH__/g'
+      let key = 0
+      if     g:arqext == "c"
+         let s1  = "C"
+         let s2  = ".h"
+	 let key = 1
+      elseif g:arqext == "cc"
+         let s1  = "CC"
+         let s2  = ".hh"
+	 let key = 1
+      elseif g:arqext == "cpp"
+         let s1  = "CPP"
+         let s2  = ".hh"
+	 let key = 1
+      elseif g:arqext == "h"
+         let s1 = "H"
+         let s2 = ".h"
+      elseif g:arqext == "hh"
+         let s1 = "HH"
+         let s2 = ".hh"
       endif
+
+      let s1 = "_".s1."__" 
+      if key == 1
+         if g:arqname =~# "^M"
+            let s2 = "_funcs".s2 
+         endif
+      endif
+
+      let aux = sbrt.'_funcs'.s2
+      silent! execute '%s/XXXXXXX_funcs.h/'.aux.'/g'
+      let aux = sbrt.s1
+      silent! execute '%s/XXXXXXX_C__/'.aux.'/g'
+      silent! execute '%s/XXXXXXX_H__/'.aux.'/g'
+      let aux = sbrt.s2
+      silent! execute '%s/XXXXXXX.h/'.aux.'/g'
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
 endfunc

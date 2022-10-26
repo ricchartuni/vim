@@ -1,5 +1,6 @@
 :insert
-#include "XXXXXXX_static.h"
+#define __XXXXXXX_C__
+#include "XXXXXXX.h"
 #include "constantes.h"
 
 #include <math.h>
