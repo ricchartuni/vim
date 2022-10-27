@@ -1,11 +1,7 @@
 :insert
 #define __XXXXXXX_C__
 #include "XXXXXXX.h"
-#include "constantes.h"
 
-#include <math.h>
-
-//#define _DEBUG___
 #include "mydbg.h"
 #ifdef _DEBUG___
 //#define _LOCALDEBUG___

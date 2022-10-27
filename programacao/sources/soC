@@ -31,11 +31,11 @@ endif
 
 function! TipoProgC()
   echo "  > Programa C............"
-  call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
   let tst = system('git remote --v')
   if tst =~# 'git@github.com:ricchartuni/src.git'
      call NOVOc('so'.g:vimdir.'programacao/headers/headergitC')
   else
+     call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
      call NOVOc('so'.g:vimdir.'programacao/headers/headerC_')
   endif
 endfunction
