@@ -19,25 +19,53 @@
 #endif
 
 #include "myrsf.h"
+#include "rsfinp.h"
 #include "rsfutl.h"
 #include "alocacao.h"
 #include "mpiutl.h"
 #include "mylog.h"
 
 #define main_kill() main_kill0(0, NULL)
+#define PROG_INIT "Initialize program"
+#define PROGALLOC "Program allocation"
+#define PROC_INFO "Proccessing"
+#define PROC__MPI "MPI-trace proccessing"
 #define PROG_KILL "Finalize program"
 
-#define ERR_INPUT_TYPE  51
-#define ERR_INPUT___N1  52
-#define ERR_INPUT_CLIP  53
-#define ERR_SEIS_ALLOC  54
+#define INPUT__PARM    "inp"
+#define OUTPUT_PARM    "out"
+#define CLIP___PARM   "clip"
+
+#define ERR_SEIS__INPUT  51
+#define ERR_SEIS_OUTPUT  52
+#define ERR_INPUT__TYPE  53
+#define ERR_INPUT____N1  54
+#define ERR_INPUT__CLIP  55
+#define ERR_SEIS__ALLOC  56
+#define ERR_SAUX__ALLOC  57
 
 static int         n1;
 static int         n2;
+static int         n3;
+static int         n4;
+static float       o1;
+static float       o2;
+static float       o3;
+static float       o4;
+static float       d1;
+static float       d2;
+static float       d3;
+static float       d4;
+static size_t   nstot;
+static size_t   n2tot;
 static float     clip;
 static float   **seis;
+static float   **saux;
 static sf_file  sfinp;
 static sf_file  sfout;
+#ifdef _USAR_MAINMPI___
+static FILE    * flog;
+#endif
 
 //======================================================================
    int main(int argc, char *argv[]){
@@ -49,13 +77,47 @@ static sf_file  sfout;
 //        *** Ultima modificacao: .... XX:XX - XX.XX.XXXX
 //        *** Modificado por: ........
 //======================================================================
-      // Initialize .........
+      // -----------------------
+      // Initialize ............
+      // -----------------------
       main_init(argc, argv);
-
-      // Proccess ...........
+      // -----------------------
+      // Input parameters ......
+      // -----------------------
+      main_input();
+      // -----------------------
+      // Output parameters .....
+      // -----------------------
+      main_output();
+#ifdef _USAR_MAINMPI___
+      if(isworker()){
+#endif
+         // -----------------------
+         MYLOG_HDR("%s\n",PROGALLOC);
+         // -----------------------
+         // Allocation ............
+         // -----------------------
+         main_alloc();
+         // -----------------------
+         // Read ..................
+         // -----------------------
+         main_read();
+#ifdef _USAR_MAINMPI___
+      }
+#endif
+      // -----------------------
+      MYLOG_HDR("%s\n",PROC_INFO);
+      // -----------------------
+      // Proccess ..............
+      // -----------------------
       main_proc();
-
-      // Finish program .....
+      // -----------------------
+      // Write .................
+      // -----------------------
+      main_write();
+      // -----------------------
+      // Finish program ........
+      // -----------------------
       main_kill();
    }
 //======================================================================
@@ -63,34 +125,183 @@ static sf_file  sfout;
 //======================================================================
    static void main_proc(){
 //---------------------------------------------------------------------
-      size_t n = n1*n2;
-      sf_floatread(seis[0],n,sfinp);
-      for (int i2=0; i2<n2; i2++){
-         for (int i1=0; i1<n1; i1++){
-            if      (seis[i2][i1] >  clip) seis[i2][i1]= clip;
-            else if (seis[i2][i1] < -clip) seis[i2][i1]=-clip;
-         }
+#ifdef _USAR_MAINMPI___
+      char* cjob = PROC__MPI;
+      int   njob = n2tot;
+      if(ismanager())
+         mpisendalltasks(njob, cjob, flog);
+      else{
+         mpitask_str task;
+         int irecv = mpiworker_taskbeg(&task, njob, cjob, flog);
+#else
+         int irecv = n2tot-1;
+#endif
+         while(irecv >= 0){
+            for (int i1=0; i1<n1; i1++){
+               if     (saux[irecv][i1]> clip) saux[irecv][i1]= clip;
+               else if(saux[irecv][i1]<-clip) saux[irecv][i1]=-clip;
+            }
+#ifdef _USAR_MAINMPI___
+            irecv = mpireceivetask(task);
+#else
+            irecv--;
+#endif
+	 }
+#ifdef _USAR_MAINMPI___
+         mympi_worker_sumf(nstot, saux[0], seis[0]);
       }
-      sf_floatwrite(seis[0],n,sfout);
+#endif
    }
 //======================================================================
 
 //======================================================================
-   static void main_kill0(const int iend, char *cerr){
+   static void main_write(){
 //---------------------------------------------------------------------
-      // Program finalization
+#ifdef _USAR_MAINMPI___
+      if(am_i_rank(1))
+#endif
+         sf_floatwrite(seis[0],nstot,sfout);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_read(){
 //---------------------------------------------------------------------
+      sf_floatread(seis[0],nstot,sfinp);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_free(){
+//---------------------------------------------------------------------
+#ifdef _USAR_MAINMPI___
+      if(saux) UTL_Free2(saux);
+#endif
       if(seis) UTL_Free2(seis);
+   }
+//======================================================================
+
+//======================================================================
+   static void main_null(){
 //---------------------------------------------------------------------
-      // Finalize RSF
+      seis  = NULL;
+      saux  = NULL;
+      sfinp = NULL;
+      sfout = NULL;
+   }
+//======================================================================
+
+//======================================================================
+   static void main_alloc(){
+//---------------------------------------------------------------------
+      seis = UTL_Malloc2F(n2tot,n1);
+      main_err(!seis, ERR_SEIS__ALLOC);
+#ifdef _USAR_MAINMPI___
+      saux = UTL_Malloc2F(n2tot,n1);
+      main_err(!saux, ERR_SAUX__ALLOC);
+#else
+      saux = seis;
+#endif
+   }
+//======================================================================
+
+//======================================================================
+   static void main_output(){
+//---------------------------------------------------------------------
+      main_err(!rsfparcheckall(OUTPUT_PARM), ERR_SEIS_OUTPUT);
+#ifdef _USAR_MAINMPI___
+      if(am_i_rank(1)){
+#endif
+         sfout = sf_output(OUTPUT_PARM);
+         sf_fileflush(sfout, sfinp);
+#ifdef _USAR_MAINMPI___
+      }
+#endif
+   }
+//======================================================================
+
+//======================================================================
+   static void main_input(){
+//---------------------------------------------------------------------
+      main_err(!rsfparcheckall(INPUT__PARM)   , ERR_SEIS__INPUT);
+      sfinp = sf_input(INPUT__PARM);
+      main_err(SF_FLOAT!=sf_gettype(sfinp)    , ERR_INPUT__TYPE);
+      main_err(!sf_histint(sfinp,"n1",&n1)    , ERR_INPUT____N1);
+      main_err(!sf_getfloat(CLIP___PARM,&clip), ERR_INPUT__CLIP);
+
+      rsfxDinfo(rsffloat, sfinp, &n1,&o1,&d1,
+       &n2,&o2,&d2, &n3,&o3,&d3, &n4,&o4,&d4);
+
+      n2tot = n2*n3*n4;
+      nstot = n1*n2tot;
+   }
+//======================================================================
+
+//======================================================================
+   static char *main_errtype(const int itype, char *cerr) {
+//---------------------------------------------------------------------
+      switch(itype){
+         case ERR_SEIS__INPUT:
+            strcpy(cerr, "Missed seismic input file (");
+            strcat(cerr, INPUT__PARM);
+            strcat(cerr, "=...)");
+            break;
+         case ERR_SEIS_OUTPUT:
+            strcpy(cerr, "Missed seismic output file (");
+            strcat(cerr, OUTPUT_PARM);
+            strcat(cerr, "=...)");
+            break;
+         case ERR_INPUT__TYPE:
+            strcpy(cerr, "Need float input file .....");
+            break;
+         case ERR_INPUT____N1:
+            strcpy(cerr, "Input file must have n1 information .....");
+            break;
+         case ERR_INPUT__CLIP:
+            strcpy(cerr, "Must define clip (");
+            strcat(cerr, CLIP___PARM);
+            strcat(cerr, "=...)");
+            break;
+         case ERR_SEIS__ALLOC:
+            strcpy(cerr, "Could not allocate seis .....");
+            break;
+         case ERR_SAUX__ALLOC:
+            strcpy(cerr, "Could not allocate saux .....");
+            break;
+         default:
+            strcpy(cerr, "Error not defined .....");
+            break;
+      }
+      return cerr;
+   }
+//======================================================================
+
+//======================================================================
+   static void main_kill0(const int iend, char *cerr) {
+//---------------------------------------------------------------------
+      // -----------------------
+      MYLOG_HDR("%s\n",PROG_KILL);
+      // -----------------------
+      // Free memory ...........
+      // -----------------------
+      main_free();
+      // -----------------------
+      // Finalize RSF ..........
+      // -----------------------
       sf_close();
-      // Finalize LOGFILE
+      // -----------------------
+      // Finalize LOGFILE ......
+      // -----------------------
       MYLOG_KILL(iend,cerr);
-#ifdef _USAR_MPI___
-      // Finalize MPI
+#ifdef _USAR_MAINMPI___
+      // -----------------------
+      // Finalize MPI ..........
+      // -----------------------
       mympi_finalize();
 #endif
-      // Finalize Program
+      // -----------------------
+      // Finalize Program ......
+      // -----------------------
       exit(iend);
    }
 //======================================================================
@@ -99,27 +310,29 @@ static sf_file  sfout;
    static void main_init(int argc, char *argv[]) {
 //---------------------------------------------------------------------
 #ifdef _USAR_MAINMPI___
-      // Initialize MPI
+      // -----------------------
+      // Initialize MPI ........
+      // -----------------------
       mympi_init(argc,argv);
 #endif
-      // Initialize RSF
+      // -----------------------
+      // Initialize RSF ........
+      // -----------------------
       myrsfinit(argc,argv);
-      // Initialize LOGFILE
+      // -----------------------
+      // Initialize LOGFILE ....
+      // -----------------------
+#ifdef _USAR_MAINMPI___
+      flog = MYLOG_INIT(argv, sf_getstring("log"));
+#else
       MYLOG_INIT(argv, sf_getstring("log"));
-//---------------------------------------------------------------------
-      // Program initialization
-//---------------------------------------------------------------------
-      seis  = NULL;
-      sfinp = sf_input("in");
-      sfout = sf_output("out");
-
-      main_err(SF_FLOAT!=sf_gettype(sfinp), ERR_INPUT_TYPE);
-      main_err(!sf_histint(sfinp,"n1",&n1), ERR_INPUT___N1);
-      n2 = sf_leftsize(sfinp,1);
-      main_err(!sf_getfloat("clip",&clip) , ERR_INPUT_CLIP);
-
-      seis = UTL_Malloc2F(n2,n1);
-      main_err(!seis, ERR_SEIS_ALLOC);
+#endif
+      // -----------------------
+      MYLOG_HDR("%s\n",PROG_INIT);
+      // -----------------------
+      // NULL structures .......
+      // -----------------------
+      main_null();
    }
 //======================================================================
 
@@ -128,28 +341,10 @@ static sf_file  sfout;
 //---------------------------------------------------------------------
       if(iret == 0)
          return;
-
       char cerr[1024];
-      switch(itype){
-         case ERR_INPUT_TYPE:
-            strcpy(cerr, "Need float input file .....");
-            break;
-         case ERR_INPUT___N1:
-            strcpy(cerr, "Input file must have n1 information .....");
-            break;
-         case ERR_INPUT_CLIP:
-            strcpy(cerr, "Must define clip  .....");
-            break;
-         case ERR_SEIS_ALLOC:
-            strcpy(cerr, "Could not allocate seis .....");
-            break;
-         default:
-            strcpy(cerr, "Error not defined .....");
-            break;
-      }
+      main_errtype(itype, cerr);
       strcat(cerr, "\n");
       main_kill0(itype, cerr);
    }
 //======================================================================
-
 .
