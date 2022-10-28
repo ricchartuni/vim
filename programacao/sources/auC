@@ -15,13 +15,10 @@ function! Subrotina()
     let nomerotina = input(' >nome da rotina: ')
     r! echo -e "
 \//======================================================================\n
-\   void ___ZZZ_subrotina_ZZZ___()\n
-\   {\n
+\   void ___ZZZ_subrotina_ZZZ___(){\n
 \//---------------------------------------------------------------------\n
-\// Descricao:\n
-\//---------------------------------------------------------------------\n
-\//         *** Criado por: .............. XXXNAMEXXX\n
-\//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\//         *** Created by: .............. XXXNAMEXXX\n
+\//         *** Created on: .................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
 \      MYDBG_BEGINROUTINE();\n
 \\n
@@ -45,13 +42,10 @@ function! FuncaoF()
     let nomerotina = input(' >nome da funcao: ')
     r! echo -e "
 \//======================================================================\n
-\   int ___ZZZ_subrotina_ZZZ___()\n
-\   {\n
+\   int ___ZZZ_subrotina_ZZZ___(){\n
 \//---------------------------------------------------------------------\n
-\// Descricao:\n
-\//---------------------------------------------------------------------\n
-\//         *** Criado por: .............. XXXNAMEXXX\n
-\//         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
+\//         *** Created by: .............. XXXNAMEXXX\n
+\//         *** Created on:..................... ___ZZZ_data_sbrt_ZZZ___\n
 \//======================================================================\n
 \      MYDBG_BEGINFUNCTION();\n
 \\n

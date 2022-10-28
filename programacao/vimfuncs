@@ -59,6 +59,7 @@ func! NOVOc(carregaarq, ...)
       call SUBS_name_init()
       let sbrt = strftime("%d.%m.%Y")
       silent! execute '%s/* Criado em:.*/* Criado em: ..................... '.sbrt.'/g'
+      silent! execute '%s/* Created on:.*/* Created on: .................... '.sbrt.'/g'
       call PrimeiraLinha()
    endif
 endfunc
@@ -136,12 +137,17 @@ endfunc
 
 func! INFOgravacao()
    "silent! exe "1," . 10 . "/* Ultima modificacao:.*/s//* Ultima modificacao: .... " .strftime("%H:%M - %d.%m.%Y")
+   "silent! exe "1," . 10 . "/* Last modification:.*/s//* Last modification: ..... " .strftime("%H:%M - %d.%m.%Y")
    if &modified
       let save_cursor = getpos(".")
       let n = min([20, line("$")])
       let o = "Ultima modificacao: ...."
       silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".strftime("%H:%M - %d.%m.%Y")
       let o = "Modificado por: ........"
+      silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".NPad(b:usrhost, 18)
+      let o = "Last modification: ....."
+      silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".strftime("%H:%M - %d.%m.%Y")
+      let o = "Modified by: ..........."
       silent! keepjumps exe '1,' . n . "/*.. ".o.".*/s//*** ".o." ".NPad(b:usrhost, 18)
       call histdel('search', -1)
       call setpos('.', save_cursor)

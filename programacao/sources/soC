@@ -42,7 +42,12 @@ endfunction
 
 function! TipoModC()
   echo "  > Funcoes C............"
-  call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
+  let tst = system('git remote --v')
+  if tst =~# 'git@github.com:ricchartuni/src.git'
+     call NOVOc('so'.g:vimdir.'programacao/headers/headermodC')
+  else
+     call NOVOc('so'.g:vimdir.'programacao/headers/headerC')
+  endif
 endfunction
 
  " troca estrutura '.' '->' .........
