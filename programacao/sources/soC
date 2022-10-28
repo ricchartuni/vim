@@ -54,6 +54,65 @@ endfunction
 nnoremap st :call ToggleIt(3)<CR>
 vnoremap st <esc>:call ToggleIt(4)<CR>
 
+" null structure ........
+vnoremap nu <esc>:call STRUCTNull()<CR>
+function! STRUCTNull()
+   call PRECMDpreserva()
+   "----------------------------------------------------------
+   let pattern____ = '[*]\+'
+   let replacement = ' \* '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '[ ]\+'
+   let replacement = ' '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '^ '
+   let replacement = '      '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = ' \*'
+   let replacement = '*'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = 'int \(.*\);'
+   let replacement = 'st->\1 = myinulo;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = 'float \(.*\);'
+   let replacement = 'st->\1 = myrnulo;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = 'size_t \(.*\);'
+   let replacement = 'st->\1 = mysnulo;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = 'FILE\* \(.*\);'
+   let replacement = 'st->\1 =  stderr;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '\w\+\* \(.*\);'
+   let replacement = 'st->\1 =    NULL;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   '<,'>v/st->/s/\(\w\+\) \(.*\);/st->\2 = \1;/
+   "----------------------------------------------------------
+   '<,'>normal f=30i 
+   '<,'>normal 25|dw 
+   call POSCMDpreserva()
+endfunction
+
+" null structure ........
+vnoremap err <esc>:call ERRlocal()<CR>
+function! ERRlocal()
+   call PRECMDpreserva()
+   "----------------------------------------------------------
+   let pattern____ = '#define I\(ERR\w\+\)[ ]\+\w\+.*'
+   let replacement = '         case I\1:'
+   let replacement = replacement.'            strcpy(cerr, C\1);'
+   let replacement = replacement.'            break;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   call POSCMDpreserva()
+endfunction
+
  " tab com espacos ..................
 set smarttab
 set softtabstop=3
