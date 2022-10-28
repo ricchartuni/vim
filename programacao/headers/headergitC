@@ -8,29 +8,30 @@
 #else
 #define _BUILD_MYBINARY___
 #endif
-
+//---------------------------
 #ifdef _BUILD_MYBINARY___
+//---------------------------
 #define __XXXXXXX_C__
 #include "XXXXXXX.h"
-
+//---------------------------
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+//---------------------------
 #ifdef _USAR_MPI___
 #ifndef _USAR_MAINMPI___
 //#define _USAR_MAINMPI___
 #endif
 #endif
-
+//---------------------------
 #include "mydbg.h"
 #ifdef _DEBUG___
 //#define _LOCALDEBUG___
 #endif
-
+//---------------------------
 #include "constantes.h"
 #include "myrsf.h"
 #include "rsfinp.h"
@@ -39,33 +40,42 @@
 #include "mpiutl.h"
 #include "defclock.h"
 #include "mylog.h"
-
+//---------------------------
 #define __MYRSFCMDOPC__
 #ifdef __MYRSFCMDOPC__
 #define myrsfinit(AC,AV) rsfopcinit(AC,AV)
 #else
 #define myrsfinit(AC,AV) rsfinit(AC,AV)
 #endif
-
-#define main_kill() main_kill0(0, NULL)
+//---------------------------
 #define PROG_INIT "Initialize program"
 #define PROGALLOC "Program allocation"
 #define PROC_INFO "Proccessing"
 #define PROC__MPI "MPI-trace proccessing"
 #define PROG_KILL "Finalize program"
-
+//---------------------------
 #define INPUT__PARM    "inp"
 #define OUTPUT_PARM    "out"
 #define CLIP___PARM   "clip"
-
-#define ERR_SEIS__INPUT  51
-#define ERR_SEIS_OUTPUT  52
-#define ERR_INPUT__TYPE  53
-#define ERR_INPUT____N1  54
-#define ERR_INPUT__CLIP  55
-#define ERR_SEIS__ALLOC  56
-#define ERR_SAUX__ALLOC  57
-
+//---------------------------
+#define CERR_NOTDEFINED   "Error not defined .........."
+//---------------------------
+#define IERR_SEIS__INPUT  51
+#define IERR_SEIS_OUTPUT  52
+#define IERR_INPUT__TYPE  53
+#define IERR_INPUT____N1  54
+#define IERR_INPUT__CLIP  55
+#define IERR_SEIS__ALLOC  56
+#define IERR_SAUX__ALLOC  57
+//---------------------------
+#define CERR_SEIS__INPUT  "Missed seismic input file (" INPUT__PARM "=...)"
+#define CERR_SEIS_OUTPUT  "Missed seismic output file (" OUTPUT_PARM "=...)"
+#define CERR_INPUT__TYPE  "Need float input file ....."
+#define CERR_INPUT____N1  "Input file must have n1 information ....."
+#define CERR_INPUT__CLIP  "Must define clip (" CLIP___PARM "=...)"
+#define CERR_SEIS__ALLOC  "Could not allocate seis ....."
+#define CERR_SAUX__ALLOC  "Could not allocate saux ....."
+//---------------------------
 static int         n1;
 static int         n2;
 static int         n3;
@@ -86,17 +96,178 @@ static float   **saux;
 static sf_file  sfinp;
 static sf_file  sfout;
 static FILE    * flog;
+//---------------------------
 
+//======================================================================
+   static void main_proc(){
+//---------------------------------------------------------------------
+      // -----------------------
+      // CLOCK proccess ........
+      defclock_proc();
+      // -----------------------
+#ifdef _USAR_MAINMPI___
+      char* cjob = PROC__MPI;
+      int   njob = n2tot;
+      if(ismanager())
+         mpisendalltasks(njob, cjob, flog);
+      else{
+         mpitask_str task;
+         int irecv = mpiworker_taskbeg(&task, njob, cjob, flog);
+#else
+         int irecv = n2tot-1;
+#endif
+         while(irecv >= 0){
+            for (int i1=0; i1<n1; i1++){
+               if     (saux[irecv][i1]> clip) saux[irecv][i1]= clip;
+               else if(saux[irecv][i1]<-clip) saux[irecv][i1]=-clip;
+            }
+#ifdef _USAR_MAINMPI___
+            irecv = mpireceivetask(task);
+#else
+            irecv--;
+#endif
+    }
+#ifdef _USAR_MAINMPI___
+         mympi_worker_sumf(nstot, saux[0], seis[0]);
+      }
+#endif
+   }
+//======================================================================
+//======================================================================
+   static void main_write(){
+//---------------------------------------------------------------------
+#ifdef _USAR_MAINMPI___
+      if(am_i_rank(1)){
+#endif
+         // -----------------------
+         // CLOCK write ...........
+         defclockwrite();
+         // -----------------------
+         sf_floatwrite(seis[0],nstot,sfout);
+#ifdef _USAR_MAINMPI___
+      }
+#endif
+   }
+//======================================================================
+//======================================================================
+   static void main_read(){
+//---------------------------------------------------------------------
+      // -----------------------
+      // CLOCK read ............
+      defclock_read();
+      // -----------------------
+      sf_floatread(seis[0],nstot,sfinp);
+   }
+//======================================================================
+//======================================================================
+   static void main_free(){
+//---------------------------------------------------------------------
+#ifdef _USAR_MAINMPI___
+      if(saux) UTL_Free2(saux);
+#endif
+      if(seis) UTL_Free2(seis);
+   }
+//======================================================================
+//======================================================================
+   static void main_null(){
+//---------------------------------------------------------------------
+      seis  = NULL;
+      saux  = NULL;
+      sfinp = NULL;
+      sfout = NULL;
+   }
+//======================================================================
+//======================================================================
+   static void main_alloc(){
+//---------------------------------------------------------------------
+      // -----------------------
+      // CLOCK alloc ...........
+      defclockalloc();
+      // -----------------------
+      seis = UTL_Malloc2F(n2tot,n1);
+      main_err(!seis, IERR_SEIS__ALLOC);
+#ifdef _USAR_MAINMPI___
+      saux = UTL_Malloc2F(n2tot,n1);
+      main_err(!saux, IERR_SAUX__ALLOC);
+#else
+      saux = seis;
+#endif
+   }
+//======================================================================
+//======================================================================
+   static void main_output(){
+//---------------------------------------------------------------------
+      main_err(!rsfparcheckall(OUTPUT_PARM), IERR_SEIS_OUTPUT);
+#ifdef _USAR_MAINMPI___
+      if(am_i_rank(1)){
+#endif
+         sfout = sf_output(OUTPUT_PARM);
+         sf_fileflush(sfout, sfinp);
+#ifdef _USAR_MAINMPI___
+      }
+#endif
+   }
+//======================================================================
+//======================================================================
+   static void main_input(){
+//---------------------------------------------------------------------
+      main_err(!rsfparcheckall(INPUT__PARM)   , IERR_SEIS__INPUT);
+      sfinp = sf_input(INPUT__PARM);
+      main_err(SF_FLOAT!=sf_gettype(sfinp)    , IERR_INPUT__TYPE);
+      main_err(!sf_histint(sfinp,"n1",&n1)    , IERR_INPUT____N1);
+      main_err(!sf_getfloat(CLIP___PARM,&clip), IERR_INPUT__CLIP);
+
+      rsfxDinfo(rsffloat, sfinp, &n1,&o1,&d1,
+       &n2,&o2,&d2, &n3,&o3,&d3, &n4,&o4,&d4);
+
+      n2tot = n2*n3*n4;
+      nstot = n1*n2tot;
+   }
+//======================================================================
+//======================================================================
+   static char *main_errtype(const int itype, char *cerr){
+//---------------------------------------------------------------------
+      switch(itype){
+         case IERR_SEIS__INPUT:
+            strcpy(cerr, CERR_SEIS__INPUT);
+            break;
+         case IERR_SEIS_OUTPUT:
+            strcpy(cerr, CERR_SEIS_OUTPUT);
+            break;
+         case IERR_INPUT__TYPE:
+            strcpy(cerr, CERR_INPUT__TYPE);
+            break;
+         case IERR_INPUT____N1:
+            strcpy(cerr, CERR_INPUT____N1);
+            break;
+         case IERR_INPUT__CLIP:
+            strcpy(cerr, CERR_INPUT__CLIP);
+            break;
+         case IERR_SEIS__ALLOC:
+            strcpy(cerr, CERR_SEIS__ALLOC);
+            break;
+         case IERR_SAUX__ALLOC:
+            strcpy(cerr, CERR_SAUX__ALLOC);
+            break;
+         default:
+            strcpy(cerr, CERR_NOTDEFINED);
+            break;
+      }
+      return cerr;
+   }
+//======================================================================
 //======================================================================
    int main(int argc, char *argv[]){
 //---------------------------------------------------------------------
-// Main program
+//  ..................................................... Main program
+//  Do not need to change from here ..................................
 //---------------------------------------------------------------------
 //        *** Created by: .............. XXXNAMEXXX
 //        *** Created on: .................... XX.XX.XXXX
 //        *** Last modification: ..... XX:XX - XX.XX.XXXX
 //        *** Modified by: ...........
 //======================================================================
+#define main_kill() main_kill0(0, NULL)
       // -----------------------
       // Initialize ............
       // -----------------------
@@ -141,180 +312,6 @@ static FILE    * flog;
       main_kill();
    }
 //======================================================================
-
-//======================================================================
-   static void main_proc(){
-//---------------------------------------------------------------------
-      // -----------------------
-      // CLOCK proccess ........
-      defclock_proc();
-      // -----------------------
-#ifdef _USAR_MAINMPI___
-      char* cjob = PROC__MPI;
-      int   njob = n2tot;
-      if(ismanager())
-         mpisendalltasks(njob, cjob, flog);
-      else{
-         mpitask_str task;
-         int irecv = mpiworker_taskbeg(&task, njob, cjob, flog);
-#else
-         int irecv = n2tot-1;
-#endif
-         while(irecv >= 0){
-            for (int i1=0; i1<n1; i1++){
-               if     (saux[irecv][i1]> clip) saux[irecv][i1]= clip;
-               else if(saux[irecv][i1]<-clip) saux[irecv][i1]=-clip;
-            }
-#ifdef _USAR_MAINMPI___
-            irecv = mpireceivetask(task);
-#else
-            irecv--;
-#endif
-	 }
-#ifdef _USAR_MAINMPI___
-         mympi_worker_sumf(nstot, saux[0], seis[0]);
-      }
-#endif
-   }
-//======================================================================
-
-//======================================================================
-   static void main_write(){
-//---------------------------------------------------------------------
-#ifdef _USAR_MAINMPI___
-      if(am_i_rank(1)){
-#endif
-         // -----------------------
-         // CLOCK write ...........
-         defclockwrite();
-         // -----------------------
-         sf_floatwrite(seis[0],nstot,sfout);
-#ifdef _USAR_MAINMPI___
-      }
-#endif
-   }
-//======================================================================
-
-//======================================================================
-   static void main_read(){
-//---------------------------------------------------------------------
-      // -----------------------
-      // CLOCK read ............
-      defclock_read();
-      // -----------------------
-      sf_floatread(seis[0],nstot,sfinp);
-   }
-//======================================================================
-
-//======================================================================
-   static void main_free(){
-//---------------------------------------------------------------------
-#ifdef _USAR_MAINMPI___
-      if(saux) UTL_Free2(saux);
-#endif
-      if(seis) UTL_Free2(seis);
-   }
-//======================================================================
-
-//======================================================================
-   static void main_null(){
-//---------------------------------------------------------------------
-      seis  = NULL;
-      saux  = NULL;
-      sfinp = NULL;
-      sfout = NULL;
-   }
-//======================================================================
-
-//======================================================================
-   static void main_alloc(){
-//---------------------------------------------------------------------
-      // -----------------------
-      // CLOCK alloc ...........
-      defclockalloc();
-      // -----------------------
-      seis = UTL_Malloc2F(n2tot,n1);
-      main_err(!seis, ERR_SEIS__ALLOC);
-#ifdef _USAR_MAINMPI___
-      saux = UTL_Malloc2F(n2tot,n1);
-      main_err(!saux, ERR_SAUX__ALLOC);
-#else
-      saux = seis;
-#endif
-   }
-//======================================================================
-
-//======================================================================
-   static void main_output(){
-//---------------------------------------------------------------------
-      main_err(!rsfparcheckall(OUTPUT_PARM), ERR_SEIS_OUTPUT);
-#ifdef _USAR_MAINMPI___
-      if(am_i_rank(1)){
-#endif
-         sfout = sf_output(OUTPUT_PARM);
-         sf_fileflush(sfout, sfinp);
-#ifdef _USAR_MAINMPI___
-      }
-#endif
-   }
-//======================================================================
-
-//======================================================================
-   static void main_input(){
-//---------------------------------------------------------------------
-      main_err(!rsfparcheckall(INPUT__PARM)   , ERR_SEIS__INPUT);
-      sfinp = sf_input(INPUT__PARM);
-      main_err(SF_FLOAT!=sf_gettype(sfinp)    , ERR_INPUT__TYPE);
-      main_err(!sf_histint(sfinp,"n1",&n1)    , ERR_INPUT____N1);
-      main_err(!sf_getfloat(CLIP___PARM,&clip), ERR_INPUT__CLIP);
-
-      rsfxDinfo(rsffloat, sfinp, &n1,&o1,&d1,
-       &n2,&o2,&d2, &n3,&o3,&d3, &n4,&o4,&d4);
-
-      n2tot = n2*n3*n4;
-      nstot = n1*n2tot;
-   }
-//======================================================================
-
-//======================================================================
-   static char *main_errtype(const int itype, char *cerr){
-//---------------------------------------------------------------------
-      switch(itype){
-         case ERR_SEIS__INPUT:
-            strcpy(cerr, "Missed seismic input file (");
-            strcat(cerr, INPUT__PARM);
-            strcat(cerr, "=...)");
-            break;
-         case ERR_SEIS_OUTPUT:
-            strcpy(cerr, "Missed seismic output file (");
-            strcat(cerr, OUTPUT_PARM);
-            strcat(cerr, "=...)");
-            break;
-         case ERR_INPUT__TYPE:
-            strcpy(cerr, "Need float input file .....");
-            break;
-         case ERR_INPUT____N1:
-            strcpy(cerr, "Input file must have n1 information .....");
-            break;
-         case ERR_INPUT__CLIP:
-            strcpy(cerr, "Must define clip (");
-            strcat(cerr, CLIP___PARM);
-            strcat(cerr, "=...)");
-            break;
-         case ERR_SEIS__ALLOC:
-            strcpy(cerr, "Could not allocate seis .....");
-            break;
-         case ERR_SAUX__ALLOC:
-            strcpy(cerr, "Could not allocate saux .....");
-            break;
-         default:
-            strcpy(cerr, "Error not defined .....");
-            break;
-      }
-      return cerr;
-   }
-//======================================================================
-
 //======================================================================
    static void main_kill0(const int iend, char *cerr){
 //---------------------------------------------------------------------
@@ -353,7 +350,6 @@ static FILE    * flog;
       exit(iend);
    }
 //======================================================================
-
 //======================================================================
    static void main_init(int argc, char *argv[]){
 //---------------------------------------------------------------------
@@ -383,12 +379,13 @@ static FILE    * flog;
       main_null();
    }
 //======================================================================
-
 //======================================================================
    static void main_err(const int iret, const int itype){
 //---------------------------------------------------------------------
-      if(iret == 0)
-         return;
+      if(iret == 0) return;
+      // ------------------------
+      // Found error ......
+      // ------------------------
       char cerr[1024];
       main_errtype(itype, cerr);
       strcat(cerr, "\n");
