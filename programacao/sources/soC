@@ -54,6 +54,39 @@ endfunction
 nnoremap st :call ToggleIt(3)<CR>
 vnoremap st <esc>:call ToggleIt(4)<CR>
 
+" free structure ........
+vnoremap fr <esc>:call STRUCTFree()<CR>
+function! STRUCTFree()
+   call PRECMDpreserva()
+   '<,'>v/*/d
+   '<,'>g/FILE /d
+   "----------------------------------------------------------
+   let pattern____ = '\*\*\*\*\*\*'
+   let replacement = ' UTL_Free6 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*\*\*'
+   let replacement = ' UTL_Free5 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*\*'
+   let replacement = ' UTL_Free4 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*'
+   let replacement = ' UTL_Free3 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*'
+   let replacement = ' UTL_Free2 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*'
+   let replacement = ' UTL_Free1 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '.* \(UTL_Free. \)\(.*\);'
+   let replacement = '      if(st->\2) \1(\2);'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   call POSCMDpreserva()
+endfunction
+
 " null structure ........
 vnoremap nu <esc>:call STRUCTNull()<CR>
 function! STRUCTNull()
@@ -103,7 +136,7 @@ function! STRUCTNull()
    call POSCMDpreserva()
 endfunction
 
-" null structure ........
+" error ........
 vnoremap err <esc>:call ERRlocal()<CR>
 function! ERRlocal()
    call PRECMDpreserva()
