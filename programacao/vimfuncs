@@ -257,11 +257,16 @@ endfunc
 vnoremap == <esc>:call AlignCOL("=")<CR>
 vnoremap =; <esc>:call AlignCOL(";")<CR>
 function AlignCOL(tipo)
-   let col = col('.')
-   if a:tipo == ";"
-      let col = col+1
-   endif
-   execute "'<,'>normal f".a:tipo."30i "
-   execute "'<,'>normal ".col."|dw"
+" ** RChartuni >>   let lin = line('.')-1
+" ** RChartuni >>   let val = readfile(g:arqfull)[lin]
+" ** RChartuni >>   if val =~ a:tipo
+      let col = col('.')
+      if a:tipo == ";"
+         let col = col+1
+      endif
+      '<,'>s/$/ /
+      execute "'<,'>normal f".a:tipo."30i "
+      execute "'<,'>normal ".col."|dw"
+" ** RChartuni >>   endif
 endfunc
 

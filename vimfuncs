@@ -154,7 +154,7 @@ function! SmartReplaceIt(tst)
     if a:tst == 1
        silent! execute ':%SmartCase("'.replacement.'")'
     else
-       silent! execute ':SmartCase("'.replacement.'")'
+       silent! execute ":'<,'>SmartCase(\"".replacement."\")"
     endif
     call cursor(cursor_pos[1], cursor_pos[2])
 endfunction
