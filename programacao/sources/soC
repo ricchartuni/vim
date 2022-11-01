@@ -54,6 +54,60 @@ endfunction
 nnoremap st :call ToggleIt(3)<CR>
 vnoremap st <esc>:call ToggleIt(4)<CR>
 
+" alloc structure ........
+vnoremap all <esc>:call STRUCTAlloc()<CR>
+function! STRUCTAlloc()
+   call PRECMDpreserva()
+   '<,'>v/*/d
+   '<,'>g/FILE /d
+   "----------------------------------------------------------
+   let pattern____ = '\*\*\*\*\*\*'
+   let replacement = ' UTL_Malloc6 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*\*\*'
+   let replacement = ' UTL_Malloc5 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*\*'
+   let replacement = ' UTL_Malloc4 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*\*'
+   let replacement = ' UTL_Malloc3 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*\*'
+   let replacement = ' UTL_Malloc2 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   let pattern____ = '\*'
+   let replacement = ' UTL_Malloc1 '
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '[ ]\+int'
+   let replacement = 'I'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '[ ]\+float'
+   let replacement = 'F'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '[ ]\+double'
+   let replacement = 'D'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '[ ]\+myfcmplx'
+   let replacement = 'Z'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '[ ]\+mydcmplx'
+   let replacement = 'ZD'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   let pattern____ = '\(.\).*\(UTL_Malloc.\) \(.*\);'
+   let replacement =             '      st->\3 = \2\1(xxxxx);'
+   let replacement = replacement.'      iret += mylocal_err(st, !(st->\3), IERR_ALLOC_\U\3);'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
+   call POSCMDpreserva()
+endfunction
+
 " free structure ........
 vnoremap fr <esc>:call STRUCTFree()<CR>
 function! STRUCTFree()
