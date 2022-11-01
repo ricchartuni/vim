@@ -84,6 +84,10 @@ function! STRUCTNull()
    let replacement = 'st->\1 = mysnulo;'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
+   let pattern____ = 'double \(.*\);'
+   let replacement = 'st->\1 = mydnulo;'
+   silent! execute "'<,'>s/".pattern____."/".replacement."/g"
+   "----------------------------------------------------------
    let pattern____ = 'FILE\* \(.*\);'
    let replacement = 'st->\1 =  stderr;'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
