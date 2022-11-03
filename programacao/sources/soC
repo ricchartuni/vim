@@ -58,8 +58,8 @@ vnoremap st <esc>:call ToggleIt(4)<CR>
 vnoremap all <esc>:call STRUCTAlloc()<CR>
 function! STRUCTAlloc()
    call PRECMDpreserva()
-   '<,'>v/*/d
-   '<,'>g/FILE /d
+   silent! '<,'>v/*/d
+   silent! '<,'>g/FILE /d
    "----------------------------------------------------------
    let pattern____ = '\*\*\*\*\*\*'
    let replacement = ' UTL_Malloc6 '
@@ -101,8 +101,9 @@ function! STRUCTAlloc()
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
    let pattern____ = '\(.\).*\(UTL_Malloc.\) \(.*\);'
-   let replacement =             '      st->\3 = \2\1(xxxxx);'
-   let replacement = replacement.'      iret += mylocal_err(st, !(st->\3), IERR_ALLOC_\U\3);'
+   let replacement =             '         st->\3 = \2\1(xxxxx);'
+   let replacement = replacement.'         iret += mylocal_err(st, !(st->\3), IERR_ALLOC_\U\3);'
+   let replacement = replacement.'         \/\/--------------------'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
    call POSCMDpreserva()
@@ -112,8 +113,8 @@ endfunction
 vnoremap fr <esc>:call STRUCTFree()<CR>
 function! STRUCTFree()
    call PRECMDpreserva()
-   '<,'>v/*/d
-   '<,'>g/FILE /d
+   silent! '<,'>v/*/d
+   silent! '<,'>g/FILE /d
    "----------------------------------------------------------
    let pattern____ = '\*\*\*\*\*\*'
    let replacement = ' UTL_Free6 '
@@ -134,8 +135,8 @@ function! STRUCTFree()
    let replacement = ' UTL_Free1 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
-   let pattern____ = '.* \(UTL_Free. \)\(.*\);'
-   let replacement = '      if(st->\2) \1(\2);'
+   let pattern____ = '.* \(UTL_Free.\) \(.*\);'
+   let replacement = '         if(st->\2) \1(st->\2);'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
    call POSCMDpreserva()
@@ -191,6 +192,20 @@ function! STRUCTNull()
 endfunction
 
 " error ........
+" ** RChartuni >>nnoremap err <esc>:exec "r! grep 'IERR_' " .g:arqfull. "\|sed 's,.*I\\(ERR_\\w\\+\\).*,\\#define C\\1  \"\"\\n\\#define I\\1  51,' \|sort -u"<CR>
+nnoremap err <esc>:call ERRdef()<CR>
+function! ERRdef()
+   let cmd = "grep 'IERR_' " .g:arqfull
+   let cmd =  cmd. "\|"
+   let cmd =  cmd. "sed 's,.*\\(IERR_\\w\\+\\).*,\\1,'"
+   let cmd =  cmd. "\|"
+   let cmd =  cmd. "awk '{if(data[\$1]++ == 0){e[++ie]=\$1; sub(\"I\",\"C\"); c[ie]=\$1}}"
+   let cmd =  cmd. "END"
+   let cmd =  cmd. "{for(i=1;i<=ie;i++){printf \"\\#define \\%-25s  \\n\", c[i]};"
+   let cmd =  cmd. " print \"\/\/---------------------------\";"
+   let cmd =  cmd. " for(i=1;i<=ie;i++){printf \"\\#define \\%-25s  \\%d\\n\", e[i], 50+i}}'"
+   exec "r! ".cmd
+endfunction
 vnoremap err <esc>:call ERRlocal()<CR>
 function! ERRlocal()
    call PRECMDpreserva()

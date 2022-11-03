@@ -254,6 +254,7 @@ func! CARREGAprg(tipo, ...)
     return key
 endfunc
 
+vnoremap =x <esc>:call AlignCOL(input(' >caracter para alinhar: '))<CR>
 vnoremap == <esc>:call AlignCOL("=")<CR>
 vnoremap =; <esc>:call AlignCOL(";")<CR>
 function AlignCOL(tipo)
@@ -267,6 +268,9 @@ function AlignCOL(tipo)
       '<,'>s/$/ /
       execute "'<,'>normal f".a:tipo."30i "
       execute "'<,'>normal ".col."|dw"
+      let pat = '+\([ ]\+\)'.a:tipo
+      let rep = '\1+'.a:tipo 
+      silent! execute "'<,'>s/".pat."/".rep."/g"
 " ** RChartuni >>   endif
 endfunc
 

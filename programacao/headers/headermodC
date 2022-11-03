@@ -9,17 +9,21 @@
 //---------------------------
 #include "constantes.h"
 #include "alocacao.h"
+#include "num.h"
 #include "mymemcpy.h"
 #include "mylog.h"
 #ifdef _USAR_MPI___
 #include "mpiutl.h" 
 #endif
 //---------------------------
+#define LOCAL_VERBOSITY 1
+#define is_localverb(v) is_verbo((v),LOCAL_VERBOSITY)
+//---------------------------
 #define CERR_NOTDEFINED "Error not defined .........."
 //---------------------------
-#define IERR_ALLOC_VEC  51
-//---------------------------
 #define CERR_ALLOC_VEC  "Could not allocate vec ....."
+//---------------------------
+#define IERR_ALLOC_VEC  51
 //---------------------------
 
 //======================================================================
@@ -60,7 +64,7 @@
       // ------------------------
       st->n1 = 2;
 
-      if(verb) mylocal_print(*st);
+      if(is_localverb(verb)) mylocal_print(*st);
       return iret;
    }
 //======================================================================
