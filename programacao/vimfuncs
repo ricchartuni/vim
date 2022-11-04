@@ -82,38 +82,45 @@ func! NOVOh(carregaarq, ...)
 
       let key = 0
       if     g:arqext == "c"
-         let s1  = "C"
-         let s2  = ".h"
+         let CC  = "C"
+         let HH  = "H"
+         let hh  = ".h"
 	 let key = 1
       elseif g:arqext == "cc"
-         let s1  = "CC"
-         let s2  = ".hh"
+         let CC  = "CC"
+         let HH  = "HH"
+         let hh  = ".hh"
 	 let key = 1
       elseif g:arqext == "cpp"
-         let s1  = "CPP"
-         let s2  = ".hh"
+         let CC  = "CPP"
+         let HH  = "HH"
+         let hh  = ".hh"
 	 let key = 1
       elseif g:arqext == "h"
-         let s1 = "H"
-         let s2 = ".h"
+         let CC = "C"
+         let HH = "H"
+         let hh = ".h"
       elseif g:arqext == "hh"
-         let s1 = "HH"
-         let s2 = ".hh"
+         let CC = "CC"
+         let HH = "HH"
+         let hh = ".hh"
       endif
 
-      let s1 = "_".s1."__" 
+      let CC = "_".CC."__" 
+      let HH = "_".HH."__" 
       if key == 1
          if g:arqname =~# "^M"
-            let s2 = "_funcs".s2 
+            let hh = "_funcs".hh 
          endif
       endif
 
-      let aux = sbrt.'_funcs'.s2
+      let aux = sbrt.'_funcs'.hh
       silent! execute '%s/XXXXXXX_funcs.h/'.aux.'/g'
-      let aux = sbrt.s1
+      let aux = sbrt.CC
       silent! execute '%s/XXXXXXX_C__/'.aux.'/g'
+      let aux = sbrt.HH
       silent! execute '%s/XXXXXXX_H__/'.aux.'/g'
-      let aux = sbrt.s2
+      let aux = sbrt.hh
       silent! execute '%s/XXXXXXX.h/'.aux.'/g'
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
