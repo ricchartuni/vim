@@ -4,6 +4,8 @@
 
 #include <stddef.h>
 
+#ifdef __XXXXXXX_C__
 #include "XXXXXXX_funcs.h"
+#endif
 #endif
 .
