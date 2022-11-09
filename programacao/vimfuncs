@@ -106,21 +106,21 @@ func! NOVOh(carregaarq, ...)
          let hh = ".hh"
       endif
 
-      let CC = "_".CC."__" 
-      let HH = "_".HH."__" 
+      silent! let CC = "_".CC."__" 
+      silent! let HH = "_".HH."__" 
       if key == 1
          if g:arqname =~# "^M"
             let hh = "_funcs".hh 
          endif
       endif
 
-      let aux = sbrt.'_funcs'.hh
+      silent! let aux = sbrt.'_funcs'.hh
       silent! execute '%s/XXXXXXX_funcs.h/'.aux.'/g'
-      let aux = sbrt.CC
+      silent! let aux = sbrt.CC
       silent! execute '%s/XXXXXXX_C__/'.aux.'/g'
-      let aux = sbrt.HH
+      silent! let aux = sbrt.HH
       silent! execute '%s/XXXXXXX_H__/'.aux.'/g'
-      let aux = sbrt.hh
+      silent! let aux = sbrt.hh
       silent! execute '%s/XXXXXXX.h/'.aux.'/g'
       silent! execute '%s/XXXXXXX/'.sbrt.'/g'
    endif
