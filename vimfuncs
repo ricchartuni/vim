@@ -58,6 +58,9 @@ set complete=.,k,w,i
  "use “space” to get rid of highlighting after a search
 :noremap <silent> <Space> :silent noh<Bar>echo<CR>
 
+ "use “space” “space” update file
+:noremap <silent> <Space><Space> o<ESC>dd:w<CR>
+
  " remover os espacos no inicio da linha especifica
 func! DeleteTrailingINI()
    call PRECMDpreserva()
