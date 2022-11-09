@@ -209,7 +209,6 @@ function! ERRdef()
    exec "r! ".cmd
    let replacement = '""'
    silent! execute "%s/".pattern."/".replacement."/g"
-   :w
    g/^[ ]\+strcpy(cerr, CERR_NOTDEFINED);$
    norm kk
    let epos = getpos('.')
@@ -220,9 +219,13 @@ function! ERRdef()
    call setpos('.', epos)
    norm da
    norm k
-   let cmd = "grep 'define IERR_' " .g:arqfull
+   let cmd = "grep 'IERR_' " .g:arqfull
    let cmd =  cmd. "\|"
-   let cmd =  cmd. "awk '{if(data[\$2]++ == 0){print}}'"
+   let cmd =  cmd. "sed 's,.*\\(IERR_\\w\\+\\).*,\\1,'"
+   let cmd =  cmd. "\|"
+   let cmd =  cmd. "awk '{if(data[\$1]++ == 0){e[++ie]=\$1}}"
+   let cmd =  cmd. "END"
+   let cmd =  cmd. "{for(i=1;i<=ie;i++){printf \"\\#define \\%-25s  \\%d\\n\", e[i], 50+i}}'"
    exec "r! ".cmd
    norm v
    call setpos('.', bpos)
