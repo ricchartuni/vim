@@ -68,7 +68,7 @@ endfunction
 map <F3> :call WriteTest()<CR>
 function! WriteTest()
     r! echo -e "
-\      MYDBG_MPITEST(MYDBG_COMM_WORLD,\"\\\n\");\n
+\      MYDBG_TST(MYDBG_COMM_WORLD,\"\\\n\");\n
 \"
 
 " ** RChartuni >>\/// XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
