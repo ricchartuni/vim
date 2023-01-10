@@ -62,22 +62,22 @@ function! STRUCTAlloc()
    silent! '<,'>g/FILE /d
    "----------------------------------------------------------
    let pattern____ = '\*\*\*\*\*\*'
-   let replacement = ' UTL_Malloc6 '
+   let replacement = ' arr_malloc6 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*\*\*'
-   let replacement = ' UTL_Malloc5 '
+   let replacement = ' arr_malloc5 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*\*'
-   let replacement = ' UTL_Malloc4 '
+   let replacement = ' arr_malloc4 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*'
-   let replacement = ' UTL_Malloc3 '
+   let replacement = ' arr_malloc3 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*'
-   let replacement = ' UTL_Malloc2 '
+   let replacement = ' arr_malloc2 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*'
-   let replacement = ' UTL_Malloc1 '
+   let replacement = ' arr_malloc1 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
    let pattern____ = '[ ]\+int'
@@ -100,9 +100,9 @@ function! STRUCTAlloc()
    let replacement = 'ZD'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
-   let pattern____ = '\(.\).*\(UTL_Malloc.\) \(.*\);'
+   let pattern____ = '\(.\).*\(arr_malloc.\) \(.*\);'
    let replacement =             '         st->\3 = \2\1(xxxxx);'
-   let replacement = replacement.'         iret += mylocal_err(st, !(st->\3), IERR_ALLOC_\U\3);'
+   let replacement = replacement.'         iret += mylocal_err(!(st->\3), IERR_ALLOC_\U\3);'
    let replacement = replacement.'         \/\/--------------------'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
@@ -117,25 +117,25 @@ function! STRUCTFree()
    silent! '<,'>g/FILE /d
    "----------------------------------------------------------
    let pattern____ = '\*\*\*\*\*\*'
-   let replacement = ' UTL_Free6 '
+   let replacement = ' arr_free6 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*\*\*'
-   let replacement = ' UTL_Free5 '
+   let replacement = ' arr_free5 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*\*'
-   let replacement = ' UTL_Free4 '
+   let replacement = ' arr_free4 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*\*'
-   let replacement = ' UTL_Free3 '
+   let replacement = ' arr_free3 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*\*'
-   let replacement = ' UTL_Free2 '
+   let replacement = ' arr_free2 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    let pattern____ = '\*'
-   let replacement = ' UTL_Free1 '
+   let replacement = ' arr_free1 '
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
-   let pattern____ = '.* \(UTL_Free.\) \(.*\);'
+   let pattern____ = '.* \(arr_free.\) \(.*\);'
    let replacement = '         if(st->\2) \1(st->\2);'
    silent! execute "'<,'>s/".pattern____."/".replacement."/g"
    "----------------------------------------------------------
@@ -215,9 +215,11 @@ function! ERRdef()
    g/^[ ]\+switch(itype){$
    norm j
    let bpos = getpos('.')
-   norm v
-   call setpos('.', epos)
-   norm da
+   if bpos[1] < epos[1]
+      norm v
+      call setpos('.', epos)
+      norm da
+   endif
    norm k
    let cmd = "grep 'IERR_' " .g:arqfull
    let cmd =  cmd. "\|"

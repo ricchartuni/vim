@@ -14,12 +14,12 @@ function! Subrotina()
 \\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \\!=======================================================================\n
 \      IMPLICIT NONE\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
 \\#endif\n
 \\n
 \\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      write(0,*)''\n
 \      write(0,*)'  ** XXXINITXXX>> ======================='\n
 \      write(0,*)'  ** XXXINITXXX>> BEGIN SUBROUTINE ', nomerotina\n
@@ -29,7 +29,7 @@ function! Subrotina()
 \\n
 \\n
 \\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      write(0,*)'  ** XXXINITXXX>> -----------------------'\n
 \      write(0,*)'  ** XXXINITXXX>> END SUBROUTINE ', nomerotina\n
 \      write(0,*)'  ** XXXINITXXX>> ======================='\n
@@ -63,13 +63,13 @@ function! FuncaoF()
 \\!         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \\!=======================================================================\n
 \      IMPLICIT NONE\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      character(len=*), parameter :: nomerotina = \"<<___ZZZ_subrotina_ZZZ___>>\"\n
 \\#endif\n
 \      integer                     :: output\n
 \\n
 \\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      write(0,*)''\n
 \      write(0,*)'  ** XXXINITXXX>> ======================='\n
 \      write(0,*)'  ** XXXINITXXX>> BEGIN FUNCTION ', nomerotina\n
@@ -79,7 +79,7 @@ function! FuncaoF()
 \\n
 \\n
 \\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      write(0,*)'  ** XXXINITXXX>> -----------------------'\n
 \      write(0,*)'  ** XXXINITXXX>> END FUNCTION ', nomerotina\n
 \      write(0,*)'  ** XXXINITXXX>> ======================='\n
@@ -104,7 +104,7 @@ map <F3> :call WriteTest()<CR>
 function! WriteTest()
     r! echo -e "
 \\!\!\! XXXINITXXX   > > >   T E S T E  = = = = = = = = = = = = = = = I N I C I O\n
-\\#ifdef _TSTDBG__\n
+\\#ifdef _DEBUG___\n
 \      write(0,*)'  ** XXXINITXXX>> ============================================'\n
 \      write(0,*)'  ** XXXINITXXX>> (___ZZZ_00000_ZZZ___) ___ZZZ_arquivo_ZZZ___'\n
 \      write(0,*)'  ** XXXINITXXX>> (___ZZZ_00000_ZZZ___) ', nomerotina\n

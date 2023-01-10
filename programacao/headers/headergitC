@@ -36,7 +36,7 @@
 #include "myrsf.h"
 #include "rsfinp.h"
 #include "rsfutl.h"
-#include "alocacao.h"
+#include "alloc.h"
 #include "mpiutl.h"
 #include "defclock.h"
 #include "mylog.h"
@@ -72,25 +72,19 @@ int n2tot = 2;
       // CLOCK proccess ........
       defclock_proc();
       // -----------------------
-#ifdef _USAR_MAINMPI___
       char* cjob = PROC__MPI;
       int   njob = n2tot;
+#ifdef _USAR_MAINMPI___
       if(ismanager())
          mpisendalltasks(njob, cjob, flog);
       else{
+#endif
          mpitask_str task;
          int irecv = mpiworker_taskbeg(&task, njob, cjob, flog);
-#else
-         int irecv = n2tot-1;
-#endif
          while(irecv >= 0){
             MYLOG_PRN("main_proc ...... %d\n", irecv);
-#ifdef _USAR_MAINMPI___
             irecv = mpireceivetask(task);
-#else
-            irecv--;
-#endif
-    }
+         }
 #ifdef _USAR_MAINMPI___
          mympi_worker_sumf(nstot, saux[0], seis[0]);
       }
@@ -145,7 +139,7 @@ int n2tot = 2;
       defclockalloc();
       // -----------------------
       MYLOG_PRN("allocate .........\n");
-// ** RChartuni >>      seis = UTL_Malloc2F(n2tot,n1);
+// ** RChartuni >>      seis = arr_malloc2F(n2tot,n1);
 // ** RChartuni >>      main_err(!seis, IERR_SEIS__ALLOC);
    }
 //======================================================================
