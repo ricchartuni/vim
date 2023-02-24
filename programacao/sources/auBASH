@@ -13,35 +13,38 @@ function! Subrotina()
 \\#         *** Criado por: .............. XXXNAMEXXX\n
 \\#         *** Criado em: ..................... ___ZZZ_data_sbrt_ZZZ___\n
 \\#=======================================================================\n
-\local diretorio_atual=\${BASH_SOURCE\%/*}\n
-\local arquivo_atual=\${BASH_SOURCE}\n
-\local arquivo_origem=\${BASH_SOURCE[\${\#BASH_SOURCE[@]}-1]}\n
-\local funcao_atual=\${FUNCNAME}\n
-\local funcao_origem=\${FUNCNAME[\${\#FUNCNAME[@]}-1]}\n
-\local erro_echo=\" **__\${FUNCNAME}_err___**\"\n
-\local warn_echo=\" **__\${FUNCNAME}_warn__**\"\n
-\local opa=\"teste\"\n
-\local verb=\"\"\n
-\local ___parametros_de_chamada___=\$(argopcao \"\$@\")\n
-\local ___parametros_de_entrada___=\$(arglocal \"\$@\")\n
+\local ___cur_func___=\${FUNCNAME}\n
+\local ___callfunc___=\${FUNCNAME[1]:-\${FUNCNAME}}\n
+\local ___org_func___=\${FUNCNAME[\${\#FUNCNAME[@]}-1]}\n
+\local ___cur_file___=\${BASH_SOURCE}\n
+\local ___callfile___=\${BASH_SOURCE[1]:-\${BASH_SOURCE}}\n
+\local ___org_file___=\${BASH_SOURCE[\${\#BASH_SOURCE[@]}-1]}\n
+\local ___cur__dir___=\${___cur_file___\%/*}\n
+\local ___call_dir___=\${___callfile___\%/*}\n
+\local ___org__dir___=\${___org_file___\%/*}\n
+\local ___err_echo___=\" **__\${___cur_func___}_err___**\"\n
+\local ___warnecho___=\" **__\${___cur_func___}_warn__**\"\n
+\local ___parmcall___=\$(argopcao \"\$@\")\n
+\local ___parm_inp___=\$(arglocal \"\$@\")\n
 \\n
 \local OPTIND\n
 \local OPTARG\n
 \local opts\n
+\local verb=\"\"\n
 \\n
-\      while getopts 'a:vh' opts 2>/dev/null; do\n
+\      while getopts 'vh' opts 2>/dev/null; do\n
 \         case \"\${opts}\" in\n
-\            a) opa=\${OPTARG} ;;\n
 \            v) verb=\"-v\"     ;;\n
 \            h)\n
-\               echo -n \"  $> \$funcao_atual\"\n
+\               echo -n \"  $> \${___cur_func___}\"\n
+\               echo -n \"\"\n
 \               echo\n
 \               return\n
 \            ;;\n
 \         esac\n
 \      done\n
 \      shift \$((OPTIND-1))\n
-\      eval \$___parametros_de_entrada___\n
+\      eval \${___parm_inp___}\n
 \\n
 \}\n
 \\#=======================================================================\n
