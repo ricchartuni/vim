@@ -80,6 +80,9 @@ static FILE    * flog;
       // Read ..................
       // -----------------------
       main_read();
+      // -----------------------
+      // Proccess ..............
+      // -----------------------
 #ifdef _USAR_MAINMPI___
       if(ismanager())
          mpisendalltasks(njob, cjob, flog);
