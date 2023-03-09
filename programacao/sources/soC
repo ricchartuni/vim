@@ -232,6 +232,8 @@ function! ERRdef()
    norm v
    call setpos('.', bpos)
    norm err
+   let cmd = "awk '{if(\$0 ~ /^\\#define [CI]ERR_/){if(a[\$2]++==0){print}}else{print}}'"
+   exec "%! ".cmd
    call POSCMDpreserva()
 endfunction
 vnoremap err <esc>:call ERRlocal()<CR>

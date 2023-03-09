@@ -261,10 +261,10 @@ func! CARREGAprg(tipo, ...)
     return key
 endfunc
 
-vnoremap =x <esc>:call AlignCOL(input(' >caracter para alinhar: '))<CR>
-vnoremap == <esc>:call AlignCOL("=")<CR>
-vnoremap =; <esc>:call AlignCOL(";")<CR>
-function AlignCOL(tipo)
+vnoremap =x <esc>:call AlignCHAR(input(' >caracter para alinhar: '))<CR>
+vnoremap == <esc>:call AlignCHAR("=")<CR>
+vnoremap =; <esc>:call AlignCHAR(";")<CR>
+func! AlignCHAR(tipo)
 " ** RChartuni >>   let lin = line('.')-1
 " ** RChartuni >>   let val = readfile(g:arqfull)[lin]
 " ** RChartuni >>   if val =~ a:tipo
