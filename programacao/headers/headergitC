@@ -14,16 +14,14 @@
 #define __XXXXXXX_C__
 #include "XXXXXXX.h"
 //---------------------------
-#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 //---------------------------
 #ifdef _USAR_MPI___
 #ifndef _USAR_MAINMPI___
-//#define _USAR_MAINMPI___
+#define _USAR_MAINMPI___
 #endif
 #endif
 //---------------------------
@@ -34,9 +32,7 @@
 //---------------------------
 #include "constantes.h"
 #include "myrsf.h"
-#include "rsfinp.h"
 #include "rsfutl.h"
-#include "alloc.h"
 #include "mpiutl.h"
 #include "defclock.h"
 #include "mylog.h"
@@ -49,13 +45,21 @@
 #endif
 //---------------------------
 #define PROG_INIT "Initialize program"
-#define PROGALLOC "Program allocation"
-#define PROC_INFO "Proccessing"
-#define PROC__MPI "MPI-trace proccessing"
-#define PROG_KILL "Finalize program"
+#define PROG_NULL "initialize structures"
+#define PROG__INP "input information"
+#define PROG__OUT "output information"
+#define PROGALLOC "allocate memory"
 //---------------------------
-#define INPUT__PARM    "inp"
-#define OUTPUT_PARM    "out"
+#ifdef _USAR_MAINMPI___
+#define PROC_INFO "MPI proccessing"
+#else
+#define PROC_INFO "Proccessing"
+#endif
+#define PROG_READ "read input data"
+#define PROG__WRT "write data"
+//---------------------------
+#define PROG_KILL "Finalize program"
+#define PROG_FREE "free memory"
 //---------------------------
 #define CERR_NOTDEFINED   "Error not defined .........."
 //---------------------------
@@ -67,26 +71,51 @@ static FILE    * flog;
 //======================================================================
    static void main_proc(){
 //---------------------------------------------------------------------
-int n2tot = 2;
       // -----------------------
-      // CLOCK proccess ........
-      defclock_proc();
+      // Proccess info .........
+      char* cjob = PROC_INFO;
+      int   njob = 2;
+      MYLOG_HDR("%s\n",PROC_INFO);
       // -----------------------
-      char* cjob = PROC__MPI;
-      int   njob = n2tot;
+      // Read ..................
+      // -----------------------
+      main_read();
 #ifdef _USAR_MAINMPI___
       if(ismanager())
          mpisendalltasks(njob, cjob, flog);
       else{
 #endif
+         // -----------------------
+         // CLOCK proccess ........
+         defclock_proc();
+         // -----------------------
          mpitask_str task;
          int irecv = mpiworker_taskbeg(&task, njob, cjob, flog);
          while(irecv >= 0){
-            MYLOG_PRN("main_proc ...... %d\n", irecv);
-            irecv = mpireceivetask(task);
+            irecv = mpireceivetask(&task);
          }
+         mpiworker_taskend(&task);
 #ifdef _USAR_MAINMPI___
-         mympi_worker_sumf(nstot, saux[0], seis[0]);
+      }
+#endif
+      // -----------------------
+      // Write .................
+      // -----------------------
+      main_write();
+   }
+//======================================================================
+//======================================================================
+   static void main_read(){
+//---------------------------------------------------------------------
+#ifdef _USAR_MAINMPI___
+      if(isworker()){
+#endif
+         // -----------------------
+         // CLOCK read ............
+         defclock_read();
+         // -----------------------
+         MYLOG_PRN("%s\n",PROG_READ);
+#ifdef _USAR_MAINMPI___
       }
 #endif
    }
@@ -95,78 +124,68 @@ int n2tot = 2;
    static void main_write(){
 //---------------------------------------------------------------------
 #ifdef _USAR_MAINMPI___
-      if(am_i_rank(1)){
+      if(isworker()){
 #endif
          // -----------------------
          // CLOCK write ...........
          defclockwrite();
          // -----------------------
-         MYLOG_PRN("output write .....\n");
-// ** RChartuni >>         sf_floatwrite(seis[0],nstot,sfout);
+         MYLOG_PRN("%s\n",PROG__WRT);
 #ifdef _USAR_MAINMPI___
       }
 #endif
    }
 //======================================================================
 //======================================================================
-   static void main_read(){
+   static void main_parmout(){
 //---------------------------------------------------------------------
-      // -----------------------
-      // CLOCK read ............
-      defclock_read();
-      // -----------------------
-      MYLOG_PRN("input read .......\n");
-// ** RChartuni >>      sf_floatread(seis[0],nstot,sfinp);
+#ifdef _USAR_MAINMPI___
+      if(isworker()){
+#endif
+         MYLOG_PRN("%s\n",PROG__OUT);
+#ifdef _USAR_MAINMPI___
+      }
+#endif
    }
 //======================================================================
 //======================================================================
-   static void main_free(){
+   static void main_parminp(){
 //---------------------------------------------------------------------
-      MYLOG_PRN("free memory ......\n");
-   }
-//======================================================================
-//======================================================================
-   static void main_null(){
-//---------------------------------------------------------------------
-      MYLOG_PRN("null variables ...\n");
+      MYLOG_PRN("%s\n",PROG__INP);
    }
 //======================================================================
 //======================================================================
    static void main_alloc(){
 //---------------------------------------------------------------------
-      // -----------------------
-      // CLOCK alloc ...........
-      defclockalloc();
-      // -----------------------
-      MYLOG_PRN("allocate .........\n");
-// ** RChartuni >>      seis = arr_malloc2F(n2tot,n1);
-// ** RChartuni >>      main_err(!seis, IERR_SEIS__ALLOC);
-   }
-//======================================================================
-//======================================================================
-   static void main_output(){
-//---------------------------------------------------------------------
-// ** RChartuni >>      main_err(!rsfparcheckall(OUTPUT_PARM), IERR_SEIS_OUTPUT);
 #ifdef _USAR_MAINMPI___
-      if(am_i_rank(1)){
+      if(isworker()){
 #endif
-         MYLOG_PRN("output flush .....\n");
-// ** RChartuni >>         sfout = sf_output(OUTPUT_PARM);
-// ** RChartuni >>         sf_fileflush(sfout, sfinp);
+         // -----------------------
+         // CLOCK alloc ...........
+         defclockalloc();
+         // -----------------------
+         MYLOG_PRN("%s\n",PROGALLOC);
 #ifdef _USAR_MAINMPI___
       }
 #endif
    }
 //======================================================================
 //======================================================================
-   static void main_input(){
+   static void main_free(){
 //---------------------------------------------------------------------
-// ** RChartuni >>      main_err(!rsfparcheckall(INPUT__PARM)   , IERR_SEIS__INPUT);
-      MYLOG_PRN("define input .....\n");
-// ** RChartuni >>      sfinp = sf_input(INPUT__PARM);
-// ** RChartuni >>      main_err(!sf_getfloat(CLIP___PARM,&clip), IERR_INPUT__CLIP);
-// ** RChartuni >>      rsfxDinfo(rsffloat, sfinp, &n1,&o1,&d1,
-// ** RChartuni >>       &n2,&o2,&d2, &n3,&o3,&d3, &n4,&o4,&d4);
+#ifdef _USAR_MAINMPI___
+      if(isworker()){
+#endif
+         MYLOG_PRN("%s\n",PROG_FREE);
+#ifdef _USAR_MAINMPI___
+      }
+#endif
+   }
+//======================================================================
+//======================================================================
+   static void main_null(){
+//---------------------------------------------------------------------
+      MYLOG_PRN("%s\n",PROG_NULL);
    }
 //======================================================================
 //======================================================================
@@ -197,43 +216,30 @@ int n2tot = 2;
       // -----------------------
       main_init(argc, argv);
       // -----------------------
-      // Input parameters ......
+      // Allocation ............
       // -----------------------
-      main_input();
-      // -----------------------
-      // Output parameters .....
-      // -----------------------
-      main_output();
-#ifdef _USAR_MAINMPI___
-      if(isworker()){
-#endif
-         // -----------------------
-         MYLOG_HDR("%s\n",PROGALLOC);
-         // -----------------------
-         // Allocation ............
-         // -----------------------
-         main_alloc();
-         // -----------------------
-         // Read ..................
-         // -----------------------
-         main_read();
-#ifdef _USAR_MAINMPI___
-      }
-#endif
-      // -----------------------
-      MYLOG_HDR("%s\n",PROC_INFO);
+      main_alloc();
       // -----------------------
       // Proccess ..............
       // -----------------------
       main_proc();
       // -----------------------
-      // Write .................
-      // -----------------------
-      main_write();
-      // -----------------------
       // Finish program ........
       // -----------------------
       main_kill();
+   }
+//======================================================================
+//======================================================================
+   static void main_err(const int iret, const int ierr){
+//---------------------------------------------------------------------
+      if(iret == 0) return;
+      // ------------------------
+      // Found error ......
+      // ------------------------
+      char cerr[1024];
+      main_errtype(ierr, cerr);
+      strcat(cerr, "\n");
+      main_kill0(ierr, cerr);
    }
 //======================================================================
 //======================================================================
@@ -256,7 +262,7 @@ int n2tot = 2;
       // -----------------------
       // Finalize CLOCK ........
       // -----------------------
-      if (iend == 0)
+      if(iend == 0)
          defclock_kill(flog);
       // -----------------------
       // Finalize LOGFILE ......
@@ -301,19 +307,14 @@ int n2tot = 2;
       // NULL structures .......
       // -----------------------
       main_null();
-   }
-//======================================================================
-//======================================================================
-   static void main_err(const int iret, const int itype){
-//---------------------------------------------------------------------
-      if(iret == 0) return;
-      // ------------------------
-      // Found error ......
-      // ------------------------
-      char cerr[1024];
-      main_errtype(itype, cerr);
-      strcat(cerr, "\n");
-      main_kill0(itype, cerr);
+      // -----------------------
+      // Input parameters ......
+      // -----------------------
+      main_parminp();
+      // -----------------------
+      // Output parameters .....
+      // -----------------------
+      main_parmout();
    }
 //======================================================================
 #else
