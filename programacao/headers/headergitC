@@ -73,8 +73,6 @@ static FILE    * flog;
 //---------------------------------------------------------------------
       // -----------------------
       // Proccess info .........
-      char* cjob = PROC_INFO;
-      int   njob = 2;
       MYLOG_HDR("%s\n",PROC_INFO);
       // -----------------------
       // Read ..................
@@ -83,6 +81,9 @@ static FILE    * flog;
       // -----------------------
       // Proccess ..............
       // -----------------------
+      char cjob[512];
+      int  njob = 2;
+      sprintf(cjob, "%s trace", PROC_INFO)
 #ifdef _USAR_MAINMPI___
       if(ismanager())
          mpisendalltasks(njob, cjob, flog);
